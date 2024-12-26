@@ -133,6 +133,27 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+
+  themes: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        // Options
+        indexDocs: true,
+        indexBlog: false,
+        docsRouteBasePath: "/docs",
+        hashed: true,
+        language: ["en"],
+        searchBarPosition: "auto",
+        searchBarShortcutHint: true,
+
+        // Highlight matches on target page
+        highlightSearchTermsOnTargetPage: true,
+        // Search result limits
+        searchResultLimits: 8,
+      },
+    ],
+  ],
 };
 
 export default config;
