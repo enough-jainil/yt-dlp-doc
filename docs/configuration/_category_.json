@@ -1,8 +1,0 @@
-{
-  "label": "Configuration",
-  "position": 6,
-  "link": {
-    "type": "generated-index",
-    "description": "Discover the various configuration options available in yt-dlp. This section provides detailed explanations of settings, customization options, and best practices to optimize your video downloading experience."
-  }
-}
