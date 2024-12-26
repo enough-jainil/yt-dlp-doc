@@ -7,7 +7,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 const config: Config = {
   title: "Unofficial yt-dlp Documentation",
   tagline: "A comprehensive guide to the powerful video downloader",
-  favicon: "img/favicon.ico",
+  favicon: "img/yt-dlp-logo.png",
 
   // Set the production url of your site here
   url: "https://yt-dlp-docs.netlify.app",
@@ -71,7 +71,7 @@ const config: Config = {
       title: "yt-dlp",
       logo: {
         alt: "yt-dlp Logo",
-        src: "img/logo.svg",
+        src: "img/yt-dlp-logo.png",
       },
       items: [
         {
