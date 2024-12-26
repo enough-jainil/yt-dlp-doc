@@ -1,0 +1,8 @@
+{
+  "label": "Introduction",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Get acquainted with yt-dlp, a versatile and efficient video downloading tool. This section provides a brief overview of its main functionalities, use cases, and how it stands out in the realm of video downloaders, enabling you to harness its capabilities effectively."
+  }
+}
