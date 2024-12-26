@@ -78,7 +78,7 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Tutorial",
+          label: "Documentation",
         },
         {
           href: "https://github.com/yt-dlp/yt-dlp",
@@ -86,7 +86,7 @@ const config: Config = {
           position: "right",
         },
         {
-          href: "https://github.com/your-github-username/yt-dlp-docs",
+          href: "https://github.com/enough-jainil/yt-dlp-doc",
           label: "GitHub",
           position: "right",
         },
@@ -99,8 +99,8 @@ const config: Config = {
           title: "Docs",
           items: [
             {
-              label: "Tutorial",
-              to: "/docs/intro",
+              label: "Documentation",
+              to: "/docs/what-is-yt-dlp",
             },
           ],
         },
@@ -122,7 +122,7 @@ const config: Config = {
             // },
             {
               label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
+              href: "https://github.com/enough-jainil/yt-dlp-doc",
             },
           ],
         },
