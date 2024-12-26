@@ -2,94 +2,144 @@
 sidebar_position: 3
 ---
 
-# Installing yt-dlp Using pip
+# Installing yt-dlp via Third-party Package Managers
 
-pip is the package installer for Python. It allows you to easily install and manage Python packages, including yt-dlp. This method is recommended for Python users and those who want to easily keep yt-dlp up-to-date.
+Third-party package managers offer a convenient way to install and update yt-dlp on various operating systems. Here are instructions for some popular package managers:
 
-## Prerequisites
+## Windows
 
-- Python 3.8 or later installed on your system
-- pip (usually comes installed with Python)
+### Chocolatey
 
-To check if you have Python and pip installed, open a terminal or command prompt and run:
+1. Install Chocolatey if you haven't already.
+2. Open an administrator PowerShell and run:
 
-```bash
-python --version
-pip --version
+   ```sh
+   choco install yt-dlp
+   ```
+
+3. To update:
+
+   ```sh
+   choco upgrade yt-dlp
+   ```
+
+### Scoop
+
+1. Install Scoop if you haven't already.
+2. Open PowerShell and run:
+
+   ```sh
+   scoop install yt-dlp
+   ```
+
+3. To update:
+
+   ```sh
+   scoop update yt-dlp
+   ```
+
+### winget
+
+1. Open PowerShell and run:
+
+   ```sh
+   winget install yt-dlp
+   ```
+
+2. To update:
+
+   ```sh
+   winget upgrade yt-dlp
+   ```
+
+## macOS
+
+### Homebrew
+
+1. Install Homebrew if you haven't already.
+2. Open Terminal and run:
+
+   ```sh
+   brew install yt-dlp
+   ```
+
+3. To update:
+
+   ```sh
+   brew upgrade yt-dlp
+   ```
+
+### MacPorts
+
+1. Install MacPorts if you haven't already.
+2. Open Terminal and run:
+
+   ```sh
+   sudo port install yt-dlp
+   ```
+
+3. To update:
+
+   ```sh
+   sudo port selfupdate
+   sudo port upgrade yt-dlp
+   ```
+
+## Linux
+
+### Arch Linux (pacman)
+
+```sh
+sudo pacman -S yt-dlp
 ```
 
-If either command is not recognized, you'll need to install Python first.
+### Debian/Ubuntu-based distributions (APT)
 
-## Installation Steps
+1. Add the PPA:
 
-Open a terminal or command prompt.
+   ```sh
+   sudo add-apt-repository ppa:tomtomtom/yt-dlp
+   ```
 
-Install yt-dlp using pip:
+2. Update and install:
 
-```bash
-python3 -m pip install -U yt-dlp
+   ```sh
+   sudo apt update
+   sudo apt install yt-dlp
+   ```
+
+### Fedora (DNF)
+
+```sh
+sudo dnf install yt-dlp
 ```
 
-This command installs yt-dlp and its dependencies. The `-U` flag ensures you get the latest version.
+### Alpine Linux
 
-To install with all optional dependencies:
-
-```bash
-python3 -m pip install -U "yt-dlp[default]"
+```sh
+doas apk add yt-dlp
 ```
 
 ## Verifying Installation
 
-After installation, verify that yt-dlp is correctly installed:
+After installation, verify yt-dlp is working:
 
-```bash
+```sh
 yt-dlp --version
 ```
 
-This should display the version number of yt-dlp.
+## Notes and Considerations
 
-## Updating yt-dlp
+- Package managers may not always have the latest version of yt-dlp immediately after a new release.
+- Some package managers require root/administrator privileges to install or update packages.
+- Using package managers integrates yt-dlp with your system's update process, making it easier to keep up-to-date.
+- If you encounter issues, check the package manager's documentation or community forums for troubleshooting.
 
-To update yt-dlp to the latest stable version:
+## Advantages of Using Package Managers
 
-```bash
-python3 -m pip install -U yt-dlp
-```
+- Simplified installation process
+- Easy updates and version management
+- Automatic handling of dependencies
+- Integration with system-wide package management
 
-## Installing Development Versions
-
-If you want to try the latest features before they're officially released:
-
-For the nightly build:
-
-```bash
-python3 -m pip install -U --pre yt-dlp
-```
-
-For the bleeding-edge version from the master branch:
-
-```bash
-python3 -m pip install -U pip hatchling wheel
-python3 -m pip install --force-reinstall "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz"
-```
-
-## Troubleshooting
-
-If you get a "permission denied" error, try using `sudo` (on Unix-based systems) or run the command prompt as administrator (on Windows).
-On some systems, you may need to use `py` or `python` instead of `python3`.
-If you're having issues, ensure your Python and pip are up-to-date.
-
-## Uninstalling
-
-To remove yt-dlp:
-
-```bash
-python3 -m pip uninstall yt-dlp
-```
-
-## Additional Notes
-
-Using pip allows you to easily manage yt-dlp alongside other Python packages.
-This method installs yt-dlp globally on your system, making it available from any directory.
-Consider using virtual environments if you need to manage multiple Python project dependencies.
-Installing via pip is a flexible and powerful way to get yt-dlp up and running, especially for users familiar with Python environments.
+Remember to keep your package manager and system up-to-date to ensure you have access to the latest versions and security updates for yt-dlp and other software.

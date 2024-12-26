@@ -2,151 +2,110 @@
 sidebar_position: 1
 ---
 
-# Format Selection in `yt-dlp`
+# Format Selection in yt-dlp
 
-`yt-dlp` is a versatile tool for downloading videos and audio from various platforms. Its format selection feature allows you to specify the quality and type of media you want to download. Below is an updated guide on how to use this feature effectively.
-
----
+Format selection in yt-dlp allows you to choose specific video and audio qualities for download. This powerful feature gives you control over the format of the media you're downloading.
 
 ## Basic Syntax
 
 The basic syntax for format selection is:
 
-```bash
+```sh
 yt-dlp -f FORMAT URL
 ```
 
-- **FORMAT**: A format selector string.
-- **URL**: The URL of the video or audio you want to download.
+Where `FORMAT` is a format selector string.
 
----
+## Format Codes
 
-## View Available Formats
+Each downloadable media stream has a unique format code. You can view available formats using:
 
-To see all available formats for a video, use:
-
-```bash
+```sh
 yt-dlp -F URL
 ```
 
-This will display a list of format codes along with their resolution, codec, and other details.
-
----
-
 ## Common Format Selectors
 
-Here are some commonly used format selectors:
-
-| Selector    | Description                                       |
-| ----------- | ------------------------------------------------- |
-| `best`      | Selects the best quality format (video + audio).  |
-| `worst`     | Selects the worst quality format.                 |
-| `bestvideo` | Selects the best quality video-only format.       |
-| `bestaudio` | Selects the best quality audio-only format.       |
-| `mp4`       | Selects the best MP4 format.                      |
-| `136+140`   | Combines format code 136 (video) and 140 (audio). |
-
----
+- `best`: Select the best quality format.
+- `worst`: Select the worst quality format.
+- `bestvideo`: Select the best quality video-only format.
+- `bestaudio`: Select the best quality audio-only format.
+- `mp4`: Select the best mp4 format.
+- `136+140`: Select format code 136 for video and 140 for audio.
 
 ## Advanced Format Selection
 
 ### Quality Preference
 
-You can use comparison operators to set quality preferences:
+Use comparison operators to set quality preferences:
 
-- `best[height<=720]`: Best quality video with a height of no more than 720 pixels.
+- `best[height<=720]`: Best quality video with height no more than 720 pixels.
 - `best[fps>30]`: Best quality video with more than 30 fps.
 
 ### Format Filtering
 
-Filter formats based on specific criteria:
+Filter formats based on various criteria:
 
-- `best[ext=mp4]`: Best MP4 format.
-- `best[acodec^=opus]`: Best format with Opus audio codec.
+- `best[ext=mp4]`: Best mp4 format.
+- `best[acodec^=opus]`: Best format with opus audio codec.
 
 ### Sorting Formats
 
 Use `/` to specify preference order:
 
-```bash
+```sh
 yt-dlp -f 'bestvideo+bestaudio/best' URL
 ```
 
 This tries to download and merge the best video with the best audio, falling back to the best combined format if merging fails.
 
----
+## Format Selection Examples
 
-### Format Selection Examples
+### Best Video with Best Audio, Prefer MP4
 
-1. **Best video with best audio, prefer MP4:**
+```sh
+yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' URL
+```
 
-   ```bash
-   yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' URL
-   ```
+### Best Video No Larger Than 720p
 
-2. **Best video no larger than 720p:**
+```sh
+yt-dlp -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' URL
+```
 
-   ```bash
-   yt-dlp -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' URL
-   ```
+### Best MP4 Video with M4A Audio
 
-3. **Best MP4 video with M4A audio:**
+```sh
+yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' URL
+```
 
-   ```bash
-   yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' URL
-   ```
+### Worst Video No Worse Than 480p
 
-4. **Worst video no worse than 480p:**
+```sh
+yt-dlp -f 'worst[height>=480]' URL
+```
 
-   ```bash
-   yt-dlp -f 'worst[height>=480]' URL
-   ```
+### Best Video and Audio but No Better Than 720p
 
-5. **Best video and audio but no better than 720p:**
-   ```bash
-   yt-dlp -S 'res:720' URL
-   ```
+```sh
+yt-dlp -S 'res:720' URL
+```
 
----
-
-### Format Sorting (`-S` Option)
+## Format Sorting (`-S` option)
 
 The `-S` option allows for more flexible sorting of formats:
 
-```bash
+```sh
 yt-dlp -S 'ext:mp4:m4a' URL
 ```
 
-This prefers MP4 video and M4A audio extensions.
+This prefers mp4 video and m4a audio extensions.
 
----
+## Tips for Format Selection
 
-### Tips for Format Selection
+- Use `-F` to list all available formats before deciding.
+- Combine format selectors for precise control.
+- Remember that not all formats may be available for every video.
+- Use `--merge-output-format` to specify the final container if merging separate audio and video.
 
-1. **List Formats First**: Always use `-F` to list all available formats before deciding.
-2. **Combine Selectors**: Combine format selectors for precise control over video and audio quality.
-3. **Check Availability**: Not all formats may be available for every video.
-4. **Merge Output Format**: Use `--merge-output-format` to specify the final container if merging separate audio and video streams.
-
----
-
-### Additional Options
-
-- **Merge Output Format**: Specify the container format when merging audio and video:
-
-  ```bash
-  yt-dlp --merge-output-format mp4 -f 'bestvideo+bestaudio' URL
-  ```
-
-- **Download Subtitles**: Include subtitles in the download:
-  ```bash
-  yt-dlp --write-subs -f 'best' URL
-  ```
-
----
-
-### Conclusion
-
-Format selection in `yt-dlp` is a powerful feature that allows you to tailor your downloads to your specific needs. Experiment with different selectors and options to find the perfect balance of quality and file size. Always check available formats using `-F` to make informed decisions.
-
-For more advanced usage, refer to the official `yt-dlp` documentation or use `yt-dlp --help` for a full list of options.
+Format selection is a powerful feature of yt-dlp. Experiment with different selectors to find the perfect balance of quality and file size for your needs.

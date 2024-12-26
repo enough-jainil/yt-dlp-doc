@@ -10,36 +10,47 @@ The primary purpose of this documentation is to provide comprehensive and access
 
 ## Key Objectives
 
-- **Inform:** Provide clear, accurate information about yt-dlp's features, capabilities, and usage.
-- **Guide:** Offer step-by-step instructions for common tasks and advanced operations.
-- **Troubleshoot:** Help users identify and resolve common issues they may encounter.
-- **Educate:** Explain complex concepts and underlying principles to enhance user understanding.
+### Inform
+
+Provide clear, accurate information about yt-dlp's features, capabilities, and usage.
+
+### Guide
+
+Offer step-by-step instructions for common tasks and advanced operations.
+
+### Troubleshoot
+
+Help users identify and resolve common issues they may encounter.
+
+### Educate
+
+Explain complex concepts and underlying principles to enhance user understanding.
 
 ## Target Audience
 
 This documentation is designed to serve:
 
-- Newcomers to yt-dlp seeking basic usage instructions
-- Experienced users looking to leverage advanced features
-- Developers interested in extending yt-dlp's functionality
-- System administrators deploying yt-dlp in various environments
+- **Newcomers to yt-dlp** seeking basic usage instructions.
+- **Experienced users** looking to leverage advanced features.
+- **Developers** interested in extending yt-dlp's functionality.
+- **System administrators** deploying yt-dlp in various environments.
 
 ## Structure and Navigation
 
 The documentation is organized to facilitate easy navigation:
 
-- Beginner-friendly sections introduce core concepts and basic usage
-- Advanced topics cover complex features and customization options
-- API reference for developers and power users
-- Frequently Asked Questions (FAQ) address common queries
+- **Beginner-friendly sections** introduce core concepts and basic usage.
+- **Advanced topics** cover complex features and customization options.
+- **API reference** for developers and power users.
+- **Frequently Asked Questions (FAQ)** address common queries.
 
 ## Continuous Improvement
 
 This documentation is a living resource, updated regularly to reflect:
 
-- New features and improvements in yt-dlp
-- User feedback and commonly requested information
-- Best practices and optimized workflows
+- New features and improvements in yt-dlp.
+- User feedback and commonly requested information.
+- Best practices and optimized workflows.
 
 ## Contributing
 
