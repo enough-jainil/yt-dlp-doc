@@ -1,0 +1,8 @@
+{
+  "label": "Contributing",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Dive into the contributing guidelines for yt-dlp, where you can learn how to effectively contribute to the project. This section outlines the processes for submitting issues, creating pull requests, and collaborating with the community to enhance the functionality and usability of this powerful video downloader."
+  }
+}

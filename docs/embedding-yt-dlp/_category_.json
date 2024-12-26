@@ -1,0 +1,8 @@
+{
+  "label": "Embedding yt-dlp",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Discover how to seamlessly integrate yt-dlp into your projects. This section covers various embedding techniques, providing clear examples and best practices to enhance your video downloading capabilities."
+  }
+}
