@@ -24,7 +24,7 @@ export default function Disclaimer(): JSX.Element {
           </a>
           <a
             className="button button--secondary button--lg bg-ifm-color-primary text-white"
-            href="https://github.com/your-github-username/yt-dlp-docs"
+            href="https://github.com/enough-jainil/yt-dlp-doc"
             target="_blank"
             rel="noopener noreferrer"
           >
