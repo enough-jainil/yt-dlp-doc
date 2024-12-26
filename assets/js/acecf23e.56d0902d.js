@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkytdlp_docs=self.webpackChunkytdlp_docs||[]).push([[1903],{1912:s=>{s.exports=JSON.parse('{"blogBasePath":"/yt-dlp-doc/blog","blogTitle":"Blog","authorsListPath":"/yt-dlp-doc/blog/authors"}')}}]);
