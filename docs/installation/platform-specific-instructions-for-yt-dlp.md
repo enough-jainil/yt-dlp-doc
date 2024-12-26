@@ -130,16 +130,18 @@ yt-dlp [OPTIONS] URL
 
 ## Android
 
-### Installation
+### Installation via Termux
 
-1. Install Termux from F-Droid or Google Play Store.
+1. Install Termux from F-Droid or Google Play Store
 2. Open Termux and run:
 
-   ```sh
-   pkg update && pkg upgrade
-   pkg install python
-   pip install yt-dlp
-   ```
+```sh
+termux-setup-storage                 # Allow termux to access storage
+pkg update && pkg upgrade            # Update packages
+pkg install libexpat openssl python  # Install python
+pip install -U "yt-dlp[default]"     # Install yt-dlp
+pkg install ffmpeg                   # Optional: Install ffmpeg
+```
 
 ### Usage
 

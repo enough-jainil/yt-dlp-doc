@@ -120,6 +120,33 @@ sudo dnf install yt-dlp
 doas apk add yt-dlp
 ```
 
+## Installing via pip
+
+### Basic Installation
+
+```sh
+python3 -m pip install -U "yt-dlp[default]"
+```
+
+### Minimal Installation (No Optional Dependencies)
+
+```sh
+python3 -m pip install --no-deps -U yt-dlp
+```
+
+### Development Versions
+
+```sh
+# Install nightly version
+python3 -m pip install -U --pre "yt-dlp[default]"
+
+# Install master branch
+python3 -m pip install -U pip hatchling wheel
+python3 -m pip install --force-reinstall "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz"
+```
+
+**Note**: On some systems, you may need to use `py` or `python` instead of `python3`
+
 ## Verifying Installation
 
 After installation, verify yt-dlp is working:

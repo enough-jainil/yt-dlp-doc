@@ -32,20 +32,23 @@ Release binaries are pre-compiled executables that allow you to run yt-dlp witho
 1. Move `yt-dlp.exe` to a directory in your system PATH (e.g., `C:\Windows`).
 2. Alternatively, you can add the directory containing `yt-dlp.exe` to your PATH.
 
-### macOS and Linux
+### UNIX-like Systems (MacOS, Linux, BSD)
 
-1. Open a terminal.
-2. Make the file executable:
+You can install yt-dlp into your `$PATH` (e.g., `~/.local/bin`) using any of these commands:
 
-   ```sh
-   chmod a+rx ./yt-dlp
-   ```
+```sh
+# Using curl
+curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ~/.local/bin/yt-dlp
+chmod a+rx ~/.local/bin/yt-dlp
 
-3. Move the file to a directory in your PATH:
+# Using wget
+wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O ~/.local/bin/yt-dlp
+chmod a+rx ~/.local/bin/yt-dlp
 
-   ```sh
-   sudo mv ./yt-dlp /usr/local/bin/
-   ```
+# Using aria2c
+aria2c https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp --dir ~/.local/bin -o yt-dlp
+chmod a+rx ~/.local/bin/yt-dlp
+```
 
 ## Verifying Installation
 

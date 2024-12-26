@@ -10,7 +10,7 @@ const config: Config = {
   favicon: "img/yt-dlp-logo.png",
 
   // Set the production url of your site here
-  url: "https://yt-dlp-docs.netlify.app",
+  url: "https://yt-dlp.memoryview.in",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -39,8 +39,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          editUrl: "https://github.com/enough-jainil/yt-dlp-doc/tree/main/",
         },
         // blog: {
         //   showReadingTime: true,
