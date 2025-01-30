@@ -80,7 +80,26 @@ The video will be downloaded in `webm` format.
 
 ### Multiple Configuration Files
 
-yt-dlp reads all found configuration files, not just the first one. Options in later files override earlier ones.
+yt-dlp reads all found configuration files, not just the first one. Options in later files override earlier ones. The loading order is:
+
+1. System configuration files (lowest priority)
+2. User configuration files
+3. Portable configuration files
+4. Configuration specified with `--config-location` (highest priority)
+
+**Example scenario:**
+
+```plaintext
+/etc/yt-dlp.conf → --output "default_%(title)s.%(ext)s"
+~/.config/yt-dlp/config → --format best
+./yt-dlp.conf → --format bestvideo[height<=1080]
+--config-location custom.conf → --output "custom_%(title)s.%(ext)s"
+```
+
+Final effective options would be:
+
+- `--format bestvideo[height<=1080]` (from ./yt-dlp.conf)
+- `--output "custom_%(title)s.%(ext)s"` (from custom.conf)
 
 ### Environment Variables
 
