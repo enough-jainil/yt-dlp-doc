@@ -28,12 +28,14 @@ yt-dlp -f FILTER URL
 
 #### **Common Filters**
 
-| Filter      | Description                          |
-| ----------- | ------------------------------------ |
-| `best`      | Best quality format (video + audio). |
-| `worst`     | Worst quality format.                |
-| `bestvideo` | Best quality video-only format.      |
-| `bestaudio` | Best quality audio-only format.      |
+| Filter       | Description                          |
+| -----------  | ------------------------------------ |
+| `best`       | Best quality format (video + audio). |
+| `worst`      | Worst quality format.                |
+| `worstvideo` | Worst quality video-only format.     |
+| `worstaudio` | Worst quality audio-only format.     |
+| `bestvideo`  | Best quality video-only format.      |
+| `bestaudio`  | Best quality audio-only format.      |
 
 #### **Advanced Filtering**
 

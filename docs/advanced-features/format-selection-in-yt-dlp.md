@@ -28,6 +28,8 @@ yt-dlp -F URL
 
 - `best`: Select the best quality format.
 - `worst`: Select the worst quality format.
+- `worstvideo`: Select the worst quality video-only format.
+- `worstaudio`: Select the worst quality audio-only format.
 - `bestvideo`: Select the best quality video-only format.
 - `bestaudio`: Select the best quality audio-only format.
 - `mp4`: Select the best mp4 format.
