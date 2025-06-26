@@ -1,0 +1,8 @@
+{
+  "label": "Network Options",
+  "position": 12,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn about network configuration options in yt-dlp. This section covers geo-restriction bypass, proxy settings, and other network-related configurations."
+  }
+}
