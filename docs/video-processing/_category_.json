@@ -1,0 +1,10 @@
+{
+  "label": "Video Processing",
+  "position": 12,
+  "collapsed": false,
+  "className": "blue",
+  "description": "Complete guide to video processing and format selection",
+  "customProps": {
+    "description": "Learn video format selection, quality control, and processing options"
+  }
+}

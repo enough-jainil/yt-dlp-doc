@@ -1,0 +1,10 @@
+{
+  "label": "Playlist Handling",
+  "position": 10,
+  "collapsed": false,
+  "className": "red",
+  "description": "Complete guide to handling playlists, channels, and bulk downloads",
+  "customProps": {
+    "description": "Learn how to download entire playlists, channels, and manage bulk video operations"
+  }
+}

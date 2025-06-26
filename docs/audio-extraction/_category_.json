@@ -1,0 +1,10 @@
+{
+  "label": "Audio Extraction",
+  "position": 11,
+  "collapsed": false,
+  "className": "green",
+  "description": "Complete guide to audio extraction and processing",
+  "customProps": {
+    "description": "Learn how to extract audio, convert formats, and process audio files"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "label": "Subtitle Handling",
+  "position": 13,
+  "collapsed": false,
+  "className": "purple",
+  "description": "Complete guide to subtitle download and processing",
+  "customProps": {
+    "description": "Learn how to download, convert, and embed subtitles"
+  }
+}

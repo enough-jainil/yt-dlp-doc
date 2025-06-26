@@ -4,154 +4,420 @@ sidebar_position: 1
 
 # Configuration Files in yt-dlp
 
-Configuration files allow you to set default options for yt-dlp, saving you from typing frequently used options every time you run the program. This guide explains how to create and use configuration files effectively.
+yt-dlp supports configuration files to store default options, making it easier to manage your preferred settings without repeatedly typing command-line arguments.
 
-## Location of Configuration Files
+## Configuration File Locations
 
-yt-dlp looks for configuration files in several locations, in the following order:
+yt-dlp loads configuration from multiple locations in the following order:
 
-### Main Configuration
+### 1. Main Configuration
 
-- Specified by `--config-location`
+- **File given to `--config-location`** - Explicitly specified configuration file
 
-### Portable Configuration
+### 2. Portable Configuration (Recommended for portable installations)
 
-- `yt-dlp.conf` in the same directory as the yt-dlp binary
-- `yt-dlp.conf` in the parent directory of yt-dlp's source code (if running from source)
+- **Binary installations**: `yt-dlp.conf` in the same directory as the binary
+- **Source installations**: `yt-dlp.conf` in the parent directory of `yt_dlp`
 
-### Home Configuration
+### 3. Home Configuration
 
-- `yt-dlp.conf` in the directory specified by `-P`
-- If `-P` is not used, it checks the current directory
-- `${XDG_CONFIG_HOME}/yt-dlp/config` (recommended on Linux/macOS)
-- `${XDG_CONFIG_HOME}/yt-dlp/config.txt`
-- `${APPDATA}/yt-dlp/config` (recommended on Windows)
-- `${APPDATA}/yt-dlp/config.txt`
-- `~/yt-dlp.conf`
-- `~/.yt-dlp/config`
+- **Custom home path**: `yt-dlp.conf` in the home path given to `-P`
+- **Current directory**: If `-P` is not given, the current directory is searched
 
-### System Configuration
+### 4. User Configuration
+
+- **Linux/macOS**:
+  - `${XDG_CONFIG_HOME}/yt-dlp.conf`
+  - `${XDG_CONFIG_HOME}/yt-dlp/config` **(recommended on Linux/macOS)**
+  - `${XDG_CONFIG_HOME}/yt-dlp/config.txt`
+- **Windows**:
+  - `${APPDATA}/yt-dlp.conf`
+  - `${APPDATA}/yt-dlp/config` **(recommended on Windows)**
+  - `${APPDATA}/yt-dlp/config.txt`
+- **Universal**:
+  - `~/yt-dlp.conf`
+  - `~/yt-dlp.conf.txt`
+  - `~/.yt-dlp/config`
+  - `~/.yt-dlp/config.txt`
+
+### 5. System Configuration
 
 - `/etc/yt-dlp.conf`
 - `/etc/yt-dlp/config`
 - `/etc/yt-dlp/config.txt`
 
-## Creating a Configuration File
+## Configuration File Format
 
-1. Create a new text file named `config` or `yt-dlp.conf` in one of the above locations.
-2. Add one option per line, exactly as they would appear on the command line.
-3. Lines starting with `#` are treated as comments.
+Configuration files use the same options as command-line arguments, with these rules:
 
-### Example Configuration File
+### Basic Syntax
 
-```plaintext
+- One option per line
+- Options use the same format as command-line (with `--` prefix)
+- **No whitespace** after `-` or `--` (e.g., `-o` not `- o`)
+- Comments start with `#`, `;`, or `]`
+- Empty lines are ignored
+
+### Example Configuration
+
+```conf
+# yt-dlp configuration file
+# Lines starting with # are comments
+
 # Always extract audio
 -x
 
-# Prefer mp4 format
--f mp4
+# Do not copy the mtime
+--no-mtime
 
-# Use a specific output template
--o "%(title)s-%(id)s.%(ext)s"
+# Use this proxy
+--proxy 127.0.0.1:3128
 
-# Set a default archive file
---download-archive ~/yt-dlp-archive.txt
+# Save all videos under YouTube directory in your home directory
+-o ~/YouTube/%(title)s.%(ext)s
+
+# Prefer MP4 format
+-f "best[ext=mp4]/best"
+
+# Download subtitles
+--write-subs
+--sub-langs en,en-US
+
+# Write metadata
+--write-info-json
+--embed-metadata
+
+# Thumbnail options
+--write-thumbnail
+--embed-thumbnail
 ```
 
-## Using Configuration Files
+## Configuration Options Management
 
-Once you've set up a configuration file, yt-dlp will automatically use these options every time it runs.
+### Ignoring Configuration Files
 
-### To Ignore the Configuration File for a Single Run
-
-```sh
+```bash
+# Ignore all configuration files for this run
 yt-dlp --ignore-config URL
+
+# Alternative syntax
+yt-dlp --no-config URL
 ```
 
-### Overriding Configuration Options
+### Custom Configuration Location
 
-Command-line options take precedence over options in configuration files. For example, if your config file sets `-f mp4` but you run:
+```bash
+# Use specific configuration file
+yt-dlp --config-locations /path/to/custom-config.conf URL
 
-```sh
-yt-dlp -f webm URL
+# Use configuration from stdin
+yt-dlp --config-locations - URL < config.conf
+
+# Use multiple configuration files
+yt-dlp --config-locations config1.conf --config-locations config2.conf URL
 ```
 
-The video will be downloaded in `webm` format.
+### Disable Custom Configuration Loading
 
-### Multiple Configuration Files
-
-yt-dlp reads all found configuration files, not just the first one. Options in later files override earlier ones. The loading order is:
-
-1. System configuration files (lowest priority)
-2. User configuration files
-3. Portable configuration files
-4. Configuration specified with `--config-location` (highest priority)
-
-**Example scenario:**
-
-```plaintext
-/etc/yt-dlp.conf → --output "default_%(title)s.%(ext)s"
-~/.config/yt-dlp/config → --format best
-./yt-dlp.conf → --format bestvideo[height<=1080]
---config-location custom.conf → --output "custom_%(title)s.%(ext)s"
+```bash
+# Do not load any custom configuration files (use only default locations)
+yt-dlp --no-config-locations URL
 ```
 
-Final effective options would be:
+## Configuration File Encoding
 
-- `--format bestvideo[height<=1080]` (from ./yt-dlp.conf)
-- `--output "custom_%(title)s.%(ext)s"` (from custom.conf)
+### Encoding Detection
 
-### Environment Variables
+- Configuration files are decoded according to UTF BOM if present
+- Otherwise, the encoding from system locale is used
 
-Some options can be set using environment variables. These take precedence over options in configuration files. For example:
+### Specifying Encoding
 
-```sh
-export YTD_LP_PASSWORD=your_password
+To force a specific encoding, add a coding declaration at the beginning:
+
+```conf
+# coding: utf-8
+# Your configuration options below
+-o "%(title)s.%(ext)s"
+--write-subs
 ```
 
-## Tips for Using Configuration Files
+**Important**: The coding declaration must be the very first line with no characters before it, not even spaces or BOM.
 
-- Use configuration files for options you use frequently.
-- Keep sensitive information (like passwords) in a separate, secure configuration file.
-- Use `--verbose` to see which configuration files are being read.
-- Consider having different configuration files for different purposes (e.g., one for audio extraction, another for video downloading).
+### Encoding Examples
 
-## Example Configurations
+```conf
+# coding: shift-jis
+# Configuration using Shift-JIS encoding
+```
 
-### Audio Extraction Setup
+```conf
+# coding: iso-8859-1
+# Configuration using Latin-1 encoding
+```
 
-```plaintext
+## Advanced Configuration
+
+### Conditional Configuration
+
+While not directly supported, you can use multiple configuration files for different scenarios:
+
+```bash
+# Configuration for high quality downloads
+yt-dlp --config-locations ~/.config/yt-dlp/high-quality.conf URL
+
+# Configuration for mobile/low bandwidth
+yt-dlp --config-locations ~/.config/yt-dlp/mobile.conf URL
+
+# Configuration for audio-only downloads
+yt-dlp --config-locations ~/.config/yt-dlp/audio-only.conf URL
+```
+
+### Network-Specific Configuration
+
+Example configurations for different network conditions:
+
+**High-speed connection** (`~/.config/yt-dlp/high-speed.conf`):
+
+```conf
+# High quality preferences
+-f "bestvideo[height<=2160]+bestaudio/best"
+-S "res,fps,vcodec,acodec"
+--concurrent-fragments 8
+```
+
+**Limited bandwidth** (`~/.config/yt-dlp/low-bandwidth.conf`):
+
+```conf
+# Bandwidth-conscious settings
+-f "best[height<=720]"
+-S "+size,res:720"
+--limit-rate 500K
+--concurrent-fragments 2
+```
+
+### Site-Specific Configuration
+
+**YouTube optimized** (`~/.config/yt-dlp/youtube.conf`):
+
+```conf
+# YouTube-specific settings
+--extractor-args "youtube:player_client=tv,ios,web"
+--sub-langs "en,en-US,en-GB"
+--write-auto-subs
+-f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
+```
+
+## Configuration Hierarchy and Precedence
+
+### Loading Order
+
+1. **System configuration** (lowest priority)
+2. **User configuration**
+3. **Home configuration**
+4. **Portable configuration**
+5. **Main configuration** (highest priority)
+6. **Command-line arguments** (override all configuration files)
+
+### Configuration Inheritance
+
+- Later configurations override earlier ones
+- Command-line arguments always take precedence
+- Use `--ignore-config` to bypass all configuration files
+
+### Example Hierarchy
+
+If you have:
+
+- System config: `/etc/yt-dlp.conf` with `-f best`
+- User config: `~/.config/yt-dlp/config` with `-f "best[height<=1080]"`
+- Command line: `-f "bestvideo+bestaudio"`
+
+The final format selector will be `bestvideo+bestaudio` (command line wins).
+
+## Environment Variables
+
+Configuration also respects environment variables:
+
+### XDG Base Directory Specification
+
+- `${XDG_CONFIG_HOME}` - defaults to `~/.config`
+- `${XDG_CACHE_HOME}` - defaults to `~/.cache`
+
+### Platform-Specific Variables
+
+- **Windows**: `${APPDATA}` - typically `C:\Users\<user>\AppData\Roaming`
+- **All platforms**: `${HOME}` or `${USERPROFILE}`
+
+### Setting Environment Variables
+
+**Linux/macOS**:
+
+```bash
+export XDG_CONFIG_HOME="$HOME/.config"
+yt-dlp URL  # Uses $XDG_CONFIG_HOME/yt-dlp/config
+```
+
+**Windows**:
+
+```cmd
+set APPDATA=C:\Users\MyUser\AppData\Roaming
+yt-dlp URL
+```
+
+## Configuration Examples
+
+### Complete Configuration Examples
+
+**Comprehensive configuration** (`~/.config/yt-dlp/config`):
+
+```conf
+# yt-dlp comprehensive configuration
+
+# Output and organization
+-o "%(uploader)s/%(upload_date>%Y)s/%(title)s [%(id)s].%(ext)s"
+--restrict-filenames
+--trim-filenames 100
+
+# Format selection
+-f "bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"
+-S "res:1080,fps:60,vcodec:h264,acodec:aac"
+
+# Subtitles
+--write-subs
+--write-auto-subs
+--sub-langs "en.*,ja,ko"
+--convert-subs srt
+
+# Metadata and thumbnails
+--write-info-json
+--write-description
+--write-thumbnail
+--embed-metadata
+--embed-subs
+--embed-thumbnail
+
+# Network and performance
+--concurrent-fragments 4
+--retries 10
+--fragment-retries 10
+
+# Archive and resume
+--download-archive downloaded.txt
+--continue
+
+# Ignore errors and continue
+--ignore-errors
+--no-abort-on-error
+```
+
+**Audio-only configuration** (`~/.config/yt-dlp/audio.conf`):
+
+```conf
+# Audio extraction configuration
+
 # Extract audio
 -x
-# Convert to mp3
 --audio-format mp3
-# Set audio quality
 --audio-quality 0
-# Add metadata
+
+# Organization
+-o "%(artist,uploader)s/%(album,playlist)s/%(track_number)02d - %(title)s.%(ext)s"
+
+# Metadata
+--embed-metadata
+--write-info-json
 --add-metadata
+
+# Thumbnail as cover art
+--write-thumbnail
+--embed-thumbnail
 ```
 
-### Video Download Setup
+**Archive configuration** (`~/.config/yt-dlp/archive.conf`):
 
-```plaintext
-# Prefer 1080p mp4
--f 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'
-# Include subtitles
---write-sub
---sub-lang en
-# Use a specific output template
--o '%(uploader)s/%(title)s-%(id)s.%(ext)s'
+```conf
+# Archive/backup configuration
+
+# Best available quality
+-f "best"
+
+# Complete metadata preservation
+--write-info-json
+--write-description
+--write-thumbnail
+--write-annotations
+--write-all-thumbnails
+--clean-info-json
+
+# Subtitles in all available languages
+--write-subs
+--write-auto-subs
+--sub-langs all
+
+# Organization by platform and uploader
+-o "%(extractor)s/%(uploader)s/%(upload_date)s - %(title)s [%(id)s].%(ext)s"
+
+# Error handling for batch processing
+--ignore-errors
+--continue
+--download-archive archive.txt
 ```
 
-### Playlist Download Setup
+## Troubleshooting Configuration
 
-```plaintext
-# Download full playlists
---yes-playlist
-# Number the videos
--o '%(playlist)s/%(playlist_index)s-%(title)s.%(ext)s'
-# Use an archive file
---download-archive playlist-archive.txt
+### Testing Configuration
+
+```bash
+# Test configuration without downloading
+yt-dlp --simulate --print filename URL
+
+# Show effective configuration
+yt-dlp --verbose --print config URL
+
+# Test specific configuration file
+yt-dlp --config-locations test-config.conf --simulate URL
 ```
 
-Configuration files in yt-dlp provide a powerful way to customize your default settings, making it easier and faster to use the tool for your specific needs. By understanding how to create and use these files effectively, you can streamline your workflow and ensure consistent behavior across different downloads.
+### Common Configuration Issues
+
+1. **Invalid syntax**: Check for extra spaces after `--`
+2. **Encoding problems**: Add `# coding: utf-8` at the top
+3. **Path issues**: Use absolute paths or proper escaping
+4. **Option conflicts**: Later options override earlier ones
+
+### Debug Configuration Loading
+
+```bash
+# Show which configuration files are loaded
+yt-dlp --verbose URL 2>&1 | grep -i config
+
+# Ignore all configs to test command-line only
+yt-dlp --ignore-config --simulate URL
+```
+
+## Configuration Best Practices
+
+### Organization Tips
+
+1. **Use separate configs** for different use cases
+2. **Comment your configuration** extensively
+3. **Test configurations** with `--simulate` first
+4. **Use portable paths** when possible
+5. **Version control** your configuration files
+
+### Security Considerations
+
+1. **Protect sensitive configs** with appropriate file permissions
+2. **Don't store passwords** in configuration files
+3. **Use environment variables** for sensitive data
+4. **Be careful with proxy settings** in shared environments
+
+### Maintenance
+
+1. **Regular updates**: Review configuration when updating yt-dlp
+2. **Option validation**: Check for deprecated options
+3. **Performance tuning**: Adjust based on your network and hardware
+4. **Backup configurations**: Keep copies of working configurations
+
+Configuration files are a powerful way to customize yt-dlp's behavior. Start with a simple configuration and gradually add options as you discover what works best for your use cases.

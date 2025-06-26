@@ -1,0 +1,10 @@
+{
+  "label": "Live Streams",
+  "position": 15,
+  "collapsed": false,
+  "className": "cyan",
+  "description": "Complete guide to handling live streams and real-time content",
+  "customProps": {
+    "description": "Learn how to download live streams, handle real-time content, and manage ongoing broadcasts"
+  }
+}

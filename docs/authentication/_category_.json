@@ -1,0 +1,10 @@
+{
+  "label": "Authentication",
+  "position": 14,
+  "collapsed": false,
+  "className": "orange",
+  "description": "Complete guide to authentication and access management",
+  "customProps": {
+    "description": "Learn how to handle login, cookies, and private content access"
+  }
+}

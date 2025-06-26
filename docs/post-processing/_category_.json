@@ -1,0 +1,10 @@
+{
+  "label": "Post-Processing",
+  "position": 16,
+  "collapsed": false,
+  "className": "indigo",
+  "description": "Complete guide to post-processing and file manipulation",
+  "customProps": {
+    "description": "Learn how to process downloaded files, convert formats, and apply transformations"
+  }
+}
