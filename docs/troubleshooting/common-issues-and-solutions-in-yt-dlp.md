@@ -4,304 +4,634 @@ sidebar_position: 1
 
 # Common Issues and Solutions in yt-dlp
 
-This guide covers frequently encountered problems when using yt-dlp and provides solutions to resolve them.
+This comprehensive troubleshooting guide covers the most frequently encountered problems when using yt-dlp, along with detailed solutions, prevention strategies, and advanced debugging techniques. Use this guide to quickly resolve issues and optimize your yt-dlp experience.
 
-## 1. Video Unavailable
+## Quick Diagnostic Commands
 
-**Issue:** yt-dlp reports that the video is unavailable.
+Before diving into specific issues, these commands help diagnose problems:
 
-**Solutions:**
+```bash
+# Check yt-dlp version and update
+yt-dlp --version
+yt-dlp -U
 
-- Check if the video is available in your region or if it requires authentication.
-- Try using a VPN or proxy:
+# Test with verbose output
+yt-dlp -v "URL"
 
-  ```sh
-  yt-dlp --proxy socks5://127.0.0.1:9150 URL
-  ```
+# Check available formats
+yt-dlp -F "URL"
 
-- Use `--cookies-from-browser BROWSER` to pass authentication cookies.
+# Test network connectivity
+yt-dlp --list-extractors | grep -i "site_name"
+```
 
-## 2. Format Selection Errors
+## 1. Video Unavailable Errors
 
-**Issue:** Unable to download the desired format or quality.
+### **Common Scenarios**
 
-**Solutions:**
+- **"Video unavailable"**: Video removed, private, or region-locked
+- **"This video is not available"**: Geographic restrictions or platform issues
+- **"Sign in to confirm your age"**: Age-restricted content
+- **"Private video"**: Access restrictions
 
-- List available formats:
+### **Diagnostic Steps**
 
-  ```sh
-  yt-dlp -F URL
-  ```
+```bash
+# Check if video exists with verbose output
+yt-dlp -v "URL"
 
-- Specify format explicitly:
+# Test different user agents
+yt-dlp --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "URL"
 
-  ```sh
-  yt-dlp -f FORMAT_CODE URL
-  ```
+# Check geo-bypass options
+yt-dlp --geo-bypass --geo-bypass-country US "URL"
+```
 
-- Use format selectors:
+### **Solutions**
 
-  ```sh
-  yt-dlp -f 'bestvideo[height<=1080]+bestaudio/best' URL
-  ```
+#### **Authentication Issues**
 
-## 3. Slow Download Speeds
+```bash
+# Use browser cookies (recommended)
+yt-dlp --cookies-from-browser firefox "URL"
+yt-dlp --cookies-from-browser chrome "URL"
 
-**Issue:** Downloads are slower than expected.
+# Manual login (less secure)
+yt-dlp --username YOUR_USERNAME --password YOUR_PASSWORD "URL"
 
-**Solutions:**
+# Use cookies file
+yt-dlp --cookies cookies.txt "URL"
+```
 
-- Use `aria2` as the external downloader:
+#### **Geo-Restrictions**
 
-  ```sh
-  yt-dlp --external-downloader aria2c URL
-  ```
+```bash
+# Enable geo-bypass
+yt-dlp --geo-bypass "URL"
 
-- Adjust the number of retries:
+# Specify country
+yt-dlp --geo-bypass-country US "URL"
 
-  ```sh
-  yt-dlp -R 10 URL
-  ```
+# Use proxy/VPN
+yt-dlp --proxy socks5://127.0.0.1:9150 "URL"
+yt-dlp --proxy http://proxy.example.com:8080 "URL"
+```
 
-- Limit the download rate to avoid throttling:
+#### **Age-Restricted Content**
 
-  ```sh
-  yt-dlp --limit-rate 1M URL
-  ```
+```bash
+# Use cookies from logged-in browser
+yt-dlp --cookies-from-browser chrome "URL"
 
-## 4. Geo-Restriction Bypass Failing
+# Bypass age verification (YouTube)
+yt-dlp --age-limit 18 "URL"
+```
 
-**Issue:** Unable to bypass geo-restrictions.
+### **Prevention**
 
-**Solutions:**
+- Keep yt-dlp updated: `yt-dlp -U`
+- Use authenticated browser sessions
+- Test URLs before batch downloads
 
-- Use `--geo-bypass` option:
+## 2. Format Selection and Quality Issues
 
-  ```sh
-  yt-dlp --geo-bypass URL
-  ```
+### **Common Problems**
 
-- Specify a different country:
+- **"Requested format not available"**: Format doesn't exist
+- **"No video formats found"**: Extractor issues
+- **"Format not supported"**: Codec/container issues
+- **Poor quality selection**: Wrong format priorities
 
-  ```sh
-  yt-dlp --geo-bypass-country US URL
-  ```
+### **Diagnostic Commands**
 
-- Use a VPN or proxy from an allowed country.
+```bash
+# List all available formats
+yt-dlp -F "URL"
 
-## 5. Subtitle Download Issues
+# Show format selection process
+yt-dlp -v -f "bestvideo+bestaudio" "URL"
 
-**Issue:** Subtitles are not downloading or are in the wrong format.
+# Test specific format
+yt-dlp -f 137 "URL"
+```
 
-**Solutions:**
+### **Solutions**
 
-- List available subtitles:
+#### **Basic Format Selection**
 
-  ```sh
-  yt-dlp --list-subs URL
-  ```
+```bash
+# Best quality (default)
+yt-dlp "URL"
 
-- Specify language:
+# Specific quality
+yt-dlp -f "best[height<=1080]" "URL"
+yt-dlp -f "worst[height>=720]" "URL"
 
-  ```sh
-  yt-dlp --sub-lang en --write-sub URL
-  ```
+# Audio only
+yt-dlp -f "bestaudio" -x "URL"
 
-- Convert subtitles:
+# Video only
+yt-dlp -f "bestvideo" "URL"
+```
 
-  ```sh
-  yt-dlp --convert-subs srt URL
-  ```
+#### **Advanced Format Selection**
 
-## 6. Playlist Download Problems
+```bash
+# Best video + audio combination
+yt-dlp -f "bestvideo+bestaudio/best" "URL"
 
-**Issue:** Issues with downloading entire playlists.
+# Prefer MP4 format
+yt-dlp -f "best[ext=mp4]/best" "URL"
 
-**Solutions:**
+# Avoid certain formats
+yt-dlp -f "best[ext!=flv]" "URL"
 
-- Use playlist-specific options:
+# Codec preferences
+yt-dlp -f "best[vcodec^=avc1]" "URL"
+```
 
-  ```sh
-  yt-dlp --yes-playlist URL
-  ```
+#### **Fallback Strategies**
 
-- Download specific items:
+```bash
+# Multiple format fallbacks
+yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best" "URL"
 
-  ```sh
-  yt-dlp --playlist-items 1,3,5-7 URL
-  ```
+# Force format merging
+yt-dlp -f "bestvideo+bestaudio" --merge-output-format mp4 "URL"
+```
 
-- Reverse order:
+## 3. Download Speed and Performance Issues
 
-  ```sh
-  yt-dlp --playlist-reverse URL
-  ```
+### **Common Causes**
 
-## 7. Network Errors
+- **Network throttling**: ISP or server limitations
+- **Server congestion**: High traffic periods
+- **Inefficient downloaders**: Single-threaded downloads
+- **Geographic distance**: Far from content servers
 
-**Issue:** Frequent network errors or timeouts.
+### **Speed Optimization**
 
-**Solutions:**
+#### **External Downloaders**
 
-- Increase retries:
+```bash
+# Use aria2c (fastest, multi-connection)
+yt-dlp --external-downloader aria2c --external-downloader-args "-x 16 -s 16" "URL"
 
-  ```sh
-  yt-dlp -R 10 URL
-  ```
+# Use wget
+yt-dlp --external-downloader wget "URL"
 
-- Add sleep interval:
+# Use curl
+yt-dlp --external-downloader curl "URL"
+```
 
-  ```sh
-  yt-dlp --sleep-interval 5 URL
-  ```
+#### **Connection Management**
 
-- Use a different IP address:
+```bash
+# Limit download rate (prevent throttling)
+yt-dlp --limit-rate 2M "URL"
 
-  ```sh
-  yt-dlp --source-address IP_ADDRESS URL
-  ```
+# Multiple retries
+yt-dlp -R 10 "URL"
 
-## 8. Filename Conflicts
+# Fragment concurrent downloads
+yt-dlp --concurrent-fragments 4 "URL"
 
-**Issue:** Duplicate filenames or invalid characters in filenames.
+# Sleep between downloads
+yt-dlp --sleep-interval 5 "URL"
+```
 
-**Solutions:**
+#### **Network Optimization**
 
-- Use output template:
+```bash
+# Use different source address
+yt-dlp --source-address 192.168.1.100 "URL"
 
-  ```sh
-  yt-dlp -o '%(title)s-%(id)s.%(ext)s' URL
-  ```
+# Custom user agent
+yt-dlp --user-agent "Mozilla/5.0..." "URL"
 
-- Restrict filenames:
+# IPv4 only (faster DNS)
+yt-dlp --force-ipv4 "URL"
+```
 
-  ```sh
-  yt-dlp --restrict-filenames URL
-  ```
+## 4. Network and Connection Errors
 
-- Auto-number:
+### **Common Error Messages**
 
-  ```sh
-  yt-dlp -o '%(autonumber)s-%(title)s.%(ext)s' URL
-  ```
+- **"HTTP Error 403: Forbidden"**: Access denied
+- **"Connection refused"**: Server unavailable
+- **"Timeout"**: Network connectivity issues
+- **"SSL Certificate verification failed"**: HTTPS issues
 
-## 9. FFmpeg Related Issues
+### **Network Troubleshooting**
 
-**Issue:** Problems related to FFmpeg, often for post-processing.
+#### **Basic Network Issues**
 
-**Solutions:**
+```bash
+# Increase timeout
+yt-dlp --socket-timeout 30 "URL"
 
-- Ensure FFmpeg is installed and in PATH.
-- Specify FFmpeg location:
+# Ignore SSL errors (use cautiously)
+yt-dlp --no-check-certificate "URL"
 
-  ```sh
-  yt-dlp --ffmpeg-location /path/to/ffmpeg URL
-  ```
+# Force IPv4
+yt-dlp --force-ipv4 "URL"
 
-- Update FFmpeg to the latest version.
+# Use different DNS
+yt-dlp --source-address 8.8.8.8 "URL"
+```
 
-## 10. Age-Restricted Content
+#### **Proxy and VPN Configuration**
 
-**Issue:** Unable to download age-restricted videos.
+```bash
+# HTTP proxy
+yt-dlp --proxy http://proxy:8080 "URL"
 
-**Solutions:**
+# SOCKS proxy
+yt-dlp --proxy socks5://127.0.0.1:1080 "URL"
 
-- Use cookies:
+# Proxy with authentication
+yt-dlp --proxy http://user:pass@proxy:8080 "URL"
 
-  ```sh
-  yt-dlp --cookies cookies.txt URL
-  ```
+# No proxy for specific domains
+yt-dlp --proxy "http://proxy:8080" --no-proxy "example.com" "URL"
+```
 
-- Pass login info:
+#### **Advanced Network Options**
 
-  ```sh
-  yt-dlp -u USERNAME -p PASSWORD URL
-  ```
+```bash
+# Custom headers
+yt-dlp --add-header "Referer:https://example.com" "URL"
 
-- Use `--age-limit` option:
+# Client certificate
+yt-dlp --client-certificate cert.pem --client-certificate-key key.pem "URL"
 
-  ```sh
-  yt-dlp --age-limit 21 URL
-  ```
+# Interface binding
+yt-dlp --source-address 192.168.1.100 "URL"
+```
 
-## 11. YouTube Throttling
+## 5. Subtitle and Caption Issues
 
-**Issue:** YouTube throttling download speed.
+### **Common Problems**
 
-**Solutions:**
+- **No subtitles available**: Content lacks captions
+- **Wrong language**: Incorrect subtitle selection
+- **Format issues**: Incompatible subtitle formats
+- **Embedding failures**: Post-processing problems
 
-- Use `--throttled-rate` option:
+### **Subtitle Solutions**
 
-  ```sh
-  yt-dlp --throttled-rate 100K URL
-  ```
+#### **Basic Subtitle Operations**
 
-- Try different format selection:
+```bash
+# List available subtitles
+yt-dlp --list-subs "URL"
 
-  ```sh
-  yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best' URL
-  ```
+# Download specific language
+yt-dlp --sub-langs en --write-subs "URL"
 
-## 12. Outdated yt-dlp Version
+# Download all subtitles
+yt-dlp --sub-langs all --write-subs "URL"
 
-**Issue:** Features not working or unexpected errors.
+# Auto-generated subtitles
+yt-dlp --write-auto-subs --sub-langs en "URL"
+```
 
-**Solution:**
+#### **Subtitle Processing**
 
-- Update yt-dlp:
+```bash
+# Convert subtitle format
+yt-dlp --convert-subs srt --write-subs "URL"
 
-  ```sh
-  yt-dlp -U
-  ```
+# Embed subtitles in video
+yt-dlp --embed-subs --sub-langs en "URL"
 
-  or
+# Both write and embed
+yt-dlp --write-subs --embed-subs --sub-langs en "URL"
+```
 
-  ```sh
-  pip install -U yt-dlp
-  ```
+## 6. Playlist and Batch Download Issues
 
-## 13. SSL Certificate Errors
+### **Common Problems**
 
-**Issue:** SSL certificate verification fails.
+- **Partial playlist downloads**: Some videos fail
+- **Wrong playlist order**: Unexpected download sequence
+- **Memory issues**: Large playlists overwhelming system
+- **Rate limiting**: Too many requests
 
-**Solutions:**
+### **Playlist Solutions**
 
-- Update your SSL certificates.
-- (Not recommended for security reasons) Disable SSL verification:
+#### **Playlist Control**
 
-  ```sh
-  yt-dlp --no-check-certificate URL
-  ```
+```bash
+# Download entire playlist
+yt-dlp --yes-playlist "PLAYLIST_URL"
 
-## 14. Region-Locked Content
+# Specific items
+yt-dlp --playlist-items 1,3,5-10 "PLAYLIST_URL"
 
-**Issue:** Content is not available in your region.
+# Reverse order
+yt-dlp --playlist-reverse "PLAYLIST_URL"
 
-**Solutions:**
+# Start from specific item
+yt-dlp --playlist-start 5 "PLAYLIST_URL"
+```
 
-- Use a VPN or proxy from an allowed region.
-- Try `--geo-bypass` option:
+#### **Error Handling**
 
-  ```sh
-  yt-dlp --geo-bypass URL
-  ```
+```bash
+# Continue on errors
+yt-dlp --ignore-errors "PLAYLIST_URL"
 
-## 15. Verbose Output for Debugging
+# Abort on first error
+yt-dlp --abort-on-error "PLAYLIST_URL"
 
-**Issue:** Need more information to diagnose a problem.
+# Skip unavailable videos
+yt-dlp --ignore-no-formats-error "PLAYLIST_URL"
+```
 
-**Solution:**
+#### **Rate Limiting for Playlists**
 
-- Use verbose output:
+```bash
+# Sleep between downloads
+yt-dlp --sleep-interval 5 --max-sleep-interval 15 "PLAYLIST_URL"
 
-  ```sh
-  yt-dlp -v URL
-  ```
+# Limit concurrent downloads
+yt-dlp --max-downloads 50 "PLAYLIST_URL"
+```
 
-- For even more detail:
+## 7. File System and Output Issues
 
-  ```sh
-  yt-dlp --verbose --dump-pages URL
-  ```
+### **Common Problems**
 
-Remember, always ensure you're using the latest version of yt-dlp, as many issues are resolved in newer releases. If you encounter persistent issues not covered here, consider checking the official yt-dlp issues page or seeking help in the community forums.
+- **Invalid filename characters**: OS restrictions
+- **Path too long**: File system limitations
+- **Permission denied**: Access rights issues
+- **Disk space**: Insufficient storage
+
+### **File System Solutions**
+
+#### **Filename Handling**
+
+```bash
+# Restrict filenames to ASCII
+yt-dlp --restrict-filenames "URL"
+
+# Custom output template
+yt-dlp -o "%(title).50s-%(id)s.%(ext)s" "URL"
+
+# Windows-safe filenames
+yt-dlp -o "%(title)s.%(ext)s" --windows-filenames "URL"
+
+# Avoid filename conflicts
+yt-dlp -o "%(autonumber)03d-%(title)s.%(ext)s" "URL"
+```
+
+#### **Path Management**
+
+```bash
+# Specify download directory
+yt-dlp -o "/path/to/downloads/%(title)s.%(ext)s" "URL"
+
+# Separate paths for different content
+yt-dlp -P "video:/videos" -P "audio:/music" "URL"
+
+# Temporary directory
+yt-dlp --paths temp:/tmp "URL"
+```
+
+## 8. FFmpeg and Post-Processing Issues
+
+### **Common Problems**
+
+- **FFmpeg not found**: Installation or PATH issues
+- **Conversion failures**: Codec or format problems
+- **Audio extraction errors**: Format compatibility
+- **Metadata embedding failures**: Container limitations
+
+### **FFmpeg Solutions**
+
+#### **Installation and Configuration**
+
+```bash
+# Check FFmpeg availability
+yt-dlp --check-formats "URL"
+
+# Specify FFmpeg location
+yt-dlp --ffmpeg-location /usr/local/bin/ffmpeg "URL"
+
+# Skip post-processing
+yt-dlp --no-post-overwrites "URL"
+```
+
+#### **Audio Processing**
+
+```bash
+# Extract audio with specific codec
+yt-dlp -x --audio-format mp3 --audio-quality 192K "URL"
+
+# Keep video after audio extraction
+yt-dlp -x --keep-video "URL"
+
+# Audio quality control
+yt-dlp -x --audio-quality best "URL"
+```
+
+#### **Video Processing**
+
+```bash
+# Remux to different container
+yt-dlp --remux-video mp4 "URL"
+
+# Re-encode video
+yt-dlp --recode-video mp4 "URL"
+
+# Embed metadata
+yt-dlp --embed-metadata --embed-thumbnail "URL"
+```
+
+## 9. Authentication and Cookie Issues
+
+### **Common Problems**
+
+- **Login required**: Private or premium content
+- **Cookie expiration**: Outdated authentication
+- **Two-factor authentication**: Additional security
+- **Browser compatibility**: Cookie extraction issues
+
+### **Authentication Solutions**
+
+#### **Browser Cookie Extraction**
+
+```bash
+# Extract from specific browser
+yt-dlp --cookies-from-browser firefox "URL"
+yt-dlp --cookies-from-browser chrome "URL"
+yt-dlp --cookies-from-browser safari "URL"
+
+# Specify profile
+yt-dlp --cookies-from-browser "firefox:Profile Name" "URL"
+
+# Container support (Firefox)
+yt-dlp --cookies-from-browser "firefox:Profile:Container" "URL"
+```
+
+#### **Manual Authentication**
+
+```bash
+# Username/password login
+yt-dlp --username user --password pass "URL"
+
+# Two-factor authentication
+yt-dlp --username user --password pass --twofactor 123456 "URL"
+
+# Netrc file authentication
+yt-dlp --netrc "URL"
+```
+
+## 10. Platform-Specific Issues
+
+### **YouTube-Specific Problems**
+
+#### **Age Restrictions and Sign-in**
+
+```bash
+# Bypass age verification
+yt-dlp --cookies-from-browser chrome "URL"
+
+# YouTube Premium content
+yt-dlp --cookies-from-browser firefox "URL"
+```
+
+#### **Throttling and Rate Limits**
+
+```bash
+# Slower downloads to avoid throttling
+yt-dlp --limit-rate 1M --sleep-interval 5 "URL"
+
+# Use different extraction method
+yt-dlp --extractor-args "youtube:player_client=web" "URL"
+```
+
+### **Social Media Platforms**
+
+#### **Instagram**
+
+```bash
+# Stories and highlights
+yt-dlp --cookies-from-browser chrome "INSTAGRAM_URL"
+```
+
+#### **TikTok**
+
+```bash
+# Avoid watermarks
+yt-dlp --extractor-args "tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com" "URL"
+```
+
+## 11. Performance and Resource Issues
+
+### **Memory Management**
+
+```bash
+# Limit concurrent fragments
+yt-dlp --concurrent-fragments 2 "URL"
+
+# Buffer size control
+yt-dlp --buffer-size 16K "URL"
+
+# HTTP chunk size
+yt-dlp --http-chunk-size 1M "URL"
+```
+
+### **CPU Optimization**
+
+```bash
+# Disable post-processing
+yt-dlp --no-post-overwrites "URL"
+
+# Limit extraction info
+yt-dlp --no-write-info-json --no-write-description "URL"
+```
+
+## 12. Advanced Debugging
+
+### **Verbose Logging**
+
+```bash
+# Full verbose output
+yt-dlp -vvv "URL"
+
+# Debug network
+yt-dlp --debug --print-traffic "URL"
+
+# Dump pages
+yt-dlp --dump-pages --write-pages "URL"
+```
+
+### **Error Analysis**
+
+```bash
+# Simulate download (no actual download)
+yt-dlp -s "URL"
+
+# Check formats only
+yt-dlp -F "URL"
+
+# Test extraction
+yt-dlp --get-url "URL"
+```
+
+## Prevention and Best Practices
+
+### **Regular Maintenance**
+
+- Update yt-dlp regularly: `yt-dlp -U`
+- Update FFmpeg when needed
+- Clear browser cookies periodically
+- Monitor disk space for large downloads
+
+### **Optimal Configuration**
+
+- Use configuration files for consistent settings
+- Set up proper output templates
+- Configure external downloaders
+- Implement proper error handling in scripts
+
+### **Monitoring and Logging**
+
+```bash
+# Log all operations
+yt-dlp --verbose --output "%(title)s.%(ext)s" "URL" 2>&1 | tee download.log
+
+# Archive successful downloads
+yt-dlp --download-archive archive.txt "URL"
+```
+
+## Getting Additional Help
+
+### **Community Resources**
+
+- **GitHub Issues**: [yt-dlp/yt-dlp/issues](https://github.com/yt-dlp/yt-dlp/issues)
+- **Reddit**: r/youtubedl community
+- **Discord**: yt-dlp community server
+
+### **Reporting Bugs**
+
+When reporting issues, include:
+
+- yt-dlp version: `yt-dlp --version`
+- Full command used
+- Complete error message
+- Operating system and Python version
+- URL (if not private/sensitive)
+
+### **Professional Support**
+
+For enterprise or commercial use, consider:
+
+- Professional consultation services
+- Custom extractor development
+- Integration support
+- Compliance and legal guidance
+
+This troubleshooting guide covers the most common issues encountered with yt-dlp. For specific platform issues or advanced use cases, refer to the dedicated sections in this documentation or seek community support through the official channels.
