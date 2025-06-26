@@ -4,146 +4,303 @@ sidebar_position: 1
 
 # How to Report Bugs in yt-dlp
 
-Effective bug reporting is crucial for the continuous improvement of yt-dlp. This guide will help you report bugs in a way that allows developers to understand, reproduce, and fix the issue efficiently.
+Effective bug reporting is essential for maintaining and improving yt-dlp. This comprehensive guide will help you report bugs in a way that enables developers to quickly understand, reproduce, and resolve issues.
 
 ## Before Reporting a Bug
 
-1. **Update yt-dlp**: Ensure you're using the latest version of yt-dlp:
+### **1. Update to Latest Version**
 
-   ```sh
-   yt-dlp -U
-   ```
+Always ensure you're using the latest version of yt-dlp before reporting a bug:
 
-2. **Check existing issues**: Search the yt-dlp issues page to see if your bug has already been reported.
+```bash
+# Update yt-dlp
+yt-dlp -U
 
-3. **Verify it's a bug**: Make sure the behavior you're experiencing is indeed a bug and not an intended feature or limitation.
-
-## Steps to Report a Bug
-
-### 1. Gather Information
-
-Collect the following details:
-
-- yt-dlp version (`yt-dlp --version`)
-- Full command you're running
-- Complete output of the command with `--verbose` flag
-- URL of the video/playlist (if applicable)
-- Your operating system and version
-
-### 2. Create a Minimal Reproducible Example
-
-Try to create the simplest possible command that reproduces the bug.
-
-### 3. Open a New Issue
-
-Go to the [yt-dlp issues page](https://github.com/yt-dlp/yt-dlp/issues) and click "New Issue".
-
-### 4. Fill Out the Bug Report Template
-
-yt-dlp provides a bug report template. Fill it out completely, including:
-
-- A clear, concise description of the bug
-- Steps to reproduce the behavior
-- Expected behavior
-- Actual behavior
-- Additional context (screenshots, error messages, etc.)
-
-### 5. Include the Verbose Log
-
-Always include the complete verbose output:
-
-```sh
-yt-dlp --verbose URL 2>&1 | paste
+# Verify version
+yt-dlp --version
 ```
 
-Replace `URL` with the actual URL you're trying to download.
+### **2. Search Existing Issues**
 
-### 6. Format Your Report
+Before creating a new issue:
 
-Use markdown to format your report for readability:
+1. Visit the [yt-dlp issues page](https://github.com/yt-dlp/yt-dlp/issues)
+2. Search for keywords related to your issue
+3. Check both open and closed issues
+4. Look for similar problems or duplicate reports
 
-- Use code blocks for command-line inputs and outputs
-- Use headings and lists to organize information
+### **3. Verify It's Actually a Bug**
 
-### 7. Be Responsive
+Confirm that the behavior is indeed a bug by:
 
-After submitting, be prepared to respond to questions or requests for additional information from the developers.
+- Reading the documentation to understand expected behavior
+- Testing with minimal, standard options
+- Checking if it's a known limitation or intended behavior
+- Testing with different URLs or content types
 
-## Best Practices for Bug Reporting
+### **4. Gather Diagnostic Information**
 
-- **One bug per report**: If you encounter multiple issues, create separate reports for each.
-- **Be specific**: Provide exact steps to reproduce the bug.
-- **Avoid speculation**: Stick to describing what actually happened, not what you think might be causing it.
-- **Include relevant details**: If the bug involves a specific video or website, include the URL.
-- **Respect privacy**: Don't share personal information or passwords in your report.
-- **Be patient**: Developers are often volunteers and may not respond immediately.
-- **Use English**: The primary language for yt-dlp development is English.
+Collect the following information before reporting:
 
-## Example of a Good Bug Report
+- **yt-dlp version**: `yt-dlp --version`
+- **Python version**: `python --version`
+- **Operating system**: Include version and architecture
+- **FFmpeg version**: `ffmpeg -version` (if relevant)
+- **Complete command**: The exact command that triggers the bug
+- **Verbose output**: Full output with `--verbose` flag
 
-### Bug Description
+## How to Report a Bug
 
-yt-dlp fails to download videos from example.com with an "HTTP Error 403: Forbidden" message.
+### **Step 1: Create a Minimal Reproducible Example**
 
-### Steps to Reproduce
+Reduce your command to the simplest form that still reproduces the bug:
 
-1. Run the following command:
+```bash
+# Instead of this complex command:
+yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail --add-metadata --output "%(title)s.%(ext)s" URL
 
-   ```sh
-   yt-dlp --verbose https://www.example.com/watch?v=123456
-   ```
-
-2. Observe the error message in the output.
-
-### Expected Behavior
-
-The video should download successfully.
-
-### Actual Behavior
-
-The download fails with an HTTP 403 error.
-
-### System Information
-
-- yt-dlp version: 2023.03.04
-- Operating System: Ubuntu 22.04
-- Python version: 3.10.6
-
-### Verbose Log
-
-```plaintext
-[debug] Command-line config: ['--verbose', 'https://www.example.com/watch?v=123456']
-[debug] Encodings: locale UTF-8, fs utf-8, out utf-8, pref UTF-8
-[debug] yt-dlp version 2023.03.04 [9d339c4] (win32_exe)
-[debug] Python 3.10.6 (CPython 64bit) - Windows-10-10.0.19045-SP0
-[debug] Checking exe version: ffmpeg -bsfs
-[debug] Checking exe version: ffprobe -bsfs
-[debug] exe versions: ffmpeg N-106550-g072101bd52-20220410 (fdk,setts), ffprobe N-106624-g391ce570c8-20220415, phantomjs 2.1.1
-[debug] Optional libraries: Cryptodome-3.15.0, brotli-1.0.9, certifi-2022.12.7, mutagen-1.46.0, sqlite3-2.6.0, websockets-10.4
-[debug] Proxy map: {}
-[debug] [generic] Extracting URL: https://www.example.com/watch?v=123456
-[generic] 123456: Requesting header
-
-WARNING: Unable to download webpage: HTTP Error 403: Forbidden (caused by <HTTPError 403: 'Forbidden'>); please report this issue on https://github.com/yt-dlp/yt-dlp/issues?q= , filling out the "Broken site" issue template. Confirm you are on the latest version using yt-dlp -U
-
-[generic] 123456: Downloading webpage
-
-ERROR: Unable to download webpage: HTTP Error 403: Forbidden (caused by <HTTPError 403: 'Forbidden'>)
-
-Traceback (most recent call last):
-File "yt_dlp\extractor\generic.py", line 2823, in \_real_extract
-File "yt_dlp\YoutubeDL.py", line 3380, in urlopen
-File "urllib\request.py", line 216, in urlopen
-File "urllib\request.py", line 525, in open
-File "urllib\request.py", line 544, in http_response
-File "urllib\request.py", line 469, in error
-File "urllib\request.py", line 403, in \_call_chain
-File "urllib\request.py", line 552, in http_error_default
-urllib.error.HTTPError: HTTP Error 403: Forbidden
+# Try this minimal version:
+yt-dlp --extract-audio URL
 ```
 
-### Additional Notes
+### **Step 2: Generate Verbose Output**
 
-This issue started occurring after the latest update. It affects all videos on example.com.
+Always include verbose output with your bug report:
 
-By following these guidelines, you'll help the yt-dlp developers quickly understand and address the issues you're experiencing, contributing to the improvement of the tool for everyone.
+```bash
+# Generate verbose output
+yt-dlp --verbose URL 2>&1
+
+# For very long output, use a pastebin service
+yt-dlp --verbose URL 2>&1 | curl -F 'f:1=<-' ix.io
+```
+
+### **Step 3: Open a New Issue**
+
+1. Go to [yt-dlp issues](https://github.com/yt-dlp/yt-dlp/issues)
+2. Click **"New Issue"**
+3. Select **"Bug Report"** template
+4. Fill out all required sections
+
+### **Step 4: Complete the Bug Report Template**
+
+#### **Bug Description**
+
+Provide a clear, concise description of the bug:
+
+```
+yt-dlp fails to download videos from example.com with HTTP 403 error
+```
+
+#### **Reproduction Steps**
+
+List exact steps to reproduce the issue:
+
+```
+1. Run: yt-dlp --verbose https://example.com/video/123
+2. Observe the HTTP 403 error in output
+3. Error occurs consistently across different videos
+```
+
+#### **Expected vs Actual Behavior**
+
+- **Expected**: Video downloads successfully
+- **Actual**: Download fails with HTTP 403 Forbidden error
+
+#### **System Information**
+
+```
+- yt-dlp version: 2024.03.10
+- Python version: 3.11.2
+- Operating System: Ubuntu 22.04.3 LTS (x86_64)
+- FFmpeg version: 4.4.2-0ubuntu0.22.04.1
+```
+
+#### **Verbose Output**
+
+Include the complete verbose output in a code block or pastebin link.
+
+## Bug Report Best Practices
+
+### **Essential Guidelines**
+
+1. **One Bug Per Report**: Create separate issues for different bugs
+2. **Use English**: All communication should be in English
+3. **Be Specific**: Provide exact commands, URLs, and error messages
+4. **Include Context**: Mention when the issue started occurring
+5. **Stay Factual**: Describe what happens, not what you think causes it
+6. **Protect Privacy**: Don't include personal information or credentials
+
+### **Formatting Your Report**
+
+Use proper markdown formatting:
+
+```markdown
+## Bug Description
+
+Clear description here
+
+## Steps to Reproduce
+
+1. First step
+2. Second step
+3. Third step
+
+## System Information
+
+- yt-dlp version: X.X.X
+- OS: Operating System
+
+## Verbose Output
+```
+
+verbose output here
+
+```
+
+```
+
+### **Common Mistakes to Avoid**
+
+❌ **Don't Do This**:
+
+- Report multiple unrelated bugs in one issue
+- Use vague descriptions like "doesn't work"
+- Omit the verbose output
+- Include personal information in logs
+- Assume the cause without evidence
+
+✅ **Do This Instead**:
+
+- Create focused, single-issue reports
+- Provide specific, detailed descriptions
+- Always include verbose output
+- Redact sensitive information
+- Stick to observable facts
+
+## Types of Bugs to Report
+
+### **Extraction Failures**
+
+- Videos that fail to download
+- Incorrect metadata extraction
+- Format detection issues
+- Site-specific problems
+
+### **Post-Processing Errors**
+
+- FFmpeg conversion failures
+- Audio extraction problems
+- Thumbnail embedding issues
+- Metadata writing errors
+
+### **Network Issues**
+
+- Connection timeouts
+- Proxy-related problems
+- Rate limiting issues
+- SSL/TLS errors
+
+### **Platform-Specific Bugs**
+
+- Windows-specific issues
+- macOS-specific problems
+- Linux distribution issues
+- Mobile platform problems
+
+## After Submitting Your Report
+
+### **Be Responsive**
+
+- Monitor your issue for developer responses
+- Answer questions promptly and thoroughly
+- Provide additional information when requested
+- Test proposed fixes and report results
+
+### **Update Your Report**
+
+- Add new information as you discover it
+- Update if the issue changes or is resolved
+- Mention if the bug affects other URLs or scenarios
+
+### **Follow Up Appropriately**
+
+- Don't bump issues without new information
+- Be patient - developers are often volunteers
+- Respect the time and effort of maintainers
+- Thank contributors for their help
+
+## Example of an Excellent Bug Report
+
+```markdown
+## Bug Description
+
+yt-dlp fails to extract audio from Vimeo videos with "Unable to download JSON metadata" error
+
+## Steps to Reproduce
+
+1. Run: `yt-dlp --extract-audio --audio-format mp3 https://vimeo.com/123456789`
+2. Observe the JSON metadata error
+3. Error occurs with all tested Vimeo URLs
+
+## Expected Behavior
+
+Audio should be extracted and converted to MP3 format
+
+## Actual Behavior
+
+Download fails with error: "Unable to download JSON metadata: HTTP Error 403: Forbidden"
+
+## System Information
+
+- yt-dlp version: 2024.03.10 [1234567] (pip)
+- Python version: 3.11.2 (CPython 64bit)
+- Operating System: Windows 11 Pro (22H2)
+- FFmpeg version: 6.0-full_build-www.gyan.dev
+
+## Additional Context
+
+- Issue started occurring after March 5, 2024
+- Affects all Vimeo URLs tested (5+ different videos)
+- Regular video download (without audio extraction) works fine
+- Issue does not occur with YouTube URLs
+
+## Verbose Output
+
+[Verbose output would be included here or linked to pastebin]
+```
+
+## Getting Help
+
+If you need assistance with bug reporting:
+
+1. **Read the Documentation**: Check the [official documentation](https://github.com/yt-dlp/yt-dlp#readme)
+2. **Search Existing Issues**: Look for similar problems and solutions
+3. **Ask in Discussions**: Use GitHub Discussions for questions
+4. **Community Forums**: Check Reddit r/youtubedl or similar communities
+
+## Recognition and Contribution
+
+Good bug reports are valuable contributions to the project:
+
+- They help improve yt-dlp for everyone
+- Well-written reports are often resolved faster
+- Contributors may be recognized in release notes
+- Quality reports help maintain project health
+
+Remember: A well-written bug report is the first step toward getting your issue resolved. Taking time to provide complete, accurate information helps developers fix problems quickly and efficiently.
+
+## Quick Reference Checklist
+
+Before submitting your bug report, verify:
+
+- [ ] Using latest yt-dlp version
+- [ ] Searched existing issues
+- [ ] Created minimal reproducible example
+- [ ] Included complete system information
+- [ ] Provided verbose output
+- [ ] Used clear, descriptive title
+- [ ] Followed bug report template
+- [ ] Removed personal/sensitive information
+- [ ] Used proper markdown formatting
+- [ ] Focused on single issue only

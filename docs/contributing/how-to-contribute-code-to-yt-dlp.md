@@ -4,130 +4,451 @@ sidebar_position: 2
 
 # How to Contribute Code to yt-dlp
 
-Contributing code to yt-dlp is a great way to improve the project and add new features. This guide will walk you through the process of contributing code to yt-dlp.
+Contributing code to yt-dlp is an excellent way to improve the project, add new features, and give back to the community. This comprehensive guide covers everything you need to know about contributing code effectively.
 
-## Prerequisites
+## Prerequisites and Setup
 
-Before you start contributing, make sure you have:
+### **Development Environment Requirements**
 
-- A GitHub account
-- Git installed on your local machine
-- Python 3.8 or later installed
-- Basic knowledge of Python programming
-- Familiarity with git and GitHub workflows
+Before contributing, ensure you have:
 
-## Step-by-Step Guide to Contributing
+- **Python 3.8+**: Latest stable version recommended
+- **Git**: For version control and collaboration
+- **GitHub Account**: For forking and pull requests
+- **Code Editor**: VS Code, PyCharm, or your preferred editor
+- **FFmpeg**: For testing media processing features
 
-### 1. Fork the Repository
+### **Knowledge Requirements**
 
-1. Go to the [yt-dlp GitHub repository](https://github.com/yt-dlp/yt-dlp).
-2. Click the "Fork" button in the top-right corner.
-3. This creates a copy of the repository in your GitHub account.
+- **Python Programming**: Intermediate to advanced level
+- **Git Workflow**: Basic understanding of branching and merging
+- **Web Technologies**: HTML, HTTP, JSON for extractor development
+- **Regular Expressions**: For pattern matching and extraction
+- **Testing**: Unit testing and integration testing concepts
 
-### 2. Clone Your Fork
+## Getting Started
 
-Clone your forked repository to your local machine:
+### **1. Fork and Clone the Repository**
 
-```sh
+```bash
+# Fork the repository on GitHub first, then clone your fork
 git clone https://github.com/YOUR_USERNAME/yt-dlp.git
 cd yt-dlp
+
+# Add upstream remote for staying updated
+git remote add upstream https://github.com/yt-dlp/yt-dlp.git
 ```
 
-### 3. Set Up the Development Environment
+### **2. Set Up Development Environment**
 
-Create a virtual environment:
+```bash
+# Create and activate virtual environment
+python -m venv venv
 
-```sh
-python3 -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-```
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
 
-Install development dependencies:
-
-```sh
+# Install development dependencies
 pip install -r requirements.txt
+pip install -r devscripts/requirements.txt
+
+# Install in development mode
+pip install -e .
 ```
 
-### 4. Create a New Branch
+### **3. Verify Installation**
 
-Create a new branch for your feature or bugfix:
+```bash
+# Test basic functionality
+python -m yt_dlp --version
+python -m yt_dlp --help
 
-```sh
-git checkout -b your-feature-branch
+# Run basic tests
+python -m pytest test/test_download.py -v
 ```
 
-### 5. Make Your Changes
+## Development Workflow
 
-- Implement your feature or fix the bug.
-- Follow the yt-dlp coding conventions.
-- Add or update tests as necessary.
-- Update documentation if you're adding new features.
+### **1. Stay Updated with Upstream**
 
-### 6. Run Tests
+```bash
+# Fetch latest changes from upstream
+git fetch upstream
 
-Ensure all tests pass:
+# Update your main branch
+git checkout master
+git merge upstream/master
 
-```sh
-python3 -m pytest
+# Push updates to your fork
+git push origin master
 ```
 
-### 7. Commit Your Changes
+### **2. Create Feature Branch**
 
-Commit your changes with a clear and descriptive commit message:
+```bash
+# Create and switch to feature branch
+git checkout -b feature/your-feature-name
 
-```sh
+# Or for bug fixes
+git checkout -b fix/issue-description
+```
+
+### **3. Make Your Changes**
+
+Follow these development practices:
+
+- **Write Clean Code**: Follow PEP 8 style guidelines
+- **Add Documentation**: Document new features and functions
+- **Write Tests**: Add tests for new functionality
+- **Commit Frequently**: Make small, focused commits
+
+### **4. Testing Your Changes**
+
+```bash
+# Run all tests
+python -m pytest
+
+# Run specific test categories
+python -m pytest test/test_extractors.py
+python -m pytest test/test_postprocessors.py
+
+# Test with specific extractors
+python -m pytest test/test_extractors.py::test_youtube
+
+# Run linting
+python -m flake8 yt_dlp/
+```
+
+### **5. Commit Your Changes**
+
+```bash
+# Stage your changes
 git add .
-git commit -m "Add new feature: Short description of your changes"
+
+# Commit with descriptive message
+git commit -m "Add support for NewSite extractor
+
+- Implement NewSiteIE class with video extraction
+- Add support for playlists and channels
+- Include metadata extraction for title, description
+- Add tests for various URL patterns"
 ```
 
-### 8. Push to Your Fork
+## Types of Contributions
 
-Push your changes to your GitHub fork:
+### **1. Extractor Development**
 
-```sh
+Extractors are the core of yt-dlp, handling video extraction from websites.
+
+#### **Basic Extractor Structure**
+
+```python
+from .common import InfoExtractor
+from ..utils import (
+    extract_attributes,
+    get_element_by_class,
+    unified_strdate,
+)
+
+class NewSiteIE(InfoExtractor):
+    _VALID_URL = r'https?://(?:www\.)?newsite\.com/watch/(?P<id>[0-9]+)'
+    _TESTS = [{
+        'url': 'https://newsite.com/watch/12345',
+        'md5': 'expected_md5_hash',
+        'info_dict': {
+            'id': '12345',
+            'ext': 'mp4',
+            'title': 'Expected Video Title',
+            'description': 'Expected description',
+            'uploader': 'Expected uploader',
+            'duration': 120,
+        }
+    }]
+
+    def _real_extract(self, url):
+        video_id = self._match_id(url)
+        webpage = self._download_webpage(url, video_id)
+
+        title = self._html_search_regex(
+            r'<title>([^<]+)</title>', webpage, 'title')
+
+        video_url = self._html_search_regex(
+            r'video_url["\']:\s*["\']([^"\']+)', webpage, 'video url')
+
+        return {
+            'id': video_id,
+            'title': title,
+            'url': video_url,
+            'ext': 'mp4',
+        }
+```
+
+#### **Extractor Best Practices**
+
+1. **URL Pattern Matching**:
+
+   ```python
+   _VALID_URL = r'https?://(?:www\.)?site\.com/(?:video/)?(?P<id>[a-zA-Z0-9]+)'
+   ```
+
+2. **Comprehensive Tests**:
+
+   ```python
+   _TESTS = [{
+       'url': 'test_url',
+       'info_dict': {
+           'id': 'expected_id',
+           'ext': 'expected_extension',
+           'title': 'expected_title',
+           # ... other expected fields
+       }
+   }, {
+       # Additional test cases
+       'url': 'another_test_url',
+       'only_matching': True,  # For URL pattern testing only
+   }]
+   ```
+
+3. **Error Handling**:
+   ```python
+   try:
+       data = self._download_json(api_url, video_id)
+   except ExtractorError as e:
+       if 'not found' in str(e):
+           raise ExtractorError('Video not found', expected=True)
+       raise
+   ```
+
+### **2. Post-Processor Development**
+
+Post-processors handle media processing after download.
+
+#### **Basic Post-Processor Structure**
+
+```python
+from .common import PostProcessor
+from ..utils import PostProcessingError
+
+class CustomPP(PostProcessor):
+    def __init__(self, downloader=None, **kwargs):
+        super().__init__(downloader)
+        # Initialize custom parameters
+
+    def run(self, info):
+        # Process the downloaded file
+        filepath = info['filepath']
+
+        try:
+            # Perform custom processing
+            self.to_screen(f'Processing {filepath}')
+            # ... processing logic ...
+
+            return [], info  # Return (files_to_delete, info_dict)
+        except Exception as e:
+            raise PostProcessingError(f'Custom processing failed: {str(e)}')
+```
+
+### **3. Core Functionality Improvements**
+
+Contributing to core functionality requires understanding of:
+
+- **YoutubeDL class**: Main downloader logic
+- **Format selection**: Video/audio format handling
+- **Network handling**: HTTP requests and responses
+- **File system operations**: Path handling and file management
+
+## Contribution Guidelines
+
+### **Code Style and Standards**
+
+1. **Follow PEP 8**: Use consistent Python coding style
+2. **Use Type Hints**: Add type annotations for new code
+3. **Write Docstrings**: Document classes and functions
+4. **Keep Functions Small**: Break complex logic into smaller functions
+5. **Use Meaningful Names**: Choose descriptive variable and function names
+
+### **Testing Requirements**
+
+1. **Unit Tests**: Test individual functions and methods
+2. **Integration Tests**: Test complete extraction workflows
+3. **Edge Cases**: Test error conditions and unusual inputs
+4. **Performance Tests**: Ensure changes don't degrade performance
+
+```python
+# Example test structure
+def test_new_site_extraction(self):
+    """Test NewSite video extraction"""
+    ie = NewSiteIE()
+    result = ie.extract('https://newsite.com/watch/12345')
+
+    self.assertEqual(result['id'], '12345')
+    self.assertEqual(result['title'], 'Expected Title')
+    self.assertIsNotNone(result['url'])
+```
+
+### **Documentation Requirements**
+
+1. **Code Comments**: Explain complex logic
+2. **Docstrings**: Document public methods and classes
+3. **README Updates**: Update documentation for new features
+4. **Changelog Entries**: Document user-facing changes
+
+## Pull Request Process
+
+### **1. Prepare Your Pull Request**
+
+```bash
+# Ensure your branch is up to date
+git checkout master
+git pull upstream master
+git checkout your-feature-branch
+git rebase master
+
+# Run final tests
+python -m pytest
+python -m flake8 yt_dlp/
+
+# Push your changes
 git push origin your-feature-branch
 ```
 
-### 9. Create a Pull Request
+### **2. Create Pull Request**
 
-1. Go to your fork on GitHub.
-2. Click "New Pull Request".
-3. Select your feature branch.
-4. Fill out the pull request template with details about your changes.
-5. Click "Create Pull Request".
+1. **Go to GitHub**: Navigate to your fork on GitHub
+2. **Click "New Pull Request"**: Compare your branch with upstream master
+3. **Fill PR Template**: Complete all required sections
+4. **Add Reviewers**: Request review from maintainers
 
-## Best Practices for Contributing
+### **3. Pull Request Template**
 
-- **Keep it focused**: Each pull request should address a single feature or bug fix.
-- **Follow coding standards**: Adhere to PEP 8 and yt-dlp's specific coding conventions.
-- **Write tests**: Add tests for new features and ensure existing tests pass.
-- **Update documentation**: If you're adding or changing functionality, update the relevant documentation.
-- **Describe your changes**: Provide a clear description of what your code does and why it's needed.
-- **Be responsive**: Be prepared to answer questions and make changes based on review feedback.
+```markdown
+## Description
 
-## Code Review Process
+Brief description of changes made
 
-1. A maintainer will review your pull request.
-2. They may ask for changes or clarifications.
-3. Make any requested changes and push them to your branch.
-4. Once approved, a maintainer will merge your pull request.
+## Type of Change
 
-## Additional Guidelines
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Documentation update
 
-- **Extractor contributions**: If you're adding or updating an extractor, make sure to follow the extractor writing guidelines.
-- **Core functionality changes**: Discuss major changes in an issue before implementing them.
-- **Performance considerations**: Ensure your changes don't negatively impact performance, especially for commonly used features.
+## Testing
 
-## Getting Help
+- [ ] Existing tests pass
+- [ ] New tests added
+- [ ] Manual testing completed
 
-If you need help or have questions:
+## Checklist
 
-- Check the contributing guidelines.
-- Ask in the yt-dlp issues section.
-- Join community discussions on platforms like Discord or Matrix (if available).
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Documentation updated
+- [ ] Tests added/updated
+```
 
-## Recognition
+### **4. Code Review Process**
 
-Your contributions will be recognized in the project's changelog and contributors list. Significant contributions may lead to maintainer status.
+1. **Initial Review**: Maintainers review code and architecture
+2. **Feedback**: Address review comments and suggestions
+3. **Iterate**: Make requested changes and push updates
+4. **Final Review**: Maintainers approve and merge
 
-Remember, contributing to open-source projects like yt-dlp is a great way to improve your skills, give back to the community, and make a meaningful impact on a widely used tool.
+## Advanced Contribution Topics
+
+### **Extractor Maintenance**
+
+1. **Site Changes**: Update extractors when sites change
+2. **Format Updates**: Handle new video/audio formats
+3. **API Changes**: Adapt to site API modifications
+4. **Performance**: Optimize extraction speed and reliability
+
+### **Security Considerations**
+
+1. **Input Validation**: Sanitize user inputs
+2. **URL Handling**: Prevent malicious URL exploitation
+3. **File Operations**: Secure file system access
+4. **Network Security**: Handle SSL/TLS properly
+
+### **Performance Optimization**
+
+1. **Caching**: Implement appropriate caching strategies
+2. **Async Operations**: Use asynchronous programming where beneficial
+3. **Memory Management**: Optimize memory usage for large files
+4. **Network Efficiency**: Minimize unnecessary requests
+
+## Getting Help and Support
+
+### **Communication Channels**
+
+1. **GitHub Issues**: For bug reports and feature requests
+2. **GitHub Discussions**: For questions and general discussion
+3. **Code Review**: Through pull request comments
+4. **Documentation**: Comprehensive guides and references
+
+### **Learning Resources**
+
+1. **Existing Code**: Study current extractors and implementations
+2. **Test Cases**: Learn from existing test patterns
+3. **Documentation**: Read all available documentation
+4. **Community**: Engage with other contributors
+
+## Recognition and Advancement
+
+### **Contribution Recognition**
+
+- **Changelog**: Contributors listed in release notes
+- **Git History**: Permanent record of contributions
+- **Community**: Recognition within the community
+- **Skills**: Improved programming and collaboration skills
+
+### **Becoming a Maintainer**
+
+Regular, high-quality contributions may lead to:
+
+- **Commit Access**: Direct repository access
+- **Review Privileges**: Ability to review other contributions
+- **Decision Making**: Input on project direction
+- **Mentoring**: Helping new contributors
+
+## Quick Reference
+
+### **Common Commands**
+
+```bash
+# Development setup
+git clone https://github.com/YOUR_USERNAME/yt-dlp.git
+cd yt-dlp
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+pip install -e .
+
+# Testing
+python -m pytest
+python -m pytest test/test_extractors.py::TestYoutube
+python -m flake8 yt_dlp/
+
+# Git workflow
+git checkout -b feature/new-feature
+git add .
+git commit -m "Descriptive commit message"
+git push origin feature/new-feature
+```
+
+### **Contribution Checklist**
+
+- [ ] Fork and clone repository
+- [ ] Set up development environment
+- [ ] Create feature branch
+- [ ] Make changes following guidelines
+- [ ] Add comprehensive tests
+- [ ] Update documentation
+- [ ] Run all tests and linting
+- [ ] Create pull request
+- [ ] Respond to review feedback
+- [ ] Celebrate your contribution!
+
+Contributing to yt-dlp is rewarding and helps millions of users worldwide. Start small, learn continuously, and don't hesitate to ask for help when needed. Your contributions make a real difference!

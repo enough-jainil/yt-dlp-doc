@@ -4,147 +4,878 @@ sidebar_position: 3
 
 # CLI to API Options Converter
 
-When embedding yt-dlp in Python scripts, you might want to convert command-line options to their API equivalent. This tool helps convert CLI options to the corresponding Python API options.
+Converting yt-dlp command-line options to their Python API equivalents is essential when embedding yt-dlp in applications. This comprehensive guide provides tools, examples, and complete conversion references.
 
-## Basic Usage
+## Understanding the Conversion Process
 
-Save the following script as `cli_to_api.py`:
+### **CLI vs API Structure**
+
+**Command Line Format**:
+
+```bash
+yt-dlp --extract-audio --audio-format mp3 --output "%(title)s.%(ext)s" URL
+```
+
+**Python API Equivalent**:
 
 ```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+    }],
+    'outtmpl': '%(title)s.%(ext)s',
+}
+
+with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    ydl.download([URL])
+```
+
+## Comprehensive Conversion Tool
+
+### **Advanced CLI to API Converter**
+
+```python
+#!/usr/bin/env python3
+"""
+Advanced yt-dlp CLI to API Options Converter
+Converts command-line arguments to Python API dictionary
+"""
+
 import sys
 import json
-import yt_dlp
+import argparse
 import shlex
+from typing import Dict, Any, List, Optional
+import yt_dlp
 
-def cli_to_api(cli_options_string):
-    """Convert CLI options to API options dictionary"""
-    try:
-        opts = shlex.split(cli_options_string)
-    except ValueError as e:
-        print(f"Error parsing command-line options: {e}", file=sys.stderr)
-        return None
+class CLIToAPIConverter:
+    """Convert yt-dlp CLI options to API options"""
 
-    default = yt_dlp.parse_options([]).ydl_opts
-    try:
-        parsed_opts = yt_dlp.parse_options(opts).ydl_opts
-    except yt_dlp.utils.DownloadError as e:
-        print(f"yt-dlp error parsing options: {e}", file=sys.stderr)
-        return None
-    except SystemExit:
-        print("yt-dlp exited due to invalid options.", file=sys.stderr)
-        return None
+    def __init__(self):
+        self.option_mappings = {
+            # Basic options
+            'format': 'format',
+            'output': 'outtmpl',
+            'outtmpl': 'outtmpl',
+            'quiet': 'quiet',
+            'verbose': 'verbose',
+            'simulate': 'simulate',
+            'skip_download': 'skip_download',
 
-    diff = {}
-    for k, v in parsed_opts.items():
-        if k not in default or default[k] != v:
-            if k == 'postprocessors':
-                default_pps = default.get('postprocessors', [])
-                diff['postprocessors'] = [pp for pp in v if pp not in default_pps]
-                if not diff['postprocessors']:
-                    continue
-            elif k == 'format_sort':
-                default_fs = default.get('format_sort', [])
-                diff['format_sort'] = [fs for fs in v if fs not in default_fs]
-                if not diff['format_sort']:
-                    continue
-            elif k == 'merge_output_format':
-                if v != default.get('merge_output_format'):
-                    diff[k] = v
+            # Download options
+            'rate_limit': 'ratelimit',
+            'retries': 'retries',
+            'fragment_retries': 'fragment_retries',
+            'buffer_size': 'buffersize',
+            'http_chunk_size': 'http_chunk_size',
+
+            # Network options
+            'proxy': 'proxy',
+            'socket_timeout': 'socket_timeout',
+            'source_address': 'source_address',
+            'force_ipv4': 'force_ipv4',
+            'force_ipv6': 'force_ipv6',
+
+            # Geo restriction
+            'geo_verification_proxy': 'geo_verification_proxy',
+            'geo_bypass': 'geo_bypass',
+            'geo_bypass_country': 'geo_bypass_country',
+            'geo_bypass_ip_block': 'geo_bypass_ip_block',
+
+            # Video selection
+            'playlist_start': 'playliststart',
+            'playlist_end': 'playlistend',
+            'playlist_items': 'playlist_items',
+            'match_title': 'matchtitle',
+            'reject_title': 'rejecttitle',
+            'max_downloads': 'max_downloads',
+            'min_filesize': 'min_filesize',
+            'max_filesize': 'max_filesize',
+            'date': 'date',
+            'datebefore': 'datebefore',
+            'dateafter': 'dateafter',
+            'min_views': 'min_views',
+            'max_views': 'max_views',
+
+            # Download archive
+            'download_archive': 'download_archive',
+            'break_on_existing': 'break_on_existing',
+            'break_on_reject': 'break_on_reject',
+
+            # Filesystem options
+            'batch_file': 'batchfile',
+            'id': 'useid',
+            'auto_number': 'autonumber',
+            'restrict_filenames': 'restrictfilenames',
+            'no_overwrites': 'nooverwrites',
+            'continue_dl': 'continuedl',
+            'no_part': 'nopart',
+            'no_mtime': 'nomtime',
+            'write_description': 'writedescription',
+            'write_info_json': 'writeinfojson',
+            'write_annotations': 'writeannotations',
+            'write_thumbnail': 'writethumbnail',
+            'write_all_thumbnails': 'writeallThumbnails',
+            'list_thumbnails': 'listthumbnails',
+
+            # Subtitle options
+            'write_sub': 'writesubtitles',
+            'write_auto_sub': 'writeautomaticsub',
+            'all_subs': 'allsubtitles',
+            'list_subs': 'listsubtitles',
+            'sub_format': 'subtitlesformat',
+            'sub_lang': 'subtitleslangs',
+
+            # Authentication
+            'username': 'username',
+            'password': 'password',
+            'twofactor': 'twofactor',
+            'netrc': 'usenetrc',
+            'video_password': 'videopassword',
+
+            # Adobe Pass
+            'ap_mso': 'ap_mso',
+            'ap_username': 'ap_username',
+            'ap_password': 'ap_password',
+
+            # Post-processing
+            'extract_audio': None,  # Special handling
+            'audio_format': None,   # Special handling
+            'audio_quality': None,  # Special handling
+            'recode_video': None,   # Special handling
+            'postprocessor_args': 'postprocessor_args',
+            'keep_video': 'keepvideo',
+            'no_post_overwrites': 'nopostoverwrites',
+            'embed_subs': None,     # Special handling
+            'embed_thumbnail': None, # Special handling
+            'add_metadata': None,   # Special handling
+            'metadata_from_title': 'metafromtitle',
+            'xattrs': 'xattrs',
+            'fixup': 'fixup',
+            'prefer_avconv': 'prefer_avconv',
+            'prefer_ffmpeg': 'prefer_ffmpeg',
+            'ffmpeg_location': 'ffmpeg_location',
+            'exec': 'exec_cmd',
+
+            # SponsorBlock
+            'sponsorblock_mark': None,    # Special handling
+            'sponsorblock_remove': None,  # Special handling
+            'sponsorblock_chapter_title': 'sponsorblock_chapter_title',
+            'no_sponsorblock': 'no_sponsorblock',
+            'sponsorblock_api': 'sponsorblock_api',
+
+            # Extractor arguments
+            'extractor_args': 'extractor_args',
+        }
+
+        self.postprocessor_mappings = {
+            'extract_audio': 'FFmpegExtractAudio',
+            'recode_video': 'FFmpegVideoConvertor',
+            'embed_subs': 'FFmpegEmbedSubtitle',
+            'embed_thumbnail': 'EmbedThumbnail',
+            'add_metadata': 'FFmpegMetadata',
+            'sponsorblock_mark': 'SponsorBlock',
+            'sponsorblock_remove': 'SponsorBlock',
+        }
+
+    def convert_args_string(self, args_string: str) -> Optional[Dict[str, Any]]:
+        """Convert CLI arguments string to API options"""
+        try:
+            args = shlex.split(args_string)
+            return self.convert_args_list(args)
+        except ValueError as e:
+            print(f"Error parsing arguments: {e}", file=sys.stderr)
+            return None
+
+    def convert_args_list(self, args: List[str]) -> Optional[Dict[str, Any]]:
+        """Convert CLI arguments list to API options"""
+        try:
+            # Parse arguments using yt-dlp's parser
+            parser = yt_dlp.parseOpts(args)[0]
+            return self.convert_parsed_args(parser)
+        except Exception as e:
+            print(f"Error converting arguments: {e}", file=sys.stderr)
+            return None
+
+    def convert_parsed_args(self, parsed_args) -> Dict[str, Any]:
+        """Convert parsed arguments to API options"""
+        api_opts = {}
+        postprocessors = []
+
+        # Handle basic options
+        for cli_opt, api_opt in self.option_mappings.items():
+            if hasattr(parsed_args, cli_opt):
+                value = getattr(parsed_args, cli_opt)
+                if value is not None and api_opt:
+                    api_opts[api_opt] = value
+
+        # Handle special post-processor options
+        postprocessors.extend(self._handle_audio_extraction(parsed_args))
+        postprocessors.extend(self._handle_video_recoding(parsed_args))
+        postprocessors.extend(self._handle_embedding_options(parsed_args))
+        postprocessors.extend(self._handle_metadata_options(parsed_args))
+        postprocessors.extend(self._handle_sponsorblock_options(parsed_args))
+
+        if postprocessors:
+            api_opts['postprocessors'] = postprocessors
+
+        # Handle format sorting
+        if hasattr(parsed_args, 'format_sort') and parsed_args.format_sort:
+            api_opts['format_sort'] = parsed_args.format_sort
+
+        # Remove None values and empty lists
+        api_opts = {k: v for k, v in api_opts.items() if v is not None}
+
+        return api_opts
+
+    def _handle_audio_extraction(self, args) -> List[Dict[str, Any]]:
+        """Handle audio extraction post-processor"""
+        processors = []
+
+        if getattr(args, 'extractaudio', False):
+            processor = {'key': 'FFmpegExtractAudio'}
+
+            if hasattr(args, 'audioformat') and args.audioformat:
+                processor['preferredcodec'] = args.audioformat
+
+            if hasattr(args, 'audioquality') and args.audioquality:
+                processor['preferredquality'] = args.audioquality
+
+            processors.append(processor)
+
+        return processors
+
+    def _handle_video_recoding(self, args) -> List[Dict[str, Any]]:
+        """Handle video recoding post-processor"""
+        processors = []
+
+        if hasattr(args, 'recodevideo') and args.recodevideo:
+            processors.append({
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': args.recodevideo,
+            })
+
+        return processors
+
+    def _handle_embedding_options(self, args) -> List[Dict[str, Any]]:
+        """Handle embedding post-processors"""
+        processors = []
+
+        if getattr(args, 'embedsubs', False):
+            processors.append({'key': 'FFmpegEmbedSubtitle'})
+
+        if getattr(args, 'embedthumbnail', False):
+            processors.append({'key': 'EmbedThumbnail'})
+
+        return processors
+
+    def _handle_metadata_options(self, args) -> List[Dict[str, Any]]:
+        """Handle metadata post-processors"""
+        processors = []
+
+        if getattr(args, 'addmetadata', False):
+            processors.append({'key': 'FFmpegMetadata'})
+
+        return processors
+
+    def _handle_sponsorblock_options(self, args) -> List[Dict[str, Any]]:
+        """Handle SponsorBlock post-processors"""
+        processors = []
+
+        mark_categories = getattr(args, 'sponsorblock_mark', [])
+        remove_categories = getattr(args, 'sponsorblock_remove', [])
+
+        if mark_categories or remove_categories:
+            processor = {'key': 'SponsorBlock'}
+
+            if mark_categories:
+                processor['categories'] = mark_categories
+                processor['actions'] = ['mark']
+
+            if remove_categories:
+                if 'categories' in processor:
+                    processor['categories'].extend(remove_categories)
+                else:
+                    processor['categories'] = remove_categories
+
+                if 'actions' in processor:
+                    processor['actions'].append('remove')
+                else:
+                    processor['actions'] = ['remove']
+
+            processors.append(processor)
+
+        return processors
+
+    def format_output(self, options: Dict[str, Any], format_type: str = 'json') -> str:
+        """Format output in specified format"""
+        if format_type == 'json':
+            return json.dumps(options, indent=2, ensure_ascii=False)
+        elif format_type == 'python':
+            return self._format_as_python_dict(options)
+        else:
+            raise ValueError(f"Unsupported format type: {format_type}")
+
+    def _format_as_python_dict(self, options: Dict[str, Any], indent: int = 0) -> str:
+        """Format options as Python dictionary string"""
+        lines = ['{']
+        indent_str = '    ' * (indent + 1)
+
+        for key, value in options.items():
+            if isinstance(value, dict):
+                formatted_value = self._format_as_python_dict(value, indent + 1)
+            elif isinstance(value, list):
+                formatted_value = self._format_python_list(value, indent + 1)
+            elif isinstance(value, str):
+                formatted_value = f"'{value}'"
             else:
-                diff[k] = v
+                formatted_value = repr(value)
 
-    return diff
+            lines.append(f"{indent_str}'{key}': {formatted_value},")
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python cli_to_api.py '<yt-dlp options>'", file=sys.stderr)
-        sys.exit(1)
+        lines.append('    ' * indent + '}')
+        return '\n'.join(lines)
 
-    cli_options_string = sys.argv[1]
-    options = cli_to_api(cli_options_string)
+    def _format_python_list(self, items: List[Any], indent: int) -> str:
+        """Format list as Python list string"""
+        if not items:
+            return '[]'
 
-    if options is None:
-        sys.exit(1)
+        if all(isinstance(item, (str, int, float, bool)) for item in items):
+            return repr(items)
 
-    print(json.dumps(options, indent=4))
+        lines = ['[']
+        indent_str = '    ' * (indent + 1)
+
+        for item in items:
+            if isinstance(item, dict):
+                formatted_item = self._format_as_python_dict(item, indent + 1)
+            else:
+                formatted_item = repr(item)
+
+            lines.append(f"{indent_str}{formatted_item},")
+
+        lines.append('    ' * indent + ']')
+        return '\n'.join(lines)
+
+def main():
+    """Main CLI interface"""
+    parser = argparse.ArgumentParser(
+        description='Convert yt-dlp CLI options to Python API options',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s --extract-audio --audio-format mp3
+  %(prog)s "-f 'best[height<=720]' -o '%%(title)s.%%(ext)s'"
+  %(prog)s --format json --extract-audio --audio-format mp3
+        """
+    )
+
+    parser.add_argument(
+        'cli_options',
+        nargs='?',
+        help='yt-dlp CLI options string (if not provided, read from stdin)'
+    )
+
+    parser.add_argument(
+        '--format',
+        choices=['json', 'python'],
+        default='json',
+        help='Output format (default: json)'
+    )
+
+    parser.add_argument(
+        '--pretty',
+        action='store_true',
+        help='Pretty print output'
+    )
+
+    args = parser.parse_args()
+
+    # Get CLI options string
+    if args.cli_options:
+        cli_options = args.cli_options
+    else:
+        print("Enter yt-dlp CLI options (press Ctrl+D when done):")
+        cli_options = sys.stdin.read().strip()
+
+    if not cli_options:
+        parser.print_help()
+        return 1
+
+    # Convert options
+    converter = CLIToAPIConverter()
+    api_options = converter.convert_args_string(cli_options)
+
+    if api_options is None:
+        return 1
+
+    # Output results
+    try:
+        output = converter.format_output(api_options, args.format)
+        print(output)
+        return 0
+    except Exception as e:
+        print(f"Error formatting output: {e}", file=sys.stderr)
+        return 1
+
+if __name__ == '__main__':
+    sys.exit(main())
 ```
 
-## Examples
+## Common Conversion Examples
 
-### Converting Audio Extraction Options
+### **Basic Downloads**
 
 ```bash
-python cli_to_api.py "--extract-audio --audio-format mp3"
+# CLI
+yt-dlp "https://example.com/video"
 ```
-
-Output:
-
-```json
-{
-  "postprocessors": [
-    {
-      "key": "FFmpegExtractAudio",
-      "preferredcodec": "mp3"
-    }
-  ]
-}
-```
-
-### Converting Format Selection
-
-```bash
-python cli_to_api.py "-f 'bestvideo[height<=1080]+bestaudio/best'"
-```
-
-Output:
-
-```json
-{
-  "format": "bestvideo[height<=1080]+bestaudio/best"
-}
-```
-
-### Converting Output Template
-
-```bash
-python cli_to_api.py "-o '%(title)s.%(ext)s'"
-```
-
-Output:
-
-```json
-{
-  "outtmpl": "%(title)s.%(ext)s"
-}
-```
-
-## Using in Python Scripts
-
-You can import and use the converter directly in your Python scripts:
 
 ```python
-from cli_to_api import cli_to_api
-
-# Convert CLI options to API options
-cli_opts = "--extract-audio --audio-format mp3"
-api_opts = cli_to_api(cli_opts)
-
-# Use the converted options with yt-dlp
-with yt_dlp.YoutubeDL(api_opts) as ydl:
-    ydl.download(['https://www.youtube.com/watch?v=example'])
+# API
+ydl_opts = {}
+with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    ydl.download(['https://example.com/video'])
 ```
 
-## Notes
+### **Format Selection**
 
-- The converter only shows options that differ from the defaults.
-- Some complex CLI options might need manual adjustment.
-- Always verify the converted options work as expected.
-- Use quotes around CLI options containing spaces or special characters.
+```bash
+# CLI
+yt-dlp -f "best[height<=720]" URL
+```
 
-This tool is especially useful when:
+```python
+# API
+ydl_opts = {
+    'format': 'best[height<=720]'
+}
+```
 
-- Porting CLI scripts to Python.
-- Learning the yt-dlp API.
-- Debugging API option configurations.
+### **Audio Extraction**
 
-By using this converter, you can easily transition from command-line usage to programmatic usage of yt-dlp, making your scripts more flexible and powerful.
+```bash
+# CLI
+yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 URL
+```
+
+```python
+# API
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '0',
+    }]
+}
+```
+
+### **Output Template**
+
+```bash
+# CLI
+yt-dlp -o "%(uploader)s - %(title)s.%(ext)s" URL
+```
+
+```python
+# API
+ydl_opts = {
+    'outtmpl': '%(uploader)s - %(title)s.%(ext)s'
+}
+```
+
+### **Playlist Handling**
+
+```bash
+# CLI
+yt-dlp --playlist-start 5 --playlist-end 10 --max-downloads 3 URL
+```
+
+```python
+# API
+ydl_opts = {
+    'playliststart': 5,
+    'playlistend': 10,
+    'max_downloads': 3,
+}
+```
+
+### **Subtitle Options**
+
+```bash
+# CLI
+yt-dlp --write-sub --sub-lang en,es --embed-subs URL
+```
+
+```python
+# API
+ydl_opts = {
+    'writesubtitles': True,
+    'subtitleslangs': ['en', 'es'],
+    'postprocessors': [{
+        'key': 'FFmpegEmbedSubtitle'
+    }]
+}
+```
+
+### **Multiple Post-Processors**
+
+```bash
+# CLI
+yt-dlp --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata URL
+```
+
+```python
+# API
+ydl_opts = {
+    'postprocessors': [
+        {
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+        },
+        {
+            'key': 'EmbedThumbnail',
+        },
+        {
+            'key': 'FFmpegMetadata',
+        }
+    ]
+}
+```
+
+### **SponsorBlock Integration**
+
+```bash
+# CLI
+yt-dlp --sponsorblock-mark sponsor,intro --sponsorblock-remove selfpromo URL
+```
+
+```python
+# API
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'SponsorBlock',
+        'categories': ['sponsor', 'intro', 'selfpromo'],
+        'actions': ['mark', 'remove']
+    }]
+}
+```
+
+### **Network Configuration**
+
+```bash
+# CLI
+yt-dlp --proxy socks5://127.0.0.1:1080 --socket-timeout 30 --retries 5 URL
+```
+
+```python
+# API
+ydl_opts = {
+    'proxy': 'socks5://127.0.0.1:1080',
+    'socket_timeout': 30,
+    'retries': 5,
+}
+```
+
+### **Authentication**
+
+```bash
+# CLI
+yt-dlp --username user@example.com --password mypassword --twofactor 123456 URL
+```
+
+```python
+# API
+ydl_opts = {
+    'username': 'user@example.com',
+    'password': 'mypassword',
+    'twofactor': '123456',
+}
+```
+
+## Complex Conversion Examples
+
+### **Advanced Format Selection with Sorting**
+
+```bash
+# CLI
+yt-dlp -f "best[height<=1080]" -S "res:720,fps,codec:h264" URL
+```
+
+```python
+# API
+ydl_opts = {
+    'format': 'best[height<=1080]',
+    'format_sort': ['res:720', 'fps', 'codec:h264']
+}
+```
+
+### **Comprehensive Download Configuration**
+
+```bash
+# CLI
+yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 \
+       --embed-thumbnail --add-metadata --write-info-json \
+       --write-description --write-thumbnail --write-sub \
+       --sub-lang en --embed-subs -o "%(uploader)s/%(title)s.%(ext)s" \
+       --download-archive archive.txt --continue --no-overwrites URL
+```
+
+```python
+# API
+ydl_opts = {
+    'outtmpl': '%(uploader)s/%(title)s.%(ext)s',
+    'download_archive': 'archive.txt',
+    'continuedl': True,
+    'nooverwrites': True,
+    'writeinfojson': True,
+    'writedescription': True,
+    'writethumbnail': True,
+    'writesubtitles': True,
+    'subtitleslangs': ['en'],
+    'postprocessors': [
+        {
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '0',
+        },
+        {
+            'key': 'EmbedThumbnail',
+        },
+        {
+            'key': 'FFmpegMetadata',
+        },
+        {
+            'key': 'FFmpegEmbedSubtitle',
+        }
+    ]
+}
+```
+
+## Interactive Conversion Tool
+
+### **Web-based Converter Interface**
+
+```python
+from flask import Flask, render_template, request, jsonify
+import json
+
+app = Flask(__name__)
+converter = CLIToAPIConverter()
+
+@app.route('/')
+def index():
+    return render_template('converter.html')
+
+@app.route('/convert', methods=['POST'])
+def convert_options():
+    """Convert CLI options via web interface"""
+    cli_options = request.json.get('cli_options', '')
+    output_format = request.json.get('format', 'json')
+
+    if not cli_options:
+        return jsonify({'error': 'No CLI options provided'}), 400
+
+    try:
+        api_options = converter.convert_args_string(cli_options)
+        if api_options is None:
+            return jsonify({'error': 'Failed to parse CLI options'}), 400
+
+        formatted_output = converter.format_output(api_options, output_format)
+
+        return jsonify({
+            'success': True,
+            'api_options': api_options,
+            'formatted_output': formatted_output
+        })
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
+```
+
+### **HTML Template (converter.html)**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>yt-dlp CLI to API Converter</title>
+    <style>
+      body {
+        font-family: monospace;
+        margin: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 150px;
+        font-family: monospace;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 10px 0;
+      }
+      .output {
+        background: #f5f5f5;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>yt-dlp CLI to API Converter</h1>
+
+    <div>
+      <label>CLI Options:</label>
+      <textarea id="cliOptions" placeholder="Enter yt-dlp CLI options here...">
+--extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"</textarea
+      >
+    </div>
+
+    <div>
+      <label>Output Format:</label>
+      <select id="outputFormat">
+        <option value="json">JSON</option>
+        <option value="python">Python Dict</option>
+      </select>
+    </div>
+
+    <button onclick="convertOptions()">Convert</button>
+
+    <div id="output" class="output" style="display: none;"></div>
+    <div id="error" class="error" style="display: none;"></div>
+
+    <script>
+      async function convertOptions() {
+        const cliOptions = document.getElementById("cliOptions").value;
+        const outputFormat = document.getElementById("outputFormat").value;
+
+        try {
+          const response = await fetch("/convert", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              cli_options: cliOptions,
+              format: outputFormat,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (result.success) {
+            document.getElementById("output").innerHTML =
+              "<pre>" + result.formatted_output + "</pre>";
+            document.getElementById("output").style.display = "block";
+            document.getElementById("error").style.display = "none";
+          } else {
+            document.getElementById("error").innerText = result.error;
+            document.getElementById("error").style.display = "block";
+            document.getElementById("output").style.display = "none";
+          }
+        } catch (error) {
+          document.getElementById("error").innerText =
+            "Network error: " + error.message;
+          document.getElementById("error").style.display = "block";
+          document.getElementById("output").style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>
+```
+
+## Usage in Scripts
+
+### **Direct Integration**
+
+```python
+from cli_to_api_converter import CLIToAPIConverter
+
+# Initialize converter
+converter = CLIToAPIConverter()
+
+# Convert CLI string to API options
+cli_string = "--extract-audio --audio-format mp3 --embed-thumbnail"
+api_options = converter.convert_args_string(cli_string)
+
+# Use with yt-dlp
+import yt_dlp
+
+with yt_dlp.YoutubeDL(api_options) as ydl:
+    ydl.download(['https://example.com/video'])
+```
+
+### **Batch Conversion**
+
+```python
+def convert_multiple_commands(cli_commands):
+    """Convert multiple CLI commands to API options"""
+    converter = CLIToAPIConverter()
+    results = {}
+
+    for name, cli_command in cli_commands.items():
+        api_options = converter.convert_args_string(cli_command)
+        if api_options:
+            results[name] = api_options
+        else:
+            print(f"Failed to convert: {name}")
+
+    return results
+
+# Example usage
+commands = {
+    'audio_download': '--extract-audio --audio-format mp3',
+    'video_720p': '-f "best[height<=720]" -o "%(title)s.%(ext)s"',
+    'playlist_partial': '--playlist-start 1 --playlist-end 5',
+}
+
+converted = convert_multiple_commands(commands)
+print(json.dumps(converted, indent=2))
+```
+
+## Best Practices
+
+### **Validation and Error Handling**
+
+```python
+def safe_convert_cli_options(cli_string, validate=True):
+    """Safely convert CLI options with validation"""
+    converter = CLIToAPIConverter()
+
+    try:
+        api_options = converter.convert_args_string(cli_string)
+
+        if api_options is None:
+            return None, "Failed to parse CLI options"
+
+        if validate:
+            # Test the options with yt-dlp
+            try:
+                with yt_dlp.YoutubeDL(api_options) as ydl:
+                    pass  # Just test initialization
+            except Exception as e:
+                return None, f"Invalid API options: {e}"
+
+        return api_options, None
+
+    except Exception as e:
+        return None, f"Conversion error: {e}"
+
+# Usage
+api_opts, error = safe_convert_cli_options("--extract-audio --audio-format mp3")
+if error:
+    print(f"Error: {error}")
+else:
+    print("Conversion successful:", api_opts)
+```
+
+This comprehensive CLI to API converter provides a robust foundation for converting yt-dlp command-line options to their Python API equivalents, making it easier to embed yt-dlp functionality in applications while maintaining the familiar CLI interface for configuration.
