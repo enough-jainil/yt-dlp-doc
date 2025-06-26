@@ -47,7 +47,18 @@ yt-dlp -f - URL
 
 ## Special Format Selectors
 
+<<<<<<< HEAD
 ### Quality Selectors
+=======
+- `best`: Select the best quality format.
+- `worst`: Select the worst quality format.
+- `worstvideo`: Select the worst quality video-only format.
+- `worstaudio`: Select the worst quality audio-only format.
+- `bestvideo`: Select the best quality video-only format.
+- `bestaudio`: Select the best quality audio-only format.
+- `mp4`: Select the best mp4 format.
+- `136+140`: Select format code 136 for video and 140 for audio.
+>>>>>>> d63945e832c3131326a1db820869f94460e632e3
 
 ```bash
 # Best quality formats
