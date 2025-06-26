@@ -1,172 +1,478 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
-# Installing yt-dlp via Third-party Package Managers
+# Installing yt-dlp Using pip
 
-Third-party package managers offer a convenient way to install and update yt-dlp on various operating systems. Here are instructions for some popular package managers:
+pip is the recommended method for installing yt-dlp when you have Python available. This guide covers all pip installation methods, from basic installation to advanced configurations.
 
-## Windows
+## Prerequisites
 
-### Chocolatey
+### Python Version Requirements
 
-1. Install Chocolatey if you haven't already.
-2. Open an administrator PowerShell and run:
+yt-dlp requires:
 
-   ```sh
-   choco install yt-dlp
-   ```
+- **Python 3.9+** (CPython)
+- **Python 3.10+** (PyPy)
 
-3. To update:
+Check your Python version:
 
-   ```sh
-   choco upgrade yt-dlp
-   ```
-
-### Scoop
-
-1. Install Scoop if you haven't already.
-2. Open PowerShell and run:
-
-   ```sh
-   scoop install yt-dlp
-   ```
-
-3. To update:
-
-   ```sh
-   scoop update yt-dlp
-   ```
-
-### winget
-
-1. Open PowerShell and run:
-
-   ```sh
-   winget install yt-dlp
-   ```
-
-2. To update:
-
-   ```sh
-   winget upgrade yt-dlp
-   ```
-
-## macOS
-
-### Homebrew
-
-1. Install Homebrew if you haven't already.
-2. Open Terminal and run:
-
-   ```sh
-   brew install yt-dlp
-   ```
-
-3. To update:
-
-   ```sh
-   brew upgrade yt-dlp
-   ```
-
-### MacPorts
-
-1. Install MacPorts if you haven't already.
-2. Open Terminal and run:
-
-   ```sh
-   sudo port install yt-dlp
-   ```
-
-3. To update:
-
-   ```sh
-   sudo port selfupdate
-   sudo port upgrade yt-dlp
-   ```
-
-## Linux
-
-### Arch Linux (pacman)
-
-```sh
-sudo pacman -S yt-dlp
+```bash
+python3 --version
+# or
+python --version
 ```
 
-### Debian/Ubuntu-based distributions (APT)
+### pip Installation
 
-1. Add the PPA:
+Ensure pip is installed and up-to-date:
 
-   ```sh
-   sudo add-apt-repository ppa:tomtomtom/yt-dlp
-   ```
-
-2. Update and install:
-
-   ```sh
-   sudo apt update
-   sudo apt install yt-dlp
-   ```
-
-### Fedora (DNF)
-
-```sh
-sudo dnf install yt-dlp
+```bash
+python3 -m pip install --upgrade pip
+# or
+python -m pip install --upgrade pip
 ```
 
-### Alpine Linux
+## Basic Installation
 
-```sh
-doas apk add yt-dlp
-```
+### Standard Installation with Default Dependencies
 
-## Installing via pip
+The recommended installation method includes common optional dependencies:
 
-### Basic Installation
-
-```sh
+```bash
 python3 -m pip install -U "yt-dlp[default]"
 ```
 
-### Minimal Installation (No Optional Dependencies)
+This installs yt-dlp with:
 
-```sh
-python3 -m pip install --no-deps -U yt-dlp
+- Core functionality
+- Most common optional dependencies
+- Enhanced networking capabilities
+- Basic post-processing support
+
+### Minimal Installation
+
+For a minimal installation without optional dependencies:
+
+```bash
+python3 -m pip install -U yt-dlp
 ```
 
-### Development Versions
+This provides core functionality only, without optional features like:
 
-```sh
-# Install nightly version
+- Advanced networking protocols
+- Browser impersonation
+- Extended metadata support
+- Some post-processing capabilities
+
+## Advanced Installation Options
+
+### Installation with Specific Feature Sets
+
+#### Browser Impersonation Support
+
+For sites that require browser impersonation to bypass TLS fingerprinting:
+
+```bash
+python3 -m pip install -U "yt-dlp[default,curl-cffi]"
+```
+
+This adds `curl_cffi` for impersonating Chrome, Edge, and Safari browsers.
+
+#### Minimal with Selected Dependencies
+
+Install minimal version with specific optional dependencies:
+
+```bash
+# With networking enhancements only
+python3 -m pip install -U "yt-dlp[networking]"
+
+# With post-processing support only
+python3 -m pip install -U "yt-dlp[postprocessing]"
+
+# Multiple feature sets
+python3 -m pip install -U "yt-dlp[networking,postprocessing]"
+```
+
+### Development and Pre-release Versions
+
+#### Latest Development Version
+
+Install the latest pre-release/development version:
+
+```bash
 python3 -m pip install -U --pre "yt-dlp[default]"
+```
 
-# Install master branch
+#### Install from GitHub Master Branch
+
+Get the absolute latest code from the master branch:
+
+```bash
+# Ensure build tools are available
 python3 -m pip install -U pip hatchling wheel
-python3 -m pip install --force-reinstall "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz"
+
+# Install from master branch
+python3 -m pip install -U --force-reinstall "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz"
 ```
 
-**Note**: On some systems, you may need to use `py` or `python` instead of `python3`
+#### Install Specific Development Build
 
-## Verifying Installation
+Install from a specific commit or branch:
 
-After installation, verify yt-dlp is working:
+```bash
+# From specific commit
+python3 -m pip install -U "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/COMMIT_HASH.tar.gz"
 
-```sh
+# From specific branch
+python3 -m pip install -U "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/BRANCH_NAME.tar.gz"
+```
+
+## Virtual Environment Installation
+
+### Creating a Virtual Environment
+
+Using virtual environments is recommended to avoid conflicts:
+
+```bash
+# Create virtual environment
+python3 -m venv yt-dlp-env
+
+# Activate virtual environment
+# On Linux/macOS:
+source yt-dlp-env/bin/activate
+# On Windows:
+yt-dlp-env\Scripts\activate
+
+# Install yt-dlp in virtual environment
+python3 -m pip install -U "yt-dlp[default]"
+```
+
+### Using pipx (Recommended for CLI Tools)
+
+pipx automatically creates isolated environments for CLI applications:
+
+```bash
+# Install pipx if not available
+python3 -m pip install --user pipx
+
+# Install yt-dlp with pipx
+pipx install "yt-dlp[default]"
+
+# Update yt-dlp via pipx
+pipx upgrade yt-dlp
+```
+
+## Platform-Specific Instructions
+
+### Windows
+
+#### Using Python Launcher
+
+If you have the Python Launcher installed:
+
+```cmd
+py -m pip install -U "yt-dlp[default]"
+```
+
+#### PowerShell Execution Policy
+
+If you encounter execution policy issues:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+python -m pip install -U "yt-dlp[default]"
+```
+
+#### Windows Store Python
+
+For Windows Store Python installations:
+
+```cmd
+python -m pip install -U "yt-dlp[default]"
+```
+
+### macOS
+
+#### System Python vs Homebrew Python
+
+```bash
+# Using system Python (if available)
+python3 -m pip install --user -U "yt-dlp[default]"
+
+# Using Homebrew Python
+/opt/homebrew/bin/python3 -m pip install -U "yt-dlp[default]"
+```
+
+#### macOS Catalina and Later
+
+On newer macOS versions, you may need to use `--user` flag:
+
+```bash
+python3 -m pip install --user -U "yt-dlp[default]"
+```
+
+### Linux
+
+#### Distribution-Specific Considerations
+
+**Ubuntu/Debian:**
+
+```bash
+# Install Python pip if not available
+sudo apt update
+sudo apt install python3-pip
+
+# Install yt-dlp
+python3 -m pip install --user -U "yt-dlp[default]"
+```
+
+**Fedora/CentOS/RHEL:**
+
+```bash
+# Install Python pip if not available
+sudo dnf install python3-pip
+
+# Install yt-dlp
+python3 -m pip install --user -U "yt-dlp[default]"
+```
+
+**Arch Linux:**
+
+```bash
+# Install Python pip if not available
+sudo pacman -S python-pip
+
+# Install yt-dlp
+python3 -m pip install --user -U "yt-dlp[default]"
+```
+
+## Updating yt-dlp
+
+### Standard Update
+
+```bash
+python3 -m pip install -U "yt-dlp[default]"
+```
+
+### Force Reinstall
+
+If you encounter issues with updates:
+
+```bash
+python3 -m pip install -U --force-reinstall "yt-dlp[default]"
+```
+
+### Update to Latest Development Version
+
+```bash
+python3 -m pip install -U --pre "yt-dlp[default]"
+```
+
+## Troubleshooting pip Installation
+
+### Common Issues and Solutions
+
+#### Permission Errors
+
+**Problem:** Permission denied during installation
+
+**Solutions:**
+
+```bash
+# Use --user flag (recommended)
+python3 -m pip install --user -U "yt-dlp[default]"
+
+# Or use virtual environment (recommended)
+python3 -m venv yt-dlp-env
+source yt-dlp-env/bin/activate
+python3 -m pip install -U "yt-dlp[default]"
+```
+
+#### SSL Certificate Errors
+
+**Problem:** SSL certificate verification failures
+
+**Solutions:**
+
+```bash
+# Upgrade certificates
+python3 -m pip install --upgrade certifi
+
+# If still failing, use trusted host (less secure)
+python3 -m pip install -U "yt-dlp[default]" --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+```
+
+#### Dependency Conflicts
+
+**Problem:** Conflicting dependencies
+
+**Solutions:**
+
+```bash
+# Use virtual environment
+python3 -m venv clean-env
+source clean-env/bin/activate
+python3 -m pip install -U "yt-dlp[default]"
+
+# Or use minimal installation
+python3 -m pip install -U yt-dlp
+```
+
+#### Build Failures
+
+**Problem:** Failed building wheel or compilation errors
+
+**Solutions:**
+
+```bash
+# Install build dependencies
+python3 -m pip install -U pip setuptools wheel
+
+# Use pre-built wheels only
+python3 -m pip install -U "yt-dlp[default]" --only-binary=all
+```
+
+#### PATH Issues
+
+**Problem:** `yt-dlp` command not found after installation
+
+**Solutions:**
+
+```bash
+# Check installation location
+python3 -m pip show -f yt-dlp
+
+# Add to PATH (Linux/macOS)
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+# Use python module directly
+python3 -m yt_dlp --version
+```
+
+### Verification
+
+#### Check Installation
+
+```bash
+# Check if yt-dlp is installed
+python3 -m pip show yt-dlp
+
+# Check version
 yt-dlp --version
+# or
+python3 -m yt_dlp --version
 ```
 
-## Notes and Considerations
+#### Test Basic Functionality
 
-- Package managers may not always have the latest version of yt-dlp immediately after a new release.
-- Some package managers require root/administrator privileges to install or update packages.
-- Using package managers integrates yt-dlp with your system's update process, making it easier to keep up-to-date.
-- If you encounter issues, check the package manager's documentation or community forums for troubleshooting.
+```bash
+# Test with a simple video
+yt-dlp --simulate "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
 
-## Advantages of Using Package Managers
+## Configuration for pip Installations
 
-- Simplified installation process
-- Easy updates and version management
-- Automatic handling of dependencies
-- Integration with system-wide package management
+### Default Configuration
 
-Remember to keep your package manager and system up-to-date to ensure you have access to the latest versions and security updates for yt-dlp and other software.
+Create a configuration file for consistent behavior:
+
+```bash
+# Linux/macOS
+mkdir -p ~/.config/yt-dlp
+cat > ~/.config/yt-dlp/config << 'EOF'
+# Default format selection
+-f 'bestvideo[height<=1080]+bestaudio/best[height<=1080]'
+
+# Output template
+-o '%(uploader)s/%(title)s.%(ext)s'
+
+# Embed metadata
+--embed-metadata
+--embed-chapters
+EOF
+```
+
+### Environment Variables
+
+Set up environment variables for pip installations:
+
+```bash
+# Add to ~/.bashrc or ~/.zshrc
+export YT_DLP_CONFIG_HOME="$HOME/.config/yt-dlp"
+export YT_DLP_CACHE_DIR="$HOME/.cache/yt-dlp"
+```
+
+## Comparison with Other Installation Methods
+
+### pip vs Binary Installation
+
+| Aspect                 | pip Installation             | Binary Installation      |
+| ---------------------- | ---------------------------- | ------------------------ |
+| **Dependencies**       | Requires Python              | Self-contained           |
+| **Updates**            | `pip install -U`             | `yt-dlp -U`              |
+| **Customization**      | Full Python ecosystem        | Limited                  |
+| **Size**               | Smaller (uses system Python) | Larger (includes Python) |
+| **Flexibility**        | High (virtual environments)  | Limited                  |
+| **System Integration** | Uses system Python           | Independent              |
+
+### When to Use pip
+
+**Choose pip installation when:**
+
+- You already have Python installed
+- You want the latest features and updates
+- You need to integrate with Python scripts
+- You want to use virtual environments
+- You prefer package manager control
+
+**Choose binary installation when:**
+
+- You don't have Python or don't want to install it
+- You want a simple, self-contained solution
+- You're on a system where pip installation is problematic
+- You prefer standalone applications
+
+## Advanced pip Usage
+
+### Installing Specific Versions
+
+```bash
+# Install specific version
+python3 -m pip install "yt-dlp==2023.12.30"
+
+# Install version range
+python3 -m pip install "yt-dlp>=2023.12.30,<2024.01.01"
+
+# Install latest version in a series
+python3 -m pip install "yt-dlp~=2023.12.0"
+```
+
+### Dependency Management
+
+```bash
+# Generate requirements file
+python3 -m pip freeze | grep yt-dlp > requirements.txt
+
+# Install from requirements file
+python3 -m pip install -r requirements.txt
+
+# Show dependency tree
+python3 -m pip show yt-dlp
+```
+
+### Development Installation
+
+For contributing to yt-dlp development:
+
+```bash
+# Clone repository
+git clone https://github.com/yt-dlp/yt-dlp.git
+cd yt-dlp
+
+# Install in development mode
+python3 -m pip install -e ".[default]"
+```
+
+pip installation provides the most flexible and up-to-date way to install yt-dlp, especially for users who already have Python in their workflow. The ability to use virtual environments, install development versions, and integrate with Python scripts makes it the preferred method for power users and developers.
