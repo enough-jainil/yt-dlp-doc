@@ -10,40 +10,61 @@ yt-dlp supports various authentication methods to access private content, age-re
 
 ### Automatic Cookie Import
 
+Import cookies from Chrome:
+
 ```bash
-# Import cookies from Chrome
 yt-dlp --cookies-from-browser chrome "VIDEO_URL"
+```
 
-# Import cookies from Firefox
+Import cookies from Firefox:
+
+```bash
 yt-dlp --cookies-from-browser firefox "VIDEO_URL"
+```
 
-# Import cookies from Safari
+Import cookies from Safari:
+
+```bash
 yt-dlp --cookies-from-browser safari "VIDEO_URL"
+```
 
-# Import cookies from Edge
+Import cookies from Edge:
+
+```bash
 yt-dlp --cookies-from-browser edge "VIDEO_URL"
 ```
 
 ### Profile-Specific Cookies
 
+Chrome with specific profile:
+
 ```bash
-# Chrome with specific profile
 yt-dlp --cookies-from-browser "chrome:Profile 1" "VIDEO_URL"
+```
 
-# Firefox with specific profile
+Firefox with specific profile:
+
+```bash
 yt-dlp --cookies-from-browser "firefox:default-release" "VIDEO_URL"
+```
 
-# Custom profile path
+Custom profile path:
+
+```bash
 yt-dlp --cookies-from-browser "chrome:/path/to/profile" "VIDEO_URL"
 ```
 
 ### Browser Container Support
 
-```bash
-# Firefox containers
-yt-dlp --cookies-from-browser "firefox:default-release:Personal" "VIDEO_URL"
+Firefox container "Personal":
 
-# Multiple container isolation
+```bash
+yt-dlp --cookies-from-browser "firefox:default-release:Personal" "VIDEO_URL"
+```
+
+Firefox container "Work":
+
+```bash
 yt-dlp --cookies-from-browser "firefox:default-release:Work" "VIDEO_URL"
 ```
 
@@ -51,66 +72,85 @@ yt-dlp --cookies-from-browser "firefox:default-release:Work" "VIDEO_URL"
 
 ### Cookie File Formats
 
+Netscape cookie format:
+
 ```bash
-# Netscape cookie format
 yt-dlp --cookies cookies.txt "VIDEO_URL"
+```
 
-# JSON cookie format
+JSON cookie format:
+
+```bash
 yt-dlp --cookies cookies.json "VIDEO_URL"
+```
 
-# Multiple cookie files
+Multiple cookie files:
+
+```bash
 yt-dlp --cookies "cookies1.txt,cookies2.txt" "VIDEO_URL"
 ```
 
 ### Exporting Cookies
 
-**Browser Extension Method:**
+Browser Extension Method:
 
 1. Install "cookies.txt" extension
 2. Navigate to the target site
 3. Export cookies to file
 4. Use with yt-dlp
 
-**Manual Export Example:**
+Manual Export Example:
 
-```bash
-# Example cookies.txt format
-# .youtube.com	TRUE	/	FALSE	1234567890	session_token	abc123
-# .youtube.com	TRUE	/	FALSE	1234567890	LOGIN_INFO	xyz789
-```
+.youtube.com TRUE / FALSE 1234567890 session_token abc123
+.youtube.com TRUE / FALSE 1234567890 LOGIN_INFO xyz789
 
 ## Username/Password Authentication
 
 ### Basic Login
 
+Username and password:
+
 ```bash
-# Username and password
 yt-dlp --username "your_username" --password "your_password" "VIDEO_URL"
+```
 
-# Interactive password prompt
+Interactive password prompt:
+
+```bash
 yt-dlp --username "your_username" --password "" "VIDEO_URL"
+```
 
-# Store credentials securely
+Store credentials securely:
+
+```bash
 yt-dlp --username "user" --password "$(cat password_file)" "VIDEO_URL"
 ```
 
 ### Two-Factor Authentication
 
-```bash
-# For platforms supporting 2FA
-yt-dlp --username "user" --password "pass" --twofactor "123456" "VIDEO_URL"
+Platforms supporting 2FA:
 
-# Interactive 2FA prompt
+```bash
+yt-dlp --username "user" --password "pass" --twofactor "123456" "VIDEO_URL"
+```
+
+Interactive 2FA prompt:
+
+```bash
 yt-dlp --username "user" --password "pass" --twofactor "" "VIDEO_URL"
 ```
 
 ### Platform-Specific Login
 
-```bash
-# Crunchyroll login
-yt-dlp --username "user" --password "pass" "https://crunchyroll.com/video"
+Crunchyroll login:
 
-# Adobe Pass for TV networks
+```bash
+yt-dlp --username "user" --password "pass" "https://crunchyroll.com/video"
+```
+
+Adobe Pass (TV networks):
+
+```bash
 yt-dlp --ap-mso "provider" --ap-username "user" --ap-password "pass" "VIDEO_URL"
 ```
 
@@ -118,21 +158,29 @@ yt-dlp --ap-mso "provider" --ap-username "user" --ap-password "pass" "VIDEO_URL"
 
 ### YouTube OAuth
 
-```bash
-# OAuth for YouTube private videos
-yt-dlp --oauth2-token "your_oauth_token" "PRIVATE_YOUTUBE_URL"
+OAuth token for private videos:
 
-# Interactive OAuth flow
+```bash
+yt-dlp --oauth2-token "your_oauth_token" "PRIVATE_YOUTUBE_URL"
+```
+
+Interactive OAuth flow:
+
+```bash
 yt-dlp --oauth2-interactive "PRIVATE_YOUTUBE_URL"
 ```
 
 ### API Token Authentication
 
-```bash
-# Custom API token
-yt-dlp --api-token "your_api_token" "VIDEO_URL"
+Custom API token:
 
-# Bearer token
+```bash
+yt-dlp --api-token "your_api_token" "VIDEO_URL"
+```
+
+Bearer token via HTTP header:
+
+```bash
 yt-dlp --http-header "Authorization: Bearer your_token" "VIDEO_URL"
 ```
 
@@ -140,75 +188,106 @@ yt-dlp --http-header "Authorization: Bearer your_token" "VIDEO_URL"
 
 ### Proxy with Authentication
 
+HTTP proxy with credentials:
+
 ```bash
-# HTTP proxy with auth
 yt-dlp --proxy "http://user:pass@proxy.com:8080" "VIDEO_URL"
+```
 
-# SOCKS proxy with auth
+SOCKS proxy with credentials:
+
+```bash
 yt-dlp --proxy "socks5://user:pass@proxy.com:1080" "VIDEO_URL"
+```
 
-# Multiple proxy authentication
+Multiple proxies:
+
+```bash
 yt-dlp --proxy "http://user:pass@proxy1.com:8080,http://user2:pass2@proxy2.com:8080" "VIDEO_URL"
 ```
 
 ### HTTP Authentication
 
-```bash
-# Basic HTTP authentication
-yt-dlp --http-header "Authorization: Basic $(echo -n 'user:pass' | base64)" "VIDEO_URL"
+Basic HTTP header:
 
-# Custom authentication headers
-yt-dlp --http-header "X-API-Key: your_key" --http-header "X-User-Token: token" "VIDEO_URL"
+```bash
+yt-dlp --http-header "Authorization: Basic $(echo -n 'user:pass' | base64)" "VIDEO_URL"
+```
+
+Custom headers:
+
+```bash
+yt-dlp --http-header "X-API-Key: your_key" \
+  --http-header "X-User-Token: token" "VIDEO_URL"
 ```
 
 ## Platform-Specific Authentication
 
 ### YouTube
 
+YouTube private videos via cookies:
+
 ```bash
-# YouTube with browser cookies
 yt-dlp --cookies-from-browser chrome "https://youtube.com/watch?v=PRIVATE_VIDEO"
+```
 
-# YouTube Music authentication
+YouTube Music private tracks:
+
+```bash
 yt-dlp --cookies-from-browser firefox "https://music.youtube.com/watch?v=PRIVATE_SONG"
-
-# YouTube Premium content
-yt-dlp --cookies-from-browser chrome "https://youtube.com/premium_content"
 ```
 
 ### Twitch
 
-```bash
-# Twitch subscriber content
-yt-dlp --cookies-from-browser firefox "https://twitch.tv/subscriber_video"
+Twitch subscriber content:
 
-# Twitch VOD with authentication
+```bash
+yt-dlp --cookies-from-browser firefox "https://twitch.tv/subscriber_video"
+```
+
+Twitch VODs:
+
+```bash
 yt-dlp --cookies-from-browser chrome "https://twitch.tv/videos/subscriber_vod"
 ```
 
-### Netflix/Streaming Services
+### Streaming Services
+
+Netflix (where permitted):
 
 ```bash
-# Netflix with cookies (where legally permitted)
 yt-dlp --cookies-from-browser chrome "NETFLIX_URL"
+```
 
-# Disney+ authentication
+Disney+:
+
+```bash
 yt-dlp --cookies-from-browser firefox "DISNEY_PLUS_URL"
+```
 
-# HBO Max authentication
+HBO Max:
+
+```bash
 yt-dlp --cookies-from-browser edge "HBO_MAX_URL"
 ```
 
-### Social Media Platforms
+### Social Media
+
+Instagram private content:
 
 ```bash
-# Instagram private content
 yt-dlp --cookies-from-browser chrome "INSTAGRAM_PRIVATE_URL"
+```
 
-# Facebook private videos
+Facebook private videos:
+
+```bash
 yt-dlp --cookies-from-browser firefox "FACEBOOK_PRIVATE_URL"
+```
 
-# Twitter private content
+Twitter private content:
+
+```bash
 yt-dlp --cookies-from-browser chrome "TWITTER_PRIVATE_URL"
 ```
 
@@ -216,38 +295,55 @@ yt-dlp --cookies-from-browser chrome "TWITTER_PRIVATE_URL"
 
 ### Session Management
 
+Save session cookies:
+
 ```bash
-# Save session for reuse
 yt-dlp --cookies-from-browser chrome --write-cookies session.txt "VIDEO_URL"
+```
 
-# Load saved session
+Load saved session:
+
+```bash
 yt-dlp --cookies session.txt "VIDEO_URL"
+```
 
-# Session with expiration handling
+Refresh expired cookies:
+
+```bash
 yt-dlp --cookies session.txt --refresh-cookies "VIDEO_URL"
 ```
 
 ### Authentication Caching
 
+Cache directory usage:
+
 ```bash
-# Cache authentication data
 yt-dlp --cache-dir ~/.cache/yt-dlp --cookies-from-browser chrome "VIDEO_URL"
+```
 
-# Clear authentication cache
+Clear cache directory:
+
+```bash
 yt-dlp --rm-cache-dir "VIDEO_URL"
+```
 
-# Force authentication refresh
+Force fresh auth:
+
+```bash
 yt-dlp --no-cache-dir --cookies-from-browser chrome "VIDEO_URL"
 ```
 
 ### Multi-Account Support
 
-```bash
-# Different accounts for different sites
-yt-dlp --cookies youtube_cookies.txt "YOUTUBE_URL"
-yt-dlp --cookies twitch_cookies.txt "TWITCH_URL"
+Use different cookie files per site:
 
-# Account-specific configuration
+```bash
+yt-dlp --cookies youtube_cookies.txt "YOUTUBE_URL"
+```
+
+Specify config file:
+
+```bash
 yt-dlp --config-location youtube_config.conf "YOUTUBE_URL"
 ```
 
@@ -255,122 +351,166 @@ yt-dlp --config-location youtube_config.conf "YOUTUBE_URL"
 
 ### Cookie Security
 
-```bash
-# Secure cookie storage
-chmod 600 cookies.txt
+Restrict cookie file permissions:
 
-# Encrypted cookie storage
+```bash
+chmod 600 cookies.txt
+```
+
+Encrypted cookie storage:
+
+```bash
 gpg -c cookies.txt
 yt-dlp --cookies <(gpg -d cookies.txt.gpg) "VIDEO_URL"
+```
 
-# Temporary cookie usage
-yt-dlp --cookies /tmp/temp_cookies.txt "VIDEO_URL" && rm /tmp/temp_cookies.txt
+Temporary cookie use and removal:
+
+```bash
+yt-dlp --cookies /tmp/temp_cookies.txt "VIDEO_URL" && \
+  rm /tmp/temp_cookies.txt
 ```
 
 ### Credential Management
 
+Set credentials via environment:
+
 ```bash
-# Environment variables
 export YTDLP_USERNAME="your_username"
 export YTDLP_PASSWORD="your_password"
-yt-dlp "VIDEO_URL"
+```
 
-# Configuration file with restricted permissions
-echo "--username your_user" > ~/.config/yt-dlp/auth.conf
-echo "--password your_pass" >> ~/.config/yt-dlp/auth.conf
+Use with yt-dlp:
+
+```bash
+yt-dlp "VIDEO_URL"
+```
+
+Secure config file with permissions:
+
+```bash
+printf "--username your_user\n--password your_pass\n" > \
+  ~/.config/yt-dlp/auth.conf
 chmod 600 ~/.config/yt-dlp/auth.conf
 yt-dlp --config-location ~/.config/yt-dlp/auth.conf "VIDEO_URL"
 ```
 
 ## Troubleshooting Authentication
 
-### Common Authentication Issues
+### Common Issues
+
+Verbose auth debug:
 
 ```bash
-# Debug authentication process
 yt-dlp --verbose --cookies-from-browser chrome "VIDEO_URL"
+```
 
-# Test cookie validity
+Check available formats:
+
+```bash
 yt-dlp --cookies cookies.txt --list-formats "VIDEO_URL"
+```
 
-# Force fresh authentication
+Force auth refresh:
+
+```bash
 yt-dlp --rm-cache-dir --cookies-from-browser chrome "VIDEO_URL"
 ```
 
 ### Cookie Problems
 
+Check file type:
+
 ```bash
-# Check cookie format
 file cookies.txt
+```
 
-# Validate cookie file
+Filter cookie errors:
+
+```bash
 yt-dlp --cookies cookies.txt --verbose "VIDEO_URL" 2>&1 | grep -i cookie
+```
 
-# Browser-specific debugging
+Browser debug mode:
+
+```bash
 yt-dlp --cookies-from-browser chrome --verbose --debug "VIDEO_URL"
 ```
 
 ### Login Failures
 
+Interactive login with debug:
+
 ```bash
-# Interactive login debugging
 yt-dlp --username "user" --password "" --verbose "VIDEO_URL"
+```
 
-# Check network connectivity
+Test network or proxy:
+
+```bash
 yt-dlp --verbose --proxy "" "VIDEO_URL"
+```
 
-# Bypass geographical restrictions
+Bypass geo-restrictions:
+
+```bash
 yt-dlp --proxy "socks5://proxy:1080" --cookies-from-browser chrome "VIDEO_URL"
 ```
 
 ## Automation and Scripting
 
-### Automated Authentication
+### Automated Authentication Script
+
+Template script:
 
 ```bash
-#!/bin/bash
-# Authentication automation script
+#!/usr/bin/env bash
 SITE="$1"
 URL="$2"
-
-case "$SITE" in
-  "youtube")
-    yt-dlp --cookies-from-browser chrome "$URL"
-    ;;
-  "twitch")
-    yt-dlp --cookies-from-browser firefox "$URL"
-    ;;
-  *)
-    yt-dlp --cookies-from-browser chrome "$URL"
-    ;;
-esac
+if [[ "$SITE" == "youtube" ]]; then
+  yt-dlp --cookies-from-browser chrome "$URL"
+elif [[ "$SITE" == "twitch" ]]; then
+  yt-dlp --cookies-from-browser firefox "$URL"
+else
+  yt-dlp --cookies-from-browser chrome "$URL"
+fi
 ```
 
 ### Batch Authentication
 
+Batch for YouTube:
+
 ```bash
-# Multiple sites with different authentication
 yt-dlp --cookies youtube_cookies.txt --batch-file youtube_urls.txt
+```
+
+Batch for Twitch:
+
+```bash
 yt-dlp --cookies twitch_cookies.txt --batch-file twitch_urls.txt
+```
+
+Credentials batch:
+
+```bash
 yt-dlp --username user --password pass --batch-file login_urls.txt
 ```
 
-### Scheduled Downloads
+### Scheduled Downloads (Cron)
 
-```bash
-# Cron job with authentication
+Daily downloads at 2am:
+
+```cron
 0 2 * * * yt-dlp --cookies-from-browser chrome --batch-file daily_downloads.txt
 ```
 
 ## Best Practices
 
-1. **Use Browser Cookies**: Most reliable method for modern websites
-2. **Secure Storage**: Protect cookie files and credentials
-3. **Regular Updates**: Refresh cookies periodically
-4. **Account Separation**: Use different credentials for different purposes
-5. **Test Authentication**: Verify access before batch operations
-6. **Respect Terms**: Follow platform terms of service
-7. **Monitor Changes**: Watch for authentication method changes
-8. **Backup Credentials**: Securely backup authentication data
-
-Authentication in yt-dlp provides flexible options for accessing private and restricted content while maintaining security and respecting platform policies.
+1. **Use Browser Cookies**: Most reliable for modern sites
+2. **Secure Storage**: Protect cookie & credential files
+3. **Refresh Regularly**: Update cookies periodically
+4. **Separate Accounts**: Different creds for different uses
+5. **Test Before Batches**: Verify auth works
+6. **Respect ToS**: Follow platform rules
+7. **Monitor Changes**: Adapt to auth method updates
+8. **Backup Data**: Securely backup cookies & configs
