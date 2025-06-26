@@ -4,112 +4,393 @@ sidebar_position: 6
 
 # SponsorBlock Integration in yt-dlp
 
-yt-dlp integrates with SponsorBlock, a crowdsourced service that allows users to skip or mark sponsored segments in YouTube videos. This feature helps you automatically handle sponsor segments, intros, outros, and other parts of videos you might want to skip.
+yt-dlp integrates seamlessly with SponsorBlock, a crowdsourced database that identifies and marks sponsored segments, intros, outros, and other non-content parts of YouTube videos. This powerful integration allows you to automatically skip or remove unwanted segments during download.
 
 ## What is SponsorBlock?
 
-SponsorBlock is a database of user-submitted timestamps for sponsored segments in YouTube videos. It allows viewers to skip non-content parts of videos automatically.
+SponsorBlock is a community-driven project that maintains a database of user-submitted timestamps for various types of segments in YouTube videos, including:
 
-## Enabling SponsorBlock in yt-dlp
-
-SponsorBlock features are disabled by default. To enable them, use the following options:
-
-### Mark Sponsors
-
-To mark sponsor segments in the video file:
-
-```sh
-yt-dlp --sponsorblock-mark all URL
-```
-
-This will add chapters to the video file, marking the sponsored segments.
-
-### Remove Sponsors
-
-To remove sponsor segments from the video:
-
-```sh
-yt-dlp --sponsorblock-remove all URL
-```
-
-This will cut out the sponsored segments from the downloaded video.
+- **Sponsor segments** - Paid promotions and sponsorships
+- **Introductions** - Intro sequences and channel introductions
+- **Outros** - End screens and outro sequences
+- **Self-promotion** - Creator promoting their own content
+- **Interaction reminders** - "Like and subscribe" reminders
+- **Non-music sections** - Talking over music in music videos
+- **Preview segments** - Recap of upcoming content
+- **Filler content** - Tangential or off-topic content
+- **Highlight segments** - Points of interest marked by users
 
 ## SponsorBlock Categories
 
-SponsorBlock recognizes several categories of segments:
+yt-dlp supports all SponsorBlock categories:
 
-- `sponsor`
-- `intro`
-- `outro`
-- `selfpromo`
-- `preview`
-- `filler`
-- `interaction`
-- `music_offtopic`
-- `poi_highlight`
+| Category         | Description                         | Common Use            |
+| ---------------- | ----------------------------------- | --------------------- |
+| `sponsor`        | Paid promotions, sponsorships       | Most commonly blocked |
+| `intro`          | Intro sequences, channel branding   | Often skipped         |
+| `outro`          | End screens, credits, outros        | Often skipped         |
+| `selfpromo`      | Self-promotion of creator's content | Selectively blocked   |
+| `preview`        | Recap or preview of video content   | Sometimes skipped     |
+| `filler`         | Tangential or off-topic content     | Selectively blocked   |
+| `interaction`    | "Like and subscribe" reminders      | Often skipped         |
+| `music_offtopic` | Non-music sections in music videos  | Music-specific        |
+| `poi_highlight`  | Points of interest (not blocked)    | For reference only    |
+| `chapter`        | Chapter markers (not blocked)       | For navigation        |
 
-You can specify which categories to mark or remove:
+### Special Category Groups
 
-```sh
-yt-dlp --sponsorblock-mark sponsor,intro --sponsorblock-remove outro URL
+- `all` - All categories including poi_highlight and chapter
+- `default` - Default categories: sponsor, intro, outro, selfpromo, preview, filler, interaction, music_offtopic
+
+## Basic SponsorBlock Usage
+
+### Enable SponsorBlock Processing
+
+SponsorBlock is disabled by default. Enable it with:
+
+```bash
+# Mark all default categories as chapters
+yt-dlp --sponsorblock-mark default URL
+
+# Remove all default categories from video
+yt-dlp --sponsorblock-remove default URL
+
+# Mark sponsors, remove intros and outros
+yt-dlp --sponsorblock-mark sponsor --sponsorblock-remove intro,outro URL
 ```
 
-## Advanced Usage
+### Mark vs Remove
 
-### Custom Chapter Title
+**Marking** (`--sponsorblock-mark`):
 
-Customize the title of SponsorBlock chapters:
+- Adds chapter markers to the video file
+- Segments remain in the video but are marked
+- Allows viewers to skip manually or with compatible players
+- Preserves original video length and continuity
 
-```sh
-yt-dlp --sponsorblock-mark all --sponsorblock-chapter-title "[SponsorBlock]: %(category)s" URL
+**Removing** (`--sponsorblock-remove`):
+
+- Physically cuts out the segments from the video
+- Creates a shorter video without unwanted content
+- Cannot be undone without re-downloading
+- May affect video continuity
+
+## Advanced SponsorBlock Options
+
+### Category Selection
+
+```bash
+# Mark specific categories
+yt-dlp --sponsorblock-mark sponsor,intro,outro URL
+
+# Remove all except music_offtopic
+yt-dlp --sponsorblock-remove default,-music_offtopic URL
+
+# Mark sponsors and highlights, remove intros
+yt-dlp --sponsorblock-mark sponsor,poi_highlight --sponsorblock-remove intro URL
 ```
 
-### Specify SponsorBlock API URL
+### Custom Chapter Titles
 
-If you want to use a different SponsorBlock API server:
+Customize how SponsorBlock segments are labeled:
 
-```sh
-yt-dlp --sponsorblock-api URL https://sponsor.ajay.app URL
+```bash
+# Default chapter title format
+yt-dlp --sponsorblock-mark default --sponsorblock-chapter-title "[SponsorBlock]: %(category)s" URL
+
+# Custom format with timestamps
+yt-dlp --sponsorblock-mark default --sponsorblock-chapter-title "%(category_names)s (%(start_time)s-%(end_time)s)" URL
+
+# Simple category names
+yt-dlp --sponsorblock-mark default --sponsorblock-chapter-title "%(category_names)s" URL
 ```
 
-## Examples
+#### Available Template Fields
 
-### Mark all sponsor segments but remove intros:
+- `%(category)s` - Category name (e.g., "sponsor")
+- `%(category_names)s` - Human-readable category name (e.g., "Sponsor")
+- `%(start_time)s` - Segment start time (HH:MM:SS format)
+- `%(end_time)s` - Segment end time (HH:MM:SS format)
+- `%(duration)s` - Segment duration
 
-```sh
-yt-dlp --sponsorblock-mark sponsor --sponsorblock-remove intro URL
+### Custom SponsorBlock API
+
+Use alternative SponsorBlock API servers:
+
+```bash
+# Use custom API endpoint
+yt-dlp --sponsorblock-api "https://sponsor.ajay.app" --sponsorblock-mark default URL
+
+# Use local SponsorBlock instance
+yt-dlp --sponsorblock-api "http://localhost:8080" --sponsorblock-mark default URL
 ```
 
-### Remove all segments except `music_offtopic`:
+### Disable SponsorBlock
 
-```sh
-yt-dlp --sponsorblock-remove all,-music_offtopic URL
+```bash
+# Explicitly disable SponsorBlock (useful in config files)
+yt-dlp --no-sponsorblock URL
 ```
 
-### Mark sponsors and intros with custom chapter titles:
+## Practical Usage Examples
 
-```sh
-yt-dlp --sponsorblock-mark sponsor,intro --sponsorblock-chapter-title "%(category)s: %(start)s - %(end)s" URL
+### Content Creator Workflow
+
+```bash
+# Download with sponsor segments marked for editing
+yt-dlp --sponsorblock-mark sponsor,selfpromo \
+       --sponsorblock-chapter-title "Edit: Remove %(category_names)s" \
+       -f "bestvideo+bestaudio" URL
 ```
 
-## Tips for Using SponsorBlock
+### Clean Viewing Experience
 
-- Use `--verbose` to see details about SponsorBlock actions.
-- Combine with other yt-dlp features like format selection for a customized download.
-- Be aware that SponsorBlock data is user-submitted and may not be 100% accurate.
-- Consider contributing to SponsorBlock if you find it useful.
+```bash
+# Remove all distractions for clean viewing
+yt-dlp --sponsorblock-remove sponsor,intro,outro,interaction \
+       --embed-chapters \
+       -f "best[height<=1080]" URL
+```
 
-## Limitations and Considerations
+### Music Video Processing
 
-- SponsorBlock integration only works with YouTube videos.
-- The accuracy depends on user submissions to the SponsorBlock database.
-- Processing videos with SponsorBlock may increase download time slightly.
-- Removed segments might affect video continuity in some cases.
+```bash
+# Keep music, remove talking segments
+yt-dlp --sponsorblock-remove music_offtopic \
+       --sponsorblock-mark sponsor,intro,outro \
+       -x --audio-format mp3 URL
+```
 
-## Ethical Use
+### Educational Content
 
-- Respect content creators' work while using SponsorBlock features.
-- Consider supporting creators through other means if you frequently skip sponsored content.
-- Be mindful that some "sponsored" content may be integral to the video's context.
+```bash
+# Remove sponsors but keep educational content
+yt-dlp --sponsorblock-remove sponsor \
+       --sponsorblock-mark intro,outro \
+       --write-info-json URL
+```
 
-SponsorBlock integration in yt-dlp provides a powerful way to customize your video downloading experience, allowing you to automatically handle sponsored and non-content segments in YouTube videos. Use it responsibly to enhance your viewing experience while respecting content creators' efforts.
+### Batch Processing with Archive
+
+```bash
+# Process playlist with SponsorBlock and archiving
+yt-dlp --sponsorblock-remove sponsor,intro,outro \
+       --download-archive processed.txt \
+       -o "%(uploader)s/%(title)s.%(ext)s" \
+       PLAYLIST_URL
+```
+
+## Integration with Other Features
+
+### Combining with Format Selection
+
+```bash
+# High-quality download with SponsorBlock
+yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" \
+       --sponsorblock-remove sponsor \
+       --merge-output-format mp4 URL
+```
+
+### With Subtitle Processing
+
+```bash
+# Download with subtitles and SponsorBlock
+yt-dlp --write-subs --embed-subs \
+       --sponsorblock-mark default \
+       --sub-langs en,en-US URL
+```
+
+### With Post-Processing
+
+```bash
+# Convert to MP3 with sponsor removal
+yt-dlp -x --audio-format mp3 \
+       --sponsorblock-remove sponsor,intro,outro \
+       --embed-metadata URL
+```
+
+### With Chapter Splitting
+
+```bash
+# Split by chapters and remove sponsors
+yt-dlp --split-chapters \
+       --sponsorblock-remove sponsor \
+       -o "%(title)s/%(section_title)s.%(ext)s" URL
+```
+
+## Configuration File Examples
+
+### Default SponsorBlock Config
+
+```conf
+# ~/.config/yt-dlp/config
+# Default SponsorBlock settings
+
+# Mark sponsors and intros, remove outros
+--sponsorblock-mark sponsor,intro
+--sponsorblock-remove outro
+
+# Custom chapter titles
+--sponsorblock-chapter-title "[%(category_names)s]"
+```
+
+### Content-Specific Configs
+
+**For music downloads:**
+
+```conf
+# ~/.config/yt-dlp/music.conf
+--sponsorblock-remove sponsor,intro,outro,music_offtopic
+--sponsorblock-mark interaction
+-x --audio-format mp3
+```
+
+**For educational content:**
+
+```conf
+# ~/.config/yt-dlp/education.conf
+--sponsorblock-remove sponsor,interaction
+--sponsorblock-mark intro,outro
+--write-subs --embed-subs
+```
+
+## Performance and Behavior
+
+### Network Requests
+
+SponsorBlock integration requires additional API calls:
+
+- One request per video to fetch segment data
+- Minimal impact on download speed
+- Cached results for repeated downloads
+
+### Processing Order
+
+1. Video extraction and format selection
+2. SponsorBlock API query for segment data
+3. Video download
+4. Segment processing (marking/removing)
+5. Post-processing (if any)
+
+### Error Handling
+
+```bash
+# Continue if SponsorBlock data unavailable
+yt-dlp --sponsorblock-mark default --ignore-errors URL
+
+# Verbose output for debugging
+yt-dlp --sponsorblock-mark default --verbose URL
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**No SponsorBlock data available:**
+
+```bash
+# Check if video has SponsorBlock data
+yt-dlp --simulate --verbose --sponsorblock-mark default URL
+```
+
+**API connectivity issues:**
+
+```bash
+# Test API connectivity
+curl "https://sponsor.ajay.app/api/skipSegments?videoID=VIDEO_ID"
+
+# Use alternative API
+yt-dlp --sponsorblock-api "https://sponsor.ajay.app" URL
+```
+
+**Segment processing errors:**
+
+```bash
+# Skip problematic segments
+yt-dlp --sponsorblock-mark default --ignore-errors URL
+
+# Debug segment processing
+yt-dlp --sponsorblock-mark default --verbose --keep-fragments URL
+```
+
+### Verification
+
+```bash
+# Check chapter markers in output
+ffprobe -v quiet -show_chapters -print_format csv output.mp4
+
+# Verify removed segments
+ffprobe -v quiet -show_format -print_format json output.mp4
+```
+
+## Best Practices
+
+### General Guidelines
+
+1. **Start with marking** before removing to preview segments
+2. **Use default categories** for most content
+3. **Combine with format selection** for optimal results
+4. **Test with `--simulate`** before batch processing
+5. **Use configuration files** for consistent behavior
+
+### Category Selection Strategy
+
+**Conservative approach:**
+
+```bash
+--sponsorblock-remove sponsor
+--sponsorblock-mark intro,outro
+```
+
+**Aggressive cleaning:**
+
+```bash
+--sponsorblock-remove sponsor,intro,outro,interaction,selfpromo
+```
+
+**Content-aware:**
+
+```bash
+# Music videos
+--sponsorblock-remove music_offtopic
+
+# Educational content
+--sponsorblock-remove sponsor,interaction
+```
+
+### Performance Optimization
+
+```bash
+# Batch processing optimization
+yt-dlp --sponsorblock-remove sponsor \
+       --concurrent-fragments 4 \
+       --sleep-interval 1 \
+       --batch-file urls.txt
+```
+
+## Ethical Considerations
+
+### Responsible Usage
+
+- **Respect content creators** who rely on sponsorships
+- **Consider supporting creators** through other means
+- **Use selectively** rather than blanket removal
+- **Contribute to SponsorBlock** if you find it useful
+
+### Legal and Platform Considerations
+
+- SponsorBlock data is user-generated and may not be 100% accurate
+- Removing segments may affect video context or creator intent
+- Some sponsors may be integral to video content
+- Consider platform terms of service regarding content modification
+
+## Contributing to SponsorBlock
+
+If you find SponsorBlock useful, consider contributing:
+
+1. **Submit segments** through the SponsorBlock browser extension
+2. **Vote on existing segments** to improve accuracy
+3. **Report incorrect segments** to maintain quality
+4. **Donate to the project** to support infrastructure
+
+SponsorBlock integration in yt-dlp provides powerful content curation capabilities while respecting the community-driven nature of the project. Use it thoughtfully to enhance your viewing experience while supporting content creators appropriately.
