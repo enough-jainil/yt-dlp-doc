@@ -11,21 +11,38 @@ yt-dlp provides a powerful Python API that allows you to programmatically downlo
 ### **Installing yt-dlp**
 
 ```bash
-# Install latest version
-pip install yt-dlp
-
-# Install with optional dependencies
-pip install yt-dlp[default]
-
-# Install development version
-pip install git+https://github.com/yt-dlp/yt-dlp.git
-
-# Install in virtual environment (recommended)
-python -m venv yt-dlp-env
-source yt-dlp-env/bin/activate  # Linux/macOS
-# yt-dlp-env\Scripts\activate   # Windows
 pip install yt-dlp
 ```
+
+Install latest version.
+
+```bash
+pip install yt-dlp[default]
+```
+
+Install with optional dependencies.
+
+```bash
+pip install git+https://github.com/yt-dlp/yt-dlp.git
+```
+
+Install development version.
+
+```bash
+python -m venv yt-dlp-env
+source yt-dlp-env/bin/activate
+pip install yt-dlp
+```
+
+Install in virtual environment (recommended, Linux/macOS).
+
+```bash
+python -m venv yt-dlp-env
+yt-dlp-env\Scripts\activate
+pip install yt-dlp
+```
+
+Install in virtual environment (Windows).
 
 ### **Basic Import and Setup**
 
@@ -63,8 +80,11 @@ def download_video(url, output_path='.'):
         except Exception as e:
             logger.error(f"Error downloading {url}: {str(e)}")
             raise
+```
 
-# Usage
+Download a single video with basic options:
+
+```bash
 download_video('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 ```
 
@@ -104,8 +124,11 @@ def extract_video_info(url):
         except Exception as e:
             logger.error(f"Error extracting info from {url}: {str(e)}")
             return None
+```
 
-# Usage
+Extract comprehensive video information:
+
+```bash
 info = extract_video_info('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 if info:
     print(f"Title: {info['title']}")
@@ -139,8 +162,8 @@ class VideoDownloader:
 
             # Download behavior
             'ignoreerrors': True,
-            'no_overwrites': True,
-            'continue_dl': True,
+            'nooverwrites': True,
+            'continuedl': True,
             'retries': 3,
             'fragment_retries': 3,
             'skip_unavailable_fragments': True,
@@ -201,8 +224,11 @@ class VideoDownloader:
                     results.append({'url': url, 'status': 'error', 'error': error_msg})
 
             return results
+```
 
-# Usage
+Download videos with comprehensive error handling:
+
+```bash
 downloader = VideoDownloader(output_dir='my_videos', quality='best[height<=720]')
 results = downloader.download([
     'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
@@ -234,8 +260,11 @@ def download_audio(url, output_dir='audio', format='mp3', quality='192'):
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
+```
 
-# Usage
+Download audio with specific format and quality:
+
+```bash
 download_audio('https://www.youtube.com/watch?v=dQw4w9WgXcQ', format='flac', quality='best')
 ```
 
@@ -308,8 +337,11 @@ class PlaylistProcessor:
         """Check if upload date matches filter"""
         # Implementation for date filtering
         return True  # Simplified for example
+```
 
-# Usage
+Download entire playlist with options:
+
+```bash
 processor = PlaylistProcessor()
 playlist_info = processor.download_playlist(
     'https://www.youtube.com/playlist?list=PLrEnWoR732-BHrPp_Pm8_VleD68f9s14-',
@@ -364,7 +396,11 @@ class ProgressTracker:
             for download_id, info in self.downloads.items():
                 if info['status'] == 'downloading':
                     print(f"{download_id}: {info['percent']} - {info['speed']} - ETA: {info['eta']}")
+```
 
+Download multiple videos with progress tracking:
+
+```bash
 def download_with_progress(urls, output_dir='downloads'):
     """Download multiple videos with progress tracking"""
     tracker = ProgressTracker()
@@ -383,7 +419,6 @@ def download_with_progress(urls, output_dir='downloads'):
             except Exception as e:
                 logger.error(f"Error downloading {url}: {e}")
 
-# Usage
 urls = [
     'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     'https://www.youtube.com/watch?v=oHg5SJYRHA0'
@@ -478,8 +513,11 @@ class RobustDownloader:
         with open(filename, 'w') as f:
             json.dump(self.failed_downloads, f, indent=2)
         logger.info(f"Saved {len(self.failed_downloads)} failed downloads to {filename}")
+```
 
-# Usage
+Download multiple URLs with error tracking:
+
+```bash
 downloader = RobustDownloader(max_retries=5, retry_delay=10)
 results = downloader.batch_download([
     'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
@@ -539,8 +577,11 @@ def download_private_content(url, auth_method='cookies'):
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
+```
 
-# Usage
+Download private or restricted content:
+
+```bash
 download_private_content('https://example.com/private_video', auth_method='cookies')
 ```
 
@@ -594,7 +635,6 @@ def download_with_custom_processing(url):
         'subtitleslangs': ['en', 'es', 'fr'],
         'postprocessors': create_custom_postprocessors(),
         'postprocessor_args': [
-            # FFmpeg arguments for quality optimization
             '-c:v', 'libx264',
             '-preset', 'medium',
             '-crf', '23',
@@ -605,8 +645,11 @@ def download_with_custom_processing(url):
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
+```
 
-# Usage
+Download with comprehensive post-processing:
+
+```bash
 download_with_custom_processing('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
 ```
 
@@ -664,8 +707,11 @@ class AsyncVideoDownloader:
     def close(self):
         """Clean up executor"""
         self.executor.shutdown(wait=True)
+```
 
-# Usage
+Run async example:
+
+```bash
 async def main():
     downloader = AsyncVideoDownloader(max_workers=3)
 
@@ -687,8 +733,7 @@ async def main():
     finally:
         downloader.close()
 
-# Run async example
-# asyncio.run(main())
+asyncio.run(main())
 ```
 
 ### **Web API Integration**
@@ -698,6 +743,7 @@ from flask import Flask, request, jsonify, send_file
 import tempfile
 import threading
 import uuid
+import os
 
 app = Flask(__name__)
 
@@ -770,8 +816,11 @@ class WebVideoDownloader:
         """Get download status"""
         with self.lock:
             return self.downloads.get(job_id)
+```
 
-# Global downloader instance
+Start download:
+
+```bash
 downloader = WebVideoDownloader()
 
 @app.route('/download', methods=['POST'])
@@ -785,15 +834,23 @@ def start_download():
 
     job_id = downloader.start_download(url, options)
     return jsonify({'job_id': job_id})
+```
 
+Get download status:
+
+```bash
 @app.route('/status/<job_id>')
 def get_status(job_id):
     status = downloader.get_status(job_id)
     if not status:
         return jsonify({'error': 'Job not found'}), 404
     return jsonify(status)
+```
 
-# Usage: curl -X POST -H "Content-Type: application/json" -d '{"url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}' http://localhost:5000/download
+Usage with curl:
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}' http://localhost:5000/download
 ```
 
 ## Best Practices and Performance
@@ -808,10 +865,18 @@ fast_opts = {
     'http_chunk_size': 10485760,  # 10MB chunks
     'concurrent_fragment_downloads': 8,
     'retries': 1,
-    'no_overwrites': True,
+    'nooverwrites': True,
     'ignoreerrors': True,
 }
+```
 
+Optimize for speed:
+
+```bash
+fast_opts
+```
+
+```python
 # Optimize for quality
 quality_opts = {
     'format': 'bestvideo[height<=4320]+bestaudio/best',
@@ -824,7 +889,15 @@ quality_opts = {
         {'key': 'FFmpegMetadata'},
     ]
 }
+```
 
+Optimize for quality:
+
+```bash
+quality_opts
+```
+
+```python
 # Memory-efficient for large playlists
 memory_efficient_opts = {
     'lazy_playlist': True,
@@ -832,6 +905,12 @@ memory_efficient_opts = {
     'playlist_items': '1-10',  # Process in batches
     'max_downloads': 10,
 }
+```
+
+Memory-efficient for large playlists:
+
+```bash
+memory_efficient_opts
 ```
 
 ### **Resource Management**
@@ -872,8 +951,11 @@ class ResourceAwareDownloader:
             ydl_opts = {'outtmpl': '%(title)s.%(ext)s'}
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
+```
 
-# Usage
+Download with resource monitoring:
+
+```bash
 resource_downloader = ResourceAwareDownloader(max_memory_mb=2048)
 resource_downloader.download_with_resource_monitoring(urls)
 ```

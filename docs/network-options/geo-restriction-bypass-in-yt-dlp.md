@@ -33,11 +33,15 @@ Content providers implement geo-restrictions through various methods:
 
 yt-dlp includes built-in geo-bypass capabilities for many extractors:
 
-```bash
-# Enable automatic geo-bypass (often enabled by default)
-yt-dlp --geo-bypass URL
+Enable automatic geo-bypass (often enabled by default)
 
-# Disable geo-bypass if it's causing issues
+```bash
+yt-dlp --geo-bypass URL
+```
+
+Disable geo-bypass if it's causing issues
+
+```bash
 yt-dlp --no-geo-bypass URL
 ```
 
@@ -45,14 +49,21 @@ yt-dlp --no-geo-bypass URL
 
 Specify a target country for geo-bypass attempts:
 
+Bypass as if accessing from the United States
+
 ```bash
-# Bypass as if accessing from the United States
 yt-dlp --geo-bypass-country US URL
+```
 
-# Bypass as if accessing from the United Kingdom
+Bypass as if accessing from the United Kingdom
+
+```bash
 yt-dlp --geo-bypass-country GB URL
+```
 
-# Bypass as if accessing from Japan
+Bypass as if accessing from Japan
+
+```bash
 yt-dlp --geo-bypass-country JP URL
 ```
 
@@ -60,11 +71,15 @@ yt-dlp --geo-bypass-country JP URL
 
 Use a specific IP address for geo-bypass:
 
-```bash
-# Use specific IP for geo-bypass
-yt-dlp --geo-bypass-ip-block 203.0.113.0/24 URL
+Use specific IP for geo-bypass
 
-# Use single IP address
+```bash
+yt-dlp --geo-bypass-ip-block 203.0.113.0/24 URL
+```
+
+Use single IP address
+
+```bash
 yt-dlp --geo-bypass-ip-block 203.0.113.1/32 URL
 ```
 
@@ -72,42 +87,62 @@ yt-dlp --geo-bypass-ip-block 203.0.113.1/32 URL
 
 ### HTTP/HTTPS Proxies
 
+HTTP proxy
+
 ```bash
-# HTTP proxy
 yt-dlp --proxy http://proxy.example.com:8080 URL
+```
 
-# HTTPS proxy with authentication
+HTTPS proxy with authentication
+
+```bash
 yt-dlp --proxy https://username:password@proxy.example.com:8080 URL
+```
 
-# Multiple proxy attempts
+Multiple proxy attempts
+
+```bash
 yt-dlp --proxy http://proxy1.com:8080 --proxy http://proxy2.com:8080 URL
 ```
 
 ### SOCKS Proxies
 
+SOCKS4 proxy
+
 ```bash
-# SOCKS4 proxy
 yt-dlp --proxy socks4://proxy.example.com:1080 URL
+```
 
-# SOCKS5 proxy
+SOCKS5 proxy
+
+```bash
 yt-dlp --proxy socks5://proxy.example.com:1080 URL
+```
 
-# SOCKS5 with authentication
+SOCKS5 with authentication
+
+```bash
 yt-dlp --proxy socks5://username:password@proxy.example.com:1080 URL
 ```
 
 ### Tor Network Integration
 
+Use Tor (assuming Tor is running on default port)
+
 ```bash
-# Use Tor (assuming Tor is running on default port)
 yt-dlp --proxy socks5://127.0.0.1:9050 URL
+```
 
-# Use Tor with custom port
+Use Tor with custom port
+
+```bash
 yt-dlp --proxy socks5://127.0.0.1:9150 URL
+```
 
-# Combine Tor with other options
-yt-dlp --proxy socks5://127.0.0.1:9050 \
-       --user-agent "Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0" URL
+Combine Tor with other options
+
+```bash
+yt-dlp --proxy socks5://127.0.0.1:9050 --user-agent "Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0" URL
 ```
 
 ## Advanced Bypass Techniques
@@ -116,31 +151,43 @@ yt-dlp --proxy socks5://127.0.0.1:9050 \
 
 Manipulate HTTP headers to bypass geo-restrictions:
 
+Fake X-Forwarded-For header
+
 ```bash
-# Fake X-Forwarded-For header
 yt-dlp --add-header "X-Forwarded-For: 203.0.113.1" URL
+```
 
-# Set custom origin
+Set custom origin
+
+```bash
 yt-dlp --add-header "Origin: https://allowed-domain.com" URL
+```
 
-# Multiple custom headers
-yt-dlp --add-header "X-Forwarded-For: 203.0.113.1" \
-       --add-header "X-Real-IP: 203.0.113.1" \
-       --add-header "CF-IPCountry: US" URL
+Multiple custom headers
+
+```bash
+yt-dlp --add-header "X-Forwarded-For: 203.0.113.1" --add-header "X-Real-IP: 203.0.113.1" --add-header "CF-IPCountry: US" URL
 ```
 
 ### User Agent Spoofing
 
 Use region-specific or generic user agents:
 
+Generic browser user agent
+
 ```bash
-# Generic browser user agent
 yt-dlp --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" URL
+```
 
-# Mobile user agent (sometimes bypasses restrictions)
+Mobile user agent (sometimes bypasses restrictions)
+
+```bash
 yt-dlp --user-agent "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X)" URL
+```
 
-# Regional browser user agent
+Regional browser user agent
+
+```bash
 yt-dlp --user-agent "Mozilla/5.0 (compatible; regional-browser)" URL
 ```
 
@@ -148,17 +195,27 @@ yt-dlp --user-agent "Mozilla/5.0 (compatible; regional-browser)" URL
 
 Use alternative DNS servers to bypass DNS-based geo-blocking:
 
+Use Google DNS
+
 ```bash
-# Use Google DNS
 yt-dlp --dns-servers 8.8.8.8,8.8.4.4 URL
+```
 
-# Use Cloudflare DNS
+Use Cloudflare DNS
+
+```bash
 yt-dlp --dns-servers 1.1.1.1,1.0.0.1 URL
+```
 
-# Use DNS over HTTPS
+Use DNS over HTTPS
+
+```bash
 yt-dlp --dns-servers https://cloudflare-dns.com/dns-query URL
+```
 
-# Use DNS over TLS
+Use DNS over TLS
+
+```bash
 yt-dlp --dns-servers tls://1.1.1.1 URL
 ```
 
@@ -166,14 +223,21 @@ yt-dlp --dns-servers tls://1.1.1.1 URL
 
 Use cookies from browsers in allowed regions:
 
+Use cookies from browser
+
 ```bash
-# Use cookies from browser
 yt-dlp --cookies-from-browser chrome URL
+```
 
-# Use specific cookie file
+Use specific cookie file
+
+```bash
 yt-dlp --cookies /path/to/region-cookies.txt URL
+```
 
-# Extract cookies from specific browser profile
+Extract cookies from specific browser profile
+
+```bash
 yt-dlp --cookies-from-browser "firefox:Profile Name" URL
 ```
 
@@ -181,65 +245,58 @@ yt-dlp --cookies-from-browser "firefox:Profile Name" URL
 
 ### YouTube Geo-restrictions
 
-```bash
-# YouTube with multiple bypass methods
-yt-dlp --geo-bypass-country US \
-       --extractor-args "youtube:player_client=tv,ios" \
-       --proxy socks5://127.0.0.1:9050 URL
+YouTube with multiple bypass methods
 
-# YouTube with embedded player bypass
+```bash
+yt-dlp --geo-bypass-country US --extractor-args "youtube:player_client=tv,ios" --proxy socks5://127.0.0.1:9050 URL
+```
+
+YouTube with embedded player bypass
+
+```bash
 yt-dlp --extractor-args "youtube:player_client=web_embedded" URL
 ```
 
 ### BBC iPlayer
 
+BBC iPlayer bypass (UK content)
+
 ```bash
-# BBC iPlayer bypass (UK content)
-yt-dlp --geo-bypass-country GB \
-       --user-agent "Mozilla/5.0 (compatible; BBCiPlayer)" \
-       --add-header "X-Forwarded-For: 203.0.113.1" URL
+yt-dlp --geo-bypass-country GB --user-agent "Mozilla/5.0 (compatible; BBCiPlayer)" --add-header "X-Forwarded-For: 203.0.113.1" URL
 ```
 
 ### Netflix and Streaming Services
 
+Generic streaming service bypass
+
 ```bash
-# Generic streaming service bypass
-yt-dlp --proxy https://region-proxy.com:8080 \
-       --cookies-from-browser chrome \
-       --user-agent "Mozilla/5.0 (Smart TV)" URL
+yt-dlp --proxy https://region-proxy.com:8080 --cookies-from-browser chrome --user-agent "Mozilla/5.0 (Smart TV)" URL
 ```
 
 ### Regional News Sites
 
+News site with regional restrictions
+
 ```bash
-# News site with regional restrictions
-yt-dlp --geo-bypass-country LOCAL_COUNTRY \
-       --add-header "Accept-Language: en-US,en;q=0.9" \
-       --referer "https://local-news-site.com" URL
+yt-dlp --geo-bypass-country LOCAL_COUNTRY --add-header "Accept-Language: en-US,en;q=0.9" --referer "https://local-news-site.com" URL
 ```
 
 ## Comprehensive Bypass Strategies
 
 ### Multi-layer Approach
 
+Comprehensive bypass strategy
+
 ```bash
-# Comprehensive bypass strategy
-yt-dlp --geo-bypass-country US \
-       --proxy socks5://127.0.0.1:9050 \
-       --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-       --add-header "X-Forwarded-For: 203.0.113.1" \
-       --add-header "Accept-Language: en-US,en;q=0.9" \
-       --cookies-from-browser chrome \
-       --dns-servers 8.8.8.8,1.1.1.1 URL
+yt-dlp --geo-bypass-country US --proxy socks5://127.0.0.1:9050 --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" --add-header "X-Forwarded-For: 203.0.113.1" --add-header "Accept-Language: en-US,en;q=0.9" --cookies-from-browser chrome --dns-servers 8.8.8.8,1.1.1.1 URL
 ```
 
 ### Fallback Strategy
 
+Try multiple methods with fallbacks
+
 ```bash
-# Try multiple methods with fallbacks
-yt-dlp --geo-bypass-country US URL || \
-yt-dlp --proxy socks5://127.0.0.1:9050 URL || \
-yt-dlp --add-header "X-Forwarded-For: 203.0.113.1" URL
+yt-dlp --geo-bypass-country US URL || yt-dlp --proxy socks5://127.0.0.1:9050 URL || yt-dlp --add-header "X-Forwarded-For: 203.0.113.1" URL
 ```
 
 ### Region-Specific Configurations
@@ -269,16 +326,29 @@ Create configuration files for different regions:
 
 ### Diagnostic Commands
 
+Check if geo-restriction is the issue
+
 ```bash
-# Check if geo-restriction is the issue
 yt-dlp --simulate --verbose URL
+```
 
-# Test with different countries
+Test with different countries
+
+```bash
 yt-dlp --simulate --geo-bypass-country US URL
-yt-dlp --simulate --geo-bypass-country GB URL
-yt-dlp --simulate --geo-bypass-country CA URL
+```
 
-# Verify proxy connectivity
+```bash
+yt-dlp --simulate --geo-bypass-country GB URL
+```
+
+```bash
+yt-dlp --simulate --geo-bypass-country CA URL
+```
+
+Verify proxy connectivity
+
+```bash
 curl --proxy socks5://127.0.0.1:9050 http://httpbin.org/ip
 ```
 
@@ -286,34 +356,43 @@ curl --proxy socks5://127.0.0.1:9050 http://httpbin.org/ip
 
 **"Video unavailable in your country":**
 
+Try geo-bypass with target country
+
 ```bash
-# Try geo-bypass with target country
 yt-dlp --geo-bypass-country TARGET_COUNTRY URL
 ```
 
 **"Access denied" or 403 errors:**
 
+Try different user agent and headers
+
 ```bash
-# Try different user agent and headers
-yt-dlp --user-agent "Mozilla/5.0 (compatible)" \
-       --add-header "Referer: https://allowed-site.com" URL
+yt-dlp --user-agent "Mozilla/5.0 (compatible)" --add-header "Referer: https://allowed-site.com" URL
 ```
 
 **DNS resolution failures:**
 
+Use alternative DNS servers
+
 ```bash
-# Use alternative DNS servers
 yt-dlp --dns-servers 1.1.1.1,8.8.8.8 URL
 ```
 
 ### Verification Methods
 
-```bash
-# Check your apparent IP and location
-curl --proxy socks5://127.0.0.1:9050 http://httpbin.org/ip
-curl --proxy socks5://127.0.0.1:9050 http://ipinfo.io
+Check your apparent IP and location
 
-# Verify headers being sent
+```bash
+curl --proxy socks5://127.0.0.1:9050 http://httpbin.org/ip
+```
+
+```bash
+curl --proxy socks5://127.0.0.1:9050 http://ipinfo.io
+```
+
+Verify headers being sent
+
+```bash
 yt-dlp --print-traffic --simulate URL
 ```
 
@@ -337,38 +416,41 @@ yt-dlp --print-traffic --simulate URL
 
 ### Platform Compliance
 
-- **Rate limiting** - Use `--sleep-interval` to avoid overwhelming servers
-- **User agent honesty** - Don't impersonate official apps maliciously
-- **Cookie respect** - Don't share authentication cookies inappropriately
-- **Terms compliance** - Understand and respect platform terms of service
+Rate limiting - Use `--sleep-interval` to avoid overwhelming servers
+
+```bash
+--sleep-interval
+```
+
+User agent honesty - Don't impersonate official apps maliciously
+
+Cookie respect - Don't share authentication cookies inappropriately
+
+Terms compliance - Understand and respect platform terms of service
 
 ## Best Practices
 
 ### Security Considerations
 
-```bash
-# Use reputable proxy services
-# Verify proxy provider privacy policies
-# Use VPN instead of proxy for sensitive content
-# Keep proxy credentials secure
-```
+- Use reputable proxy services
+- Verify proxy provider privacy policies
+- Use VPN instead of proxy for sensitive content
+- Keep proxy credentials secure
 
 ### Performance Optimization
 
+Optimize for geo-bypass performance
+
 ```bash
-# Optimize for geo-bypass performance
-yt-dlp --geo-bypass-country US \
-       --concurrent-fragments 2 \
-       --limit-rate 1M \
-       --sleep-interval 1 URL
+yt-dlp --geo-bypass-country US --concurrent-fragments 2 --limit-rate 1M --sleep-interval 1 URL
 ```
 
 ### Automation and Scripting
 
+Automated geo-bypass script
+
 ```bash
 #!/bin/bash
-# Automated geo-bypass script
-
 COUNTRIES=("US" "GB" "CA" "AU")
 URL="$1"
 
@@ -384,10 +466,17 @@ done
 
 ### Configuration Management
 
+Use environment-specific configs
+
 ```bash
-# Use environment-specific configs
 alias yt-dlp-us='yt-dlp --config-locations ~/.config/yt-dlp/us.conf'
+```
+
+```bash
 alias yt-dlp-eu='yt-dlp --config-locations ~/.config/yt-dlp/eu.conf'
+```
+
+```bash
 alias yt-dlp-asia='yt-dlp --config-locations ~/.config/yt-dlp/asia.conf'
 ```
 
@@ -395,8 +484,9 @@ alias yt-dlp-asia='yt-dlp --config-locations ~/.config/yt-dlp/asia.conf'
 
 ### Dynamic IP Rotation
 
+Script for rotating through multiple proxies
+
 ```bash
-# Script for rotating through multiple proxies
 #!/bin/bash
 PROXIES=("proxy1.com:8080" "proxy2.com:8080" "proxy3.com:8080")
 for proxy in "${PROXIES[@]}"; do
@@ -406,17 +496,16 @@ done
 
 ### Geo-bypass with External Tools
 
-```bash
-# Combine with external geo-bypass tools
-# Use with VPN automation
-# Integrate with proxy rotation services
-# Combine with DNS manipulation tools
-```
+- Combine with external geo-bypass tools
+- Use with VPN automation
+- Integrate with proxy rotation services
+- Combine with DNS manipulation tools
 
 ### API-based Bypass
 
+Use region-specific API endpoints through extractor args
+
 ```bash
-# Use region-specific API endpoints through extractor args
 yt-dlp --extractor-args "platform:api_region=us" URL
 ```
 

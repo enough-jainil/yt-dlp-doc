@@ -75,8 +75,9 @@ This comprehensive FAQ addresses the most commonly asked questions about yt-dlp,
 
 **1. Standalone Binaries (Easiest)**
 
+Download from GitHub releases - no Python required
+
 ```bash
-# Download from GitHub releases - no Python required
 # Windows: yt-dlp.exe
 # macOS/Linux: yt-dlp
 ```
@@ -85,41 +86,74 @@ This comprehensive FAQ addresses the most commonly asked questions about yt-dlp,
 
 ```bash
 pip install yt-dlp
-# or for user-only installation
+```
+
+Install for user-only
+
+```bash
 pip install --user yt-dlp
 ```
 
 **3. Package Managers**
 
+macOS
+
 ```bash
-# macOS
 brew install yt-dlp
+```
 
-# Windows
+Windows
+
+```bash
 choco install yt-dlp
-winget install yt-dlp
+```
 
-# Linux (varies by distribution)
-sudo apt install yt-dlp  # Debian/Ubuntu
-sudo dnf install yt-dlp  # Fedora
-sudo pacman -S yt-dlp    # Arch
+```bash
+winget install yt-dlp
+```
+
+Linux (varies by distribution)
+
+```bash
+sudo apt install yt-dlp
+```
+
+```bash
+sudo dnf install yt-dlp
+```
+
+```bash
+sudo pacman -S yt-dlp
 ```
 
 ### **Q6: How do I update yt-dlp?**
 
 **A:** Update methods depend on installation:
 
+Self-updater (for binaries)
+
 ```bash
-# Self-updater (for binaries)
 yt-dlp -U
+```
 
-# pip installation
+pip installation
+
+```bash
 pip install -U yt-dlp
+```
 
-# Package managers
-brew upgrade yt-dlp        # macOS
-choco upgrade yt-dlp       # Windows
-sudo apt update && sudo apt upgrade yt-dlp  # Linux
+Package managers
+
+```bash
+brew upgrade yt-dlp
+```
+
+```bash
+choco upgrade yt-dlp
+```
+
+```bash
+sudo apt update && sudo apt upgrade yt-dlp
 ```
 
 ### **Q7: Why am I getting "command not found" or "yt-dlp not recognized" errors?**
@@ -134,24 +168,38 @@ sudo apt update && sudo apt upgrade yt-dlp  # Linux
 
 **2. Installation Verification**
 
-```bash
-# Check if installed
-which yt-dlp      # Linux/macOS
-where yt-dlp      # Windows
+Check if installed
 
-# Check version
+```bash
+which yt-dlp
+```
+
+```bash
+where yt-dlp
+```
+
+Check version
+
+```bash
 yt-dlp --version
 ```
 
 **3. Alternative Execution**
 
-```bash
-# If installed via pip but not in PATH
-python -m yt_dlp "URL"
+If installed via pip but not in PATH
 
-# Direct execution (if binary downloaded)
-./yt-dlp "URL"      # Linux/macOS
-yt-dlp.exe "URL"    # Windows
+```bash
+python -m yt_dlp "URL"
+```
+
+Direct execution (if binary downloaded)
+
+```bash
+./yt-dlp "URL"
+```
+
+```bash
+yt-dlp.exe "URL"
 ```
 
 ## Basic Usage
@@ -160,14 +208,21 @@ yt-dlp.exe "URL"    # Windows
 
 **A:** Basic download syntax:
 
+Simple download (best quality)
+
 ```bash
-# Simple download (best quality)
 yt-dlp "https://www.youtube.com/watch?v=VIDEO_ID"
+```
 
-# Multiple videos
+Multiple videos
+
+```bash
 yt-dlp "URL1" "URL2" "URL3"
+```
 
-# From file containing URLs
+From file containing URLs
+
+```bash
 yt-dlp -a urls.txt
 ```
 
@@ -175,17 +230,27 @@ yt-dlp -a urls.txt
 
 **A:** Audio extraction options:
 
+Extract audio (default format)
+
 ```bash
-# Extract audio (default format)
 yt-dlp -x "URL"
+```
 
-# Specific audio format and quality
+Specific audio format and quality
+
+```bash
 yt-dlp -x --audio-format mp3 --audio-quality 192K "URL"
+```
 
-# Best audio quality
+Best audio quality
+
+```bash
 yt-dlp -x --audio-quality best "URL"
+```
 
-# Keep video file after extraction
+Keep video file after extraction
+
+```bash
 yt-dlp -x --keep-video "URL"
 ```
 
@@ -193,19 +258,35 @@ yt-dlp -x --keep-video "URL"
 
 **A:** Quality selection options:
 
+List available formats first
+
 ```bash
-# List available formats first
 yt-dlp -F "URL"
+```
 
-# Specific quality
-yt-dlp -f "best[height<=1080]" "URL"      # Max 1080p
-yt-dlp -f "worst[height>=720]" "URL"      # Min 720p
-yt-dlp -f "best[height=720]" "URL"        # Exactly 720p
+Specific quality
 
-# Format preferences
+```bash
+yt-dlp -f "best[height<=1080]" "URL"
+```
+
+```bash
+yt-dlp -f "worst[height>=720]" "URL"
+```
+
+```bash
+yt-dlp -f "best[height=720]" "URL"
+```
+
+Format preferences
+
+```bash
 yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" "URL"
+```
 
-# Avoid certain formats
+Avoid certain formats
+
+```bash
 yt-dlp -f "best[ext!=flv]" "URL"
 ```
 
@@ -213,22 +294,41 @@ yt-dlp -f "best[ext!=flv]" "URL"
 
 **A:** Yes, with various options:
 
+Entire playlist
+
 ```bash
-# Entire playlist
 yt-dlp "PLAYLIST_URL"
+```
 
-# Specific items from playlist
+Specific items from playlist
+
+```bash
 yt-dlp --playlist-items 1,3,5-10 "PLAYLIST_URL"
+```
 
-# Reverse order
+Reverse order
+
+```bash
 yt-dlp --playlist-reverse "PLAYLIST_URL"
+```
 
-# YouTube channel (all uploads)
+YouTube channel (all uploads)
+
+```bash
 yt-dlp "https://www.youtube.com/@channel_name"
+```
 
-# Channel playlists, shorts, live streams
+Channel playlists, shorts, live streams
+
+```bash
 yt-dlp "https://www.youtube.com/@channel_name/playlists"
+```
+
+```bash
 yt-dlp "https://www.youtube.com/@channel_name/shorts"
+```
+
+```bash
 yt-dlp "https://www.youtube.com/@channel_name/streams"
 ```
 
@@ -238,20 +338,33 @@ yt-dlp "https://www.youtube.com/@channel_name/streams"
 
 **A:** Use output templates:
 
+Custom filename template
+
 ```bash
-# Custom filename template
 yt-dlp -o "%(title)s-%(id)s.%(ext)s" "URL"
+```
 
-# Organize by uploader
+Organize by uploader
+
+```bash
 yt-dlp -o "%(uploader)s/%(title)s.%(ext)s" "URL"
+```
 
-# Date-based organization
+Date-based organization
+
+```bash
 yt-dlp -o "%(upload_date)s/%(title)s.%(ext)s" "URL"
+```
 
-# Separate paths for different content types
+Separate paths for different content types
+
+```bash
 yt-dlp -P "video:/Videos" -P "audio:/Music" "URL"
+```
 
-# Windows-safe filenames
+Windows-safe filenames
+
+```bash
 yt-dlp --windows-filenames -o "%(title)s.%(ext)s" "URL"
 ```
 
@@ -259,23 +372,39 @@ yt-dlp --windows-filenames -o "%(title)s.%(ext)s" "URL"
 
 **A:** Subtitle options:
 
+List available subtitles
+
 ```bash
-# List available subtitles
 yt-dlp --list-subs "URL"
+```
 
-# Download specific language subtitles
+Download specific language subtitles
+
+```bash
 yt-dlp --sub-langs en --write-subs "URL"
+```
 
-# Download all available subtitles
+Download all available subtitles
+
+```bash
 yt-dlp --sub-langs all --write-subs "URL"
+```
 
-# Auto-generated subtitles
+Auto-generated subtitles
+
+```bash
 yt-dlp --write-auto-subs --sub-langs en "URL"
+```
 
-# Embed subtitles in video
+Embed subtitles in video
+
+```bash
 yt-dlp --embed-subs --sub-langs en "URL"
+```
 
-# Convert subtitle format
+Convert subtitle format
+
+```bash
 yt-dlp --convert-subs srt --write-subs "URL"
 ```
 
@@ -304,18 +433,28 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 
 **A:** Live stream options:
 
+Download live stream (will stop when stream ends)
+
 ```bash
-# Download live stream (will stop when stream ends)
 yt-dlp "LIVE_STREAM_URL"
+```
 
-# Download from start (experimental)
+Download from start (experimental)
+
+```bash
 yt-dlp --live-from-start "LIVE_STREAM_URL"
+```
 
-# Wait for live stream to start
+Wait for live stream to start
+
+```bash
 yt-dlp --wait-for-video 60 "LIVE_STREAM_URL"
+```
 
-# Record for specific duration
-yt-dlp --download-sections "*0-3600" "LIVE_STREAM_URL"  # First hour
+Record for specific duration
+
+```bash
+yt-dlp --download-sections "*0-3600" "LIVE_STREAM_URL"
 ```
 
 ## Troubleshooting
@@ -324,17 +463,27 @@ yt-dlp --download-sections "*0-3600" "LIVE_STREAM_URL"  # First hour
 
 **A:** Speed optimization strategies:
 
+Use external downloader (fastest)
+
 ```bash
-# Use external downloader (fastest)
 yt-dlp --external-downloader aria2c --external-downloader-args "-x 16 -s 16" "URL"
+```
 
-# Limit rate to avoid throttling
+Limit rate to avoid throttling
+
+```bash
 yt-dlp --limit-rate 2M "URL"
+```
 
-# Concurrent fragment downloads
+Concurrent fragment downloads
+
+```bash
 yt-dlp --concurrent-fragments 4 "URL"
+```
 
-# Different user agent
+Different user agent
+
+```bash
 yt-dlp --user-agent "Mozilla/5.0..." "URL"
 ```
 
@@ -342,16 +491,29 @@ yt-dlp --user-agent "Mozilla/5.0..." "URL"
 
 **A:** Geo-restriction bypass methods:
 
+Built-in geo-bypass
+
 ```bash
-# Built-in geo-bypass
 yt-dlp --geo-bypass "URL"
+```
+
+```bash
 yt-dlp --geo-bypass-country US "URL"
+```
 
-# Use proxy
+Use proxy
+
+```bash
 yt-dlp --proxy socks5://127.0.0.1:9150 "URL"
-yt-dlp --proxy http://proxy.example.com:8080 "URL"
+```
 
-# VPN (external solution)
+```bash
+yt-dlp --proxy http://proxy.example.com:8080 "URL"
+```
+
+VPN (external solution)
+
+```bash
 # Connect to VPN first, then run yt-dlp normally
 ```
 
@@ -359,18 +521,31 @@ yt-dlp --proxy http://proxy.example.com:8080 "URL"
 
 **A:** Authentication methods:
 
+Use browser cookies (recommended)
+
 ```bash
-# Use browser cookies (recommended)
 yt-dlp --cookies-from-browser firefox "URL"
+```
+
+```bash
 yt-dlp --cookies-from-browser chrome "URL"
+```
 
-# Specific browser profile
+Specific browser profile
+
+```bash
 yt-dlp --cookies-from-browser "firefox:Profile Name" "URL"
+```
 
-# Manual login (less secure)
+Manual login (less secure)
+
+```bash
 yt-dlp --username YOUR_USERNAME --password YOUR_PASSWORD "URL"
+```
 
-# Cookies file
+Cookies file
+
+```bash
 yt-dlp --cookies cookies.txt "URL"
 ```
 
@@ -389,17 +564,27 @@ yt-dlp --cookies cookies.txt "URL"
 
 **A:** FFmpeg troubleshooting:
 
+Check if FFmpeg is available
+
 ```bash
-# Check if FFmpeg is available
 yt-dlp --check-formats "URL"
+```
 
-# Specify FFmpeg location
+Specify FFmpeg location
+
+```bash
 yt-dlp --ffmpeg-location /path/to/ffmpeg "URL"
+```
 
-# Skip post-processing if FFmpeg issues
+Skip post-processing if FFmpeg issues
+
+```bash
 yt-dlp --no-post-overwrites "URL"
+```
 
-# Install FFmpeg
+Install FFmpeg
+
+```bash
 # Windows: Download from ffmpeg.org
 # macOS: brew install ffmpeg
 # Linux: sudo apt install ffmpeg
@@ -443,11 +628,15 @@ yt-dlp --no-post-overwrites "URL"
 
 **A:** Use download archives:
 
-```bash
-# Create and use download archive
-yt-dlp --download-archive archive.txt "PLAYLIST_URL"
+Create and use download archive
 
-# Archive will track downloaded videos
+```bash
+yt-dlp --download-archive archive.txt "PLAYLIST_URL"
+```
+
+Archive will track downloaded videos
+
+```bash
 # Subsequent runs will skip already downloaded content
 ```
 
@@ -455,17 +644,27 @@ yt-dlp --download-archive archive.txt "PLAYLIST_URL"
 
 **A:** Large playlist strategies:
 
+Limit concurrent downloads
+
 ```bash
-# Limit concurrent downloads
 yt-dlp --max-downloads 50 "PLAYLIST_URL"
+```
 
-# Add delays between downloads
+Add delays between downloads
+
+```bash
 yt-dlp --sleep-interval 5 --max-sleep-interval 15 "PLAYLIST_URL"
+```
 
-# Continue on errors
+Continue on errors
+
+```bash
 yt-dlp --ignore-errors "PLAYLIST_URL"
+```
 
-# Download specific date ranges
+Download specific date ranges
+
+```bash
 yt-dlp --dateafter 20230101 --datebefore 20231231 "PLAYLIST_URL"
 ```
 
@@ -520,24 +719,43 @@ yt-dlp --dateafter 20230101 --datebefore 20231231 "PLAYLIST_URL"
 
 **A:** YouTube-specific capabilities:
 
+YouTube search
+
 ```bash
-# YouTube search
-yt-dlp "ytsearch10:cats"  # Search for 10 cat videos
+yt-dlp "ytsearch10:cats"
+```
 
-# YouTube Music
+YouTube Music
+
+```bash
 yt-dlp "https://music.youtube.com/watch?v=VIDEO_ID"
+```
 
-# YouTube Shorts
+YouTube Shorts
+
+```bash
 yt-dlp "https://www.youtube.com/shorts/SHORT_ID"
+```
 
-# YouTube Stories (if available)
+YouTube Stories (if available)
+
+```bash
 yt-dlp "ytstories:CHANNEL_ID"
+```
 
-# Skip sponsored segments (SponsorBlock)
+Skip sponsored segments (SponsorBlock)
+
+```bash
 yt-dlp --sponsorblock-mark all "URL"
-yt-dlp --sponsorblock-remove sponsor "URL"
+```
 
-# Different player clients (if needed)
+```bash
+yt-dlp --sponsorblock-remove sponsor "URL"
+```
+
+Different player clients (if needed)
+
+```bash
 yt-dlp --extractor-args "youtube:player_client=web" "URL"
 ```
 
@@ -547,22 +765,25 @@ yt-dlp --extractor-args "youtube:player_client=web" "URL"
 
 **Instagram:**
 
+Requires authentication for most content
+
 ```bash
-# Requires authentication for most content
 yt-dlp --cookies-from-browser chrome "INSTAGRAM_URL"
 ```
 
 **TikTok:**
 
+Avoid watermarks
+
 ```bash
-# Avoid watermarks
 yt-dlp --extractor-args "tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com" "URL"
 ```
 
 **Twitter:**
 
+May require authentication
+
 ```bash
-# May require authentication
 yt-dlp --cookies-from-browser firefox "TWITTER_URL"
 ```
 
@@ -603,14 +824,21 @@ yt-dlp --cookies-from-browser firefox "TWITTER_URL"
 
 **Include this information:**
 
+yt-dlp version
+
 ```bash
-# yt-dlp version
 yt-dlp --version
+```
 
-# Full command used
+Full command used
+
+```bash
 yt-dlp -v "URL"
+```
 
-# Operating system and Python version
+Operating system and Python version
+
+```bash
 python --version
 ```
 
@@ -650,10 +878,29 @@ python --version
 
 **Self-Help Resources:**
 
-- Built-in help: `yt-dlp --help`
-- Verbose output for debugging: `yt-dlp -v`
-- Check supported sites: `yt-dlp --list-extractors`
-- Format information: `yt-dlp -F "URL"`
+Built-in help
+
+```bash
+yt-dlp --help
+```
+
+Verbose output for debugging
+
+```bash
+yt-dlp -v
+```
+
+Check supported sites
+
+```bash
+yt-dlp --list-extractors
+```
+
+Format information
+
+```bash
+yt-dlp -F "URL"
+```
 
 ---
 

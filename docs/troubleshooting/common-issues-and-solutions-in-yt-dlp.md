@@ -10,18 +10,31 @@ This comprehensive troubleshooting guide covers the most frequently encountered 
 
 Before diving into specific issues, these commands help diagnose problems:
 
+Check yt-dlp version and update
+
 ```bash
-# Check yt-dlp version and update
 yt-dlp --version
+```
+
+```bash
 yt-dlp -U
+```
 
-# Test with verbose output
+Test with verbose output
+
+```bash
 yt-dlp -v "URL"
+```
 
-# Check available formats
+Check available formats
+
+```bash
 yt-dlp -F "URL"
+```
 
-# Test network connectivity
+Test network connectivity
+
+```bash
 yt-dlp --list-extractors | grep -i "site_name"
 ```
 
@@ -36,14 +49,21 @@ yt-dlp --list-extractors | grep -i "site_name"
 
 ### **Diagnostic Steps**
 
+Check if video exists with verbose output
+
 ```bash
-# Check if video exists with verbose output
 yt-dlp -v "URL"
+```
 
-# Test different user agents
+Test different user agents
+
+```bash
 yt-dlp --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" "URL"
+```
 
-# Check geo-bypass options
+Check geo-bypass options
+
+```bash
 yt-dlp --geo-bypass --geo-bypass-country US "URL"
 ```
 
@@ -51,39 +71,63 @@ yt-dlp --geo-bypass --geo-bypass-country US "URL"
 
 #### **Authentication Issues**
 
+Use browser cookies (recommended)
+
 ```bash
-# Use browser cookies (recommended)
 yt-dlp --cookies-from-browser firefox "URL"
+```
+
+```bash
 yt-dlp --cookies-from-browser chrome "URL"
+```
 
-# Manual login (less secure)
+Manual login (less secure)
+
+```bash
 yt-dlp --username YOUR_USERNAME --password YOUR_PASSWORD "URL"
+```
 
-# Use cookies file
+Use cookies file
+
+```bash
 yt-dlp --cookies cookies.txt "URL"
 ```
 
 #### **Geo-Restrictions**
 
+Enable geo-bypass
+
 ```bash
-# Enable geo-bypass
 yt-dlp --geo-bypass "URL"
+```
 
-# Specify country
+Specify country
+
+```bash
 yt-dlp --geo-bypass-country US "URL"
+```
 
-# Use proxy/VPN
+Use proxy/VPN
+
+```bash
 yt-dlp --proxy socks5://127.0.0.1:9150 "URL"
+```
+
+```bash
 yt-dlp --proxy http://proxy.example.com:8080 "URL"
 ```
 
 #### **Age-Restricted Content**
 
-```bash
-# Use cookies from logged-in browser
-yt-dlp --cookies-from-browser chrome "URL"
+Use cookies from logged-in browser
 
-# Bypass age verification (YouTube)
+```bash
+yt-dlp --cookies-from-browser chrome "URL"
+```
+
+Bypass age verification (YouTube)
+
+```bash
 yt-dlp --age-limit 18 "URL"
 ```
 
@@ -104,14 +148,21 @@ yt-dlp --age-limit 18 "URL"
 
 ### **Diagnostic Commands**
 
+List all available formats
+
 ```bash
-# List all available formats
 yt-dlp -F "URL"
+```
 
-# Show format selection process
+Show format selection process
+
+```bash
 yt-dlp -v -f "bestvideo+bestaudio" "URL"
+```
 
-# Test specific format
+Test specific format
+
+```bash
 yt-dlp -f 137 "URL"
 ```
 
@@ -119,44 +170,71 @@ yt-dlp -f 137 "URL"
 
 #### **Basic Format Selection**
 
+Best quality (default)
+
 ```bash
-# Best quality (default)
 yt-dlp "URL"
+```
 
-# Specific quality
+Specific quality
+
+```bash
 yt-dlp -f "best[height<=1080]" "URL"
+```
+
+```bash
 yt-dlp -f "worst[height>=720]" "URL"
+```
 
-# Audio only
+Audio only
+
+```bash
 yt-dlp -f "bestaudio" -x "URL"
+```
 
-# Video only
+Video only
+
+```bash
 yt-dlp -f "bestvideo" "URL"
 ```
 
 #### **Advanced Format Selection**
 
+Best video + audio combination
+
 ```bash
-# Best video + audio combination
 yt-dlp -f "bestvideo+bestaudio/best" "URL"
+```
 
-# Prefer MP4 format
+Prefer MP4 format
+
+```bash
 yt-dlp -f "best[ext=mp4]/best" "URL"
+```
 
-# Avoid certain formats
+Avoid certain formats
+
+```bash
 yt-dlp -f "best[ext!=flv]" "URL"
+```
 
-# Codec preferences
+Codec preferences
+
+```bash
 yt-dlp -f "best[vcodec^=avc1]" "URL"
 ```
 
 #### **Fallback Strategies**
 
-```bash
-# Multiple format fallbacks
-yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best" "URL"
+Multiple format fallbacks
 
-# Force format merging
+```bash
+yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best" "URL"
+```
+
+Force format merging
+
+```bash
 yt-dlp -f "bestvideo+bestaudio" --merge-output-format mp4 "URL"
 ```
 
@@ -173,43 +251,67 @@ yt-dlp -f "bestvideo+bestaudio" --merge-output-format mp4 "URL"
 
 #### **External Downloaders**
 
+Use aria2c (fastest, multi-connection)
+
 ```bash
-# Use aria2c (fastest, multi-connection)
 yt-dlp --external-downloader aria2c --external-downloader-args "-x 16 -s 16" "URL"
+```
 
-# Use wget
+Use wget
+
+```bash
 yt-dlp --external-downloader wget "URL"
+```
 
-# Use curl
+Use curl
+
+```bash
 yt-dlp --external-downloader curl "URL"
 ```
 
 #### **Connection Management**
 
+Limit download rate (prevent throttling)
+
 ```bash
-# Limit download rate (prevent throttling)
 yt-dlp --limit-rate 2M "URL"
+```
 
-# Multiple retries
+Multiple retries
+
+```bash
 yt-dlp -R 10 "URL"
+```
 
-# Fragment concurrent downloads
+Fragment concurrent downloads
+
+```bash
 yt-dlp --concurrent-fragments 4 "URL"
+```
 
-# Sleep between downloads
+Sleep between downloads
+
+```bash
 yt-dlp --sleep-interval 5 "URL"
 ```
 
 #### **Network Optimization**
 
+Use different source address
+
 ```bash
-# Use different source address
 yt-dlp --source-address 192.168.1.100 "URL"
+```
 
-# Custom user agent
+Custom user agent
+
+```bash
 yt-dlp --user-agent "Mozilla/5.0..." "URL"
+```
 
-# IPv4 only (faster DNS)
+IPv4 only (faster DNS)
+
+```bash
 yt-dlp --force-ipv4 "URL"
 ```
 
@@ -226,46 +328,73 @@ yt-dlp --force-ipv4 "URL"
 
 #### **Basic Network Issues**
 
+Increase timeout
+
 ```bash
-# Increase timeout
 yt-dlp --socket-timeout 30 "URL"
+```
 
-# Ignore SSL errors (use cautiously)
+Ignore SSL errors (use cautiously)
+
+```bash
 yt-dlp --no-check-certificate "URL"
+```
 
-# Force IPv4
+Force IPv4
+
+```bash
 yt-dlp --force-ipv4 "URL"
+```
 
-# Use different DNS
+Use different DNS
+
+```bash
 yt-dlp --source-address 8.8.8.8 "URL"
 ```
 
 #### **Proxy and VPN Configuration**
 
+HTTP proxy
+
 ```bash
-# HTTP proxy
 yt-dlp --proxy http://proxy:8080 "URL"
+```
 
-# SOCKS proxy
+SOCKS proxy
+
+```bash
 yt-dlp --proxy socks5://127.0.0.1:1080 "URL"
+```
 
-# Proxy with authentication
+Proxy with authentication
+
+```bash
 yt-dlp --proxy http://user:pass@proxy:8080 "URL"
+```
 
-# No proxy for specific domains
+No proxy for specific domains
+
+```bash
 yt-dlp --proxy "http://proxy:8080" --no-proxy "example.com" "URL"
 ```
 
 #### **Advanced Network Options**
 
+Custom headers
+
 ```bash
-# Custom headers
 yt-dlp --add-header "Referer:https://example.com" "URL"
+```
 
-# Client certificate
+Client certificate
+
+```bash
 yt-dlp --client-certificate cert.pem --client-certificate-key key.pem "URL"
+```
 
-# Interface binding
+Interface binding
+
+```bash
 yt-dlp --source-address 192.168.1.100 "URL"
 ```
 
@@ -282,30 +411,47 @@ yt-dlp --source-address 192.168.1.100 "URL"
 
 #### **Basic Subtitle Operations**
 
+List available subtitles
+
 ```bash
-# List available subtitles
 yt-dlp --list-subs "URL"
+```
 
-# Download specific language
+Download specific language
+
+```bash
 yt-dlp --sub-langs en --write-subs "URL"
+```
 
-# Download all subtitles
+Download all subtitles
+
+```bash
 yt-dlp --sub-langs all --write-subs "URL"
+```
 
-# Auto-generated subtitles
+Auto-generated subtitles
+
+```bash
 yt-dlp --write-auto-subs --sub-langs en "URL"
 ```
 
 #### **Subtitle Processing**
 
+Convert subtitle format
+
 ```bash
-# Convert subtitle format
 yt-dlp --convert-subs srt --write-subs "URL"
+```
 
-# Embed subtitles in video
+Embed subtitles in video
+
+```bash
 yt-dlp --embed-subs --sub-langs en "URL"
+```
 
-# Both write and embed
+Both write and embed
+
+```bash
 yt-dlp --write-subs --embed-subs --sub-langs en "URL"
 ```
 
@@ -322,40 +468,61 @@ yt-dlp --write-subs --embed-subs --sub-langs en "URL"
 
 #### **Playlist Control**
 
+Download entire playlist
+
 ```bash
-# Download entire playlist
 yt-dlp --yes-playlist "PLAYLIST_URL"
+```
 
-# Specific items
+Specific items
+
+```bash
 yt-dlp --playlist-items 1,3,5-10 "PLAYLIST_URL"
+```
 
-# Reverse order
+Reverse order
+
+```bash
 yt-dlp --playlist-reverse "PLAYLIST_URL"
+```
 
-# Start from specific item
+Start from specific item
+
+```bash
 yt-dlp --playlist-start 5 "PLAYLIST_URL"
 ```
 
 #### **Error Handling**
 
+Continue on errors
+
 ```bash
-# Continue on errors
 yt-dlp --ignore-errors "PLAYLIST_URL"
+```
 
-# Abort on first error
+Abort on first error
+
+```bash
 yt-dlp --abort-on-error "PLAYLIST_URL"
+```
 
-# Skip unavailable videos
+Skip unavailable videos
+
+```bash
 yt-dlp --ignore-no-formats-error "PLAYLIST_URL"
 ```
 
 #### **Rate Limiting for Playlists**
 
-```bash
-# Sleep between downloads
-yt-dlp --sleep-interval 5 --max-sleep-interval 15 "PLAYLIST_URL"
+Sleep between downloads
 
-# Limit concurrent downloads
+```bash
+yt-dlp --sleep-interval 5 --max-sleep-interval 15 "PLAYLIST_URL"
+```
+
+Limit concurrent downloads
+
+```bash
 yt-dlp --max-downloads 50 "PLAYLIST_URL"
 ```
 
@@ -372,30 +539,47 @@ yt-dlp --max-downloads 50 "PLAYLIST_URL"
 
 #### **Filename Handling**
 
+Restrict filenames to ASCII
+
 ```bash
-# Restrict filenames to ASCII
 yt-dlp --restrict-filenames "URL"
+```
 
-# Custom output template
+Custom output template
+
+```bash
 yt-dlp -o "%(title).50s-%(id)s.%(ext)s" "URL"
+```
 
-# Windows-safe filenames
+Windows-safe filenames
+
+```bash
 yt-dlp -o "%(title)s.%(ext)s" --windows-filenames "URL"
+```
 
-# Avoid filename conflicts
+Avoid filename conflicts
+
+```bash
 yt-dlp -o "%(autonumber)03d-%(title)s.%(ext)s" "URL"
 ```
 
 #### **Path Management**
 
+Specify download directory
+
 ```bash
-# Specify download directory
 yt-dlp -o "/path/to/downloads/%(title)s.%(ext)s" "URL"
+```
 
-# Separate paths for different content
+Separate paths for different content
+
+```bash
 yt-dlp -P "video:/videos" -P "audio:/music" "URL"
+```
 
-# Temporary directory
+Temporary directory
+
+```bash
 yt-dlp --paths temp:/tmp "URL"
 ```
 
@@ -412,40 +596,61 @@ yt-dlp --paths temp:/tmp "URL"
 
 #### **Installation and Configuration**
 
+Check FFmpeg availability
+
 ```bash
-# Check FFmpeg availability
 yt-dlp --check-formats "URL"
+```
 
-# Specify FFmpeg location
+Specify FFmpeg location
+
+```bash
 yt-dlp --ffmpeg-location /usr/local/bin/ffmpeg "URL"
+```
 
-# Skip post-processing
+Skip post-processing
+
+```bash
 yt-dlp --no-post-overwrites "URL"
 ```
 
 #### **Audio Processing**
 
+Extract audio with specific codec
+
 ```bash
-# Extract audio with specific codec
 yt-dlp -x --audio-format mp3 --audio-quality 192K "URL"
+```
 
-# Keep video after audio extraction
+Keep video after audio extraction
+
+```bash
 yt-dlp -x --keep-video "URL"
+```
 
-# Audio quality control
+Audio quality control
+
+```bash
 yt-dlp -x --audio-quality best "URL"
 ```
 
 #### **Video Processing**
 
+Remux to different container
+
 ```bash
-# Remux to different container
 yt-dlp --remux-video mp4 "URL"
+```
 
-# Re-encode video
+Re-encode video
+
+```bash
 yt-dlp --recode-video mp4 "URL"
+```
 
-# Embed metadata
+Embed metadata
+
+```bash
 yt-dlp --embed-metadata --embed-thumbnail "URL"
 ```
 
@@ -462,29 +667,49 @@ yt-dlp --embed-metadata --embed-thumbnail "URL"
 
 #### **Browser Cookie Extraction**
 
+Extract from specific browser
+
 ```bash
-# Extract from specific browser
 yt-dlp --cookies-from-browser firefox "URL"
+```
+
+```bash
 yt-dlp --cookies-from-browser chrome "URL"
+```
+
+```bash
 yt-dlp --cookies-from-browser safari "URL"
+```
 
-# Specify profile
+Specify profile
+
+```bash
 yt-dlp --cookies-from-browser "firefox:Profile Name" "URL"
+```
 
-# Container support (Firefox)
+Container support (Firefox)
+
+```bash
 yt-dlp --cookies-from-browser "firefox:Profile:Container" "URL"
 ```
 
 #### **Manual Authentication**
 
+Username/password login
+
 ```bash
-# Username/password login
 yt-dlp --username user --password pass "URL"
+```
 
-# Two-factor authentication
+Two-factor authentication
+
+```bash
 yt-dlp --username user --password pass --twofactor 123456 "URL"
+```
 
-# Netrc file authentication
+Netrc file authentication
+
+```bash
 yt-dlp --netrc "URL"
 ```
 
@@ -494,21 +719,29 @@ yt-dlp --netrc "URL"
 
 #### **Age Restrictions and Sign-in**
 
-```bash
-# Bypass age verification
-yt-dlp --cookies-from-browser chrome "URL"
+Bypass age verification
 
-# YouTube Premium content
+```bash
+yt-dlp --cookies-from-browser chrome "URL"
+```
+
+YouTube Premium content
+
+```bash
 yt-dlp --cookies-from-browser firefox "URL"
 ```
 
 #### **Throttling and Rate Limits**
 
-```bash
-# Slower downloads to avoid throttling
-yt-dlp --limit-rate 1M --sleep-interval 5 "URL"
+Slower downloads to avoid throttling
 
-# Use different extraction method
+```bash
+yt-dlp --limit-rate 1M --sleep-interval 5 "URL"
+```
+
+Use different extraction method
+
+```bash
 yt-dlp --extractor-args "youtube:player_client=web" "URL"
 ```
 
@@ -516,15 +749,17 @@ yt-dlp --extractor-args "youtube:player_client=web" "URL"
 
 #### **Instagram**
 
+Stories and highlights
+
 ```bash
-# Stories and highlights
 yt-dlp --cookies-from-browser chrome "INSTAGRAM_URL"
 ```
 
 #### **TikTok**
 
+Avoid watermarks
+
 ```bash
-# Avoid watermarks
 yt-dlp --extractor-args "tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com" "URL"
 ```
 
@@ -532,24 +767,35 @@ yt-dlp --extractor-args "tiktok:api_hostname=api16-normal-c-useast1a.tiktokv.com
 
 ### **Memory Management**
 
+Limit concurrent fragments
+
 ```bash
-# Limit concurrent fragments
 yt-dlp --concurrent-fragments 2 "URL"
+```
 
-# Buffer size control
+Buffer size control
+
+```bash
 yt-dlp --buffer-size 16K "URL"
+```
 
-# HTTP chunk size
+HTTP chunk size
+
+```bash
 yt-dlp --http-chunk-size 1M "URL"
 ```
 
 ### **CPU Optimization**
 
-```bash
-# Disable post-processing
-yt-dlp --no-post-overwrites "URL"
+Disable post-processing
 
-# Limit extraction info
+```bash
+yt-dlp --no-post-overwrites "URL"
+```
+
+Limit extraction info
+
+```bash
 yt-dlp --no-write-info-json --no-write-description "URL"
 ```
 
@@ -557,27 +803,41 @@ yt-dlp --no-write-info-json --no-write-description "URL"
 
 ### **Verbose Logging**
 
+Full verbose output
+
 ```bash
-# Full verbose output
 yt-dlp -vvv "URL"
+```
 
-# Debug network
+Debug network
+
+```bash
 yt-dlp --debug --print-traffic "URL"
+```
 
-# Dump pages
+Dump pages
+
+```bash
 yt-dlp --dump-pages --write-pages "URL"
 ```
 
 ### **Error Analysis**
 
+Simulate download (no actual download)
+
 ```bash
-# Simulate download (no actual download)
 yt-dlp -s "URL"
+```
 
-# Check formats only
+Check formats only
+
+```bash
 yt-dlp -F "URL"
+```
 
-# Test extraction
+Test extraction
+
+```bash
 yt-dlp --get-url "URL"
 ```
 
@@ -599,11 +859,15 @@ yt-dlp --get-url "URL"
 
 ### **Monitoring and Logging**
 
-```bash
-# Log all operations
-yt-dlp --verbose --output "%(title)s.%(ext)s" "URL" 2>&1 | tee download.log
+Log all operations
 
-# Archive successful downloads
+```bash
+yt-dlp --verbose --output "%(title)s.%(ext)s" "URL" 2>&1 | tee download.log
+```
+
+Archive successful downloads
+
+```bash
 yt-dlp --download-archive archive.txt "URL"
 ```
 

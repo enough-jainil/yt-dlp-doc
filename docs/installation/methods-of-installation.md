@@ -29,21 +29,29 @@ Pre-compiled binaries are the simplest installation method for most users. They 
 
 #### Recommended Locations
 
+System-wide (requires admin rights)
+
 ```cmd
-# System-wide (requires admin rights)
 C:\Windows\System32\
+```
 
-# User-specific
+User-specific
+
+```cmd
 C:\Users\%USERNAME%\AppData\Local\Microsoft\WindowsApps\
+```
 
-# Custom directory (add to PATH)
+Custom directory (add to PATH)
+
+```cmd
 C:\Tools\yt-dlp\
 ```
 
 #### Adding to PATH
 
+Add directory to PATH permanently
+
 ```cmd
-# Add directory to PATH permanently
 setx PATH "%PATH%;C:\Tools\yt-dlp"
 ```
 
@@ -53,28 +61,41 @@ setx PATH "%PATH%;C:\Tools\yt-dlp"
 
 1. **Download**: Get `yt-dlp_macos` from [releases page](https://github.com/yt-dlp/yt-dlp/releases)
 2. **Rename and Make Executable**:
-   ```bash
-   mv yt-dlp_macos yt-dlp
-   chmod +x yt-dlp
-   ```
+
+```bash
+mv yt-dlp_macos yt-dlp
+```
+
+```bash
+chmod +x yt-dlp
+```
+
 3. **Install System-wide**:
-   ```bash
-   sudo mv yt-dlp /usr/local/bin/
-   ```
+
+```bash
+sudo mv yt-dlp /usr/local/bin/
+```
 
 #### Apple Silicon (M1/M2) Macs
 
 1. **Download**: Get `yt-dlp_macos` (universal binary works on both architectures)
 2. **Handle Security Warnings**:
-   ```bash
-   # Remove quarantine attribute if needed
-   xattr -d com.apple.quarantine yt-dlp
-   ```
+
+Remove quarantine attribute if needed
+
+```bash
+xattr -d com.apple.quarantine yt-dlp
+```
+
 3. **Install**:
-   ```bash
-   chmod +x yt-dlp
-   sudo mv yt-dlp /usr/local/bin/
-   ```
+
+```bash
+chmod +x yt-dlp
+```
+
+```bash
+sudo mv yt-dlp /usr/local/bin/
+```
 
 ### Linux
 
@@ -82,30 +103,48 @@ setx PATH "%PATH%;C:\Tools\yt-dlp"
 
 1. **Download**: Get `yt-dlp` from [releases page](https://github.com/yt-dlp/yt-dlp/releases)
 2. **Make Executable and Install**:
-   ```bash
-   chmod +x yt-dlp
-   sudo mv yt-dlp /usr/local/bin/
-   ```
+
+```bash
+chmod +x yt-dlp
+```
+
+```bash
+sudo mv yt-dlp /usr/local/bin/
+```
 
 #### Alternative Installation Locations
 
+User-specific installation (no sudo required)
+
 ```bash
-# User-specific installation (no sudo required)
 mkdir -p ~/.local/bin
+```
+
+```bash
 mv yt-dlp ~/.local/bin/
+```
+
+```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+```
+
+```bash
 source ~/.bashrc
 ```
 
 ### Auto-update Feature
 
-All binary installations support self-updating:
+**All binary installations support self-updating:**
+
+Update to latest release
 
 ```bash
-# Update to latest release
 yt-dlp -U
+```
 
-# Update to specific version
+Update to specific version
+
+```bash
 yt-dlp -U --update-to 2023.12.30
 ```
 
@@ -120,46 +159,69 @@ Best for Python users who want the latest features and flexible installation opt
 
 ### Basic Installation
 
-```bash
-# Standard installation with common dependencies
-python3 -m pip install -U "yt-dlp[default]"
+Standard installation with common dependencies
 
-# Minimal installation (core features only)
+```bash
+python3 -m pip install -U "yt-dlp[default]"
+```
+
+Minimal installation (core features only)
+
+```bash
 python3 -m pip install -U yt-dlp
 ```
 
 ### Advanced Installation Options
 
+With browser impersonation support
+
 ```bash
-# With browser impersonation support
 python3 -m pip install -U "yt-dlp[default,curl-cffi]"
+```
 
-# Development/pre-release version
+Development/pre-release version
+
+```bash
 python3 -m pip install -U --pre "yt-dlp[default]"
+```
 
-# From GitHub master branch
+From GitHub master branch
+
+```bash
 python3 -m pip install -U "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz"
 ```
 
 ### Virtual Environment (Recommended)
 
-```bash
-# Create isolated environment
-python3 -m venv yt-dlp-env
-source yt-dlp-env/bin/activate  # Linux/macOS
-# yt-dlp-env\Scripts\activate   # Windows
+Create isolated environment
 
-# Install in virtual environment
+```bash
+python3 -m venv yt-dlp-env
+```
+
+Linux/macOS
+
+```bash
+source yt-dlp-env/bin/activate
+```
+
+Install in virtual environment
+
+```bash
 python3 -m pip install -U "yt-dlp[default]"
 ```
 
 ### Using pipx (Recommended for CLI Tools)
 
-```bash
-# Install pipx
-python3 -m pip install --user pipx
+Install pipx
 
-# Install yt-dlp with pipx
+```bash
+python3 -m pip install --user pipx
+```
+
+Install yt-dlp with pipx
+
+```bash
 pipx install "yt-dlp[default]"
 ```
 
@@ -171,40 +233,67 @@ Convenient for users who prefer system package managers for software management.
 
 #### Chocolatey
 
+Install Chocolatey (if not already installed)
+
 ```powershell
-# Install Chocolatey (if not already installed)
 Set-ExecutionPolicy Bypass -Scope Process -Force
+```
+
+```powershell
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+```
+
+```powershell
 iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```powershell
 choco install yt-dlp
+```
 
-# Update
+Update
+
+```powershell
 choco upgrade yt-dlp
 ```
 
 #### Scoop
 
+Install Scoop (if not already installed)
+
 ```powershell
-# Install Scoop (if not already installed)
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+```powershell
 irm get.scoop.sh | iex
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```powershell
 scoop install yt-dlp
+```
 
-# Update
+Update
+
+```powershell
 scoop update yt-dlp
 ```
 
 #### winget (Windows Package Manager)
 
-```cmd
-# Install
-winget install yt-dlp.yt-dlp
+Install
 
-# Update
+```cmd
+winget install yt-dlp.yt-dlp
+```
+
+Update
+
+```cmd
 winget upgrade yt-dlp.yt-dlp
 ```
 
@@ -212,26 +301,40 @@ winget upgrade yt-dlp.yt-dlp
 
 #### Homebrew
 
+Install Homebrew (if not already installed)
+
 ```bash
-# Install Homebrew (if not already installed)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 brew install yt-dlp
+```
 
-# Update
+Update
+
+```bash
 brew upgrade yt-dlp
 ```
 
 #### MacPorts
 
-```bash
-# Install MacPorts (requires separate installation)
-# Then install yt-dlp
-sudo port install yt-dlp
+Install MacPorts (requires separate installation)
+Then install yt-dlp
 
-# Update
+```bash
+sudo port install yt-dlp
+```
+
+Update
+
+```bash
 sudo port selfupdate
+```
+
+```bash
 sudo port upgrade yt-dlp
 ```
 
@@ -239,33 +342,51 @@ sudo port upgrade yt-dlp
 
 #### Debian/Ubuntu (APT)
 
-```bash
-# Add official PPA (most up-to-date)
-sudo add-apt-repository ppa:yt-dlp/stable
-sudo apt update
-sudo apt install yt-dlp
+Add official PPA (most up-to-date)
 
-# Alternative: Use distribution package (may be older)
+```bash
+sudo add-apt-repository ppa:yt-dlp/stable
+```
+
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install yt-dlp
+```
+
+Alternative: Use distribution package (may be older)
+
+```bash
 sudo apt install yt-dlp
 ```
 
 #### Fedora/CentOS/RHEL (DNF/YUM)
 
-```bash
-# Fedora
-sudo dnf install yt-dlp
+Fedora
 
-# Enable additional repositories if needed
+```bash
+sudo dnf install yt-dlp
+```
+
+Enable additional repositories if needed
+
+```bash
 sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 ```
 
 #### Arch Linux (pacman)
 
-```bash
-# Official repository
-sudo pacman -S yt-dlp
+Official repository
 
-# AUR for development versions
+```bash
+sudo pacman -S yt-dlp
+```
+
+AUR for development versions
+
+```bash
 yay -S yt-dlp-git
 ```
 
@@ -277,11 +398,15 @@ sudo zypper install yt-dlp
 
 #### Alpine Linux (apk)
 
-```bash
-# Add community repository
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+Add community repository
 
-# Install
+```bash
+echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+```
+
+Install
+
+```bash
 doas apk add yt-dlp
 ```
 
@@ -291,41 +416,63 @@ For developers and users who want the absolute latest features.
 
 ### Prerequisites
 
+Install build dependencies
+
 ```bash
-# Install build dependencies
 python3 -m pip install -U pip setuptools wheel hatchling
 ```
 
 ### Standard Build
 
+Clone repository
+
 ```bash
-# Clone repository
 git clone https://github.com/yt-dlp/yt-dlp.git
+```
+
+```bash
 cd yt-dlp
+```
 
-# Install dependencies
+Install dependencies
+
+```bash
 python3 -m pip install -U -r requirements.txt
+```
 
-# Build and install
+Build and install
+
+```bash
 python3 -m pip install -e .
 ```
 
 ### Creating Standalone Executable
 
-```bash
-# Install PyInstaller
-python3 -m pip install pyinstaller
+Install PyInstaller
 
-# Build executable
+```bash
+python3 -m pip install pyinstaller
+```
+
+Build executable
+
+```bash
 python3 -m PyInstaller --onefile --name yt-dlp yt_dlp/__main__.py
 ```
 
 ### Development Installation
 
+Clone and install in development mode
+
 ```bash
-# Clone and install in development mode
 git clone https://github.com/yt-dlp/yt-dlp.git
+```
+
+```bash
 cd yt-dlp
+```
+
+```bash
 python3 -m pip install -e ".[default]"
 ```
 
@@ -335,25 +482,35 @@ For containerized environments and isolated execution.
 
 ### Docker
 
-```bash
-# Run directly
-docker run --rm -v "$(pwd):/downloads" jauderho/yt-dlp:latest [OPTIONS] URL
+Run directly
 
-# Build custom image
+```bash
+docker run --rm -v "$(pwd):/downloads" jauderho/yt-dlp:latest [OPTIONS] URL
+```
+
+Build custom image
+
+```bash
 cat > Dockerfile << 'EOF'
 FROM python:3.11-alpine
 RUN pip install yt-dlp[default]
 ENTRYPOINT ["yt-dlp"]
 EOF
+```
 
+```bash
 docker build -t my-yt-dlp .
+```
+
+```bash
 docker run --rm -v "$(pwd):/downloads" my-yt-dlp [OPTIONS] URL
 ```
 
 ### Podman
 
+Similar to Docker
+
 ```bash
-# Similar to Docker
 podman run --rm -v "$(pwd):/downloads:Z" jauderho/yt-dlp:latest [OPTIONS] URL
 ```
 
@@ -361,34 +518,62 @@ podman run --rm -v "$(pwd):/downloads:Z" jauderho/yt-dlp:latest [OPTIONS] URL
 
 ### Android (Termux)
 
-```bash
-# Install Termux from F-Droid
-# In Termux:
-pkg update && pkg upgrade
-pkg install python
-pip install yt-dlp[default]
+Install Termux from F-Droid
+In Termux:
 
-# Optional: Install FFmpeg
+```bash
+pkg update
+```
+
+```bash
+pkg upgrade
+```
+
+```bash
+pkg install python
+```
+
+```bash
+pip install yt-dlp[default]
+```
+
+Optional: Install FFmpeg
+
+```bash
 pkg install ffmpeg
 ```
 
 ### iOS (iSH)
 
+Install iSH from App Store
+In iSH terminal:
+
 ```bash
-# Install iSH from App Store
-# In iSH terminal:
 apk update
+```
+
+```bash
 apk add python3 py3-pip
+```
+
+```bash
 pip3 install yt-dlp[default]
 ```
 
 ### Chrome OS (Linux container)
 
+Enable Linux development environment
+In Linux terminal:
+
 ```bash
-# Enable Linux development environment
-# In Linux terminal:
 sudo apt update
+```
+
+```bash
 sudo apt install python3-pip
+```
+
+```bash
 pip3 install --user yt-dlp[default]
 ```
 
@@ -396,28 +581,45 @@ pip3 install --user yt-dlp[default]
 
 ### Basic Verification
 
+Check version
+
 ```bash
-# Check version
 yt-dlp --version
+```
 
-# Test functionality
+Test functionality
+
+```bash
 yt-dlp --simulate "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
 
-# Check available extractors
+Check available extractors
+
+```bash
 yt-dlp --list-extractors | head -20
 ```
 
 ### Comprehensive Testing
 
+Test format listing
+
 ```bash
-# Test format listing
 yt-dlp -F "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
 
-# Test with different sites
+Test with different sites
+
+```bash
 yt-dlp --simulate "https://vimeo.com/123456789"
-yt-dlp --simulate "https://soundcloud.com/example/track"
+```
 
-# Check post-processing capabilities
+```bash
+yt-dlp --simulate "https://soundcloud.com/example/track"
+```
+
+Check post-processing capabilities
+
+```bash
 yt-dlp --list-post-processors
 ```
 
@@ -445,32 +647,58 @@ yt-dlp --list-post-processors
 
 ### Binary Installations
 
-```bash
-# Self-update (recommended)
-yt-dlp -U
+Self-update (recommended)
 
-# Check for updates without installing
+```bash
+yt-dlp -U
+```
+
+Check for updates without installing
+
+```bash
 yt-dlp --update --simulate
 ```
 
 ### pip Installations
 
-```bash
-# Update to latest stable
-python3 -m pip install -U yt-dlp[default]
+Update to latest stable
 
-# Update to development version
+```bash
+python3 -m pip install -U yt-dlp[default]
+```
+
+Update to development version
+
+```bash
 python3 -m pip install -U --pre yt-dlp[default]
 ```
 
 ### Package Manager Installations
 
+Follow your package manager's update process
+
+macOS Homebrew
+
 ```bash
-# Follow your package manager's update process
-brew upgrade yt-dlp           # macOS Homebrew
-choco upgrade yt-dlp          # Windows Chocolatey
-sudo apt upgrade yt-dlp       # Debian/Ubuntu
-sudo pacman -Syu yt-dlp       # Arch Linux
+brew upgrade yt-dlp
+```
+
+Windows Chocolatey
+
+```powershell
+choco upgrade yt-dlp
+```
+
+Debian/Ubuntu
+
+```bash
+sudo apt upgrade yt-dlp
+```
+
+Arch Linux
+
+```bash
+sudo pacman -Syu yt-dlp
 ```
 
 ## Troubleshooting Installation Issues

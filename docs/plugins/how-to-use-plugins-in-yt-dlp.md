@@ -72,30 +72,47 @@ Custom download methods and protocols:
 
 #### **Using pip**
 
+Install from PyPI
+
 ```bash
-# Install from PyPI
 pip install yt-dlp-plugin-name
+```
 
-# Install from GitHub
+Install from GitHub
+
+```bash
 pip install git+https://github.com/user/yt-dlp-plugin-repo.git
+```
 
-# Install specific version
+Install specific version
+
+```bash
 pip install yt-dlp-plugin-name==1.2.3
+```
 
-# Install with dependencies
+Install with dependencies
+
+```bash
 pip install yt-dlp-plugin-name[extra-features]
 ```
 
 #### **Using Package Managers**
 
+Homebrew (macOS)
+
 ```bash
-# Homebrew (macOS)
 brew install yt-dlp-plugin-name
+```
 
-# APT (Debian/Ubuntu) - if available
+APT (Debian/Ubuntu) - if available
+
+```bash
 sudo apt install yt-dlp-plugin-name
+```
 
-# DNF (Fedora) - if available
+DNF (Fedora) - if available
+
+```bash
 sudo dnf install yt-dlp-plugin-name
 ```
 
@@ -118,17 +135,27 @@ sudo dnf install yt-dlp-plugin-name
 
 #### **Manual Installation Steps**
 
+Create plugin directories
+
 ```bash
-# Create plugin directories
 mkdir -p ~/.config/yt-dlp/plugins/{extractors,postprocessors,downloaders}
+```
 
-# Download plugin file
+Download plugin file
+
+```bash
 wget https://raw.githubusercontent.com/user/repo/main/plugin.py
+```
 
-# Place in appropriate directory
+Place in appropriate directory
+
+```bash
 mv plugin.py ~/.config/yt-dlp/plugins/extractors/
+```
 
-# Create __init__.py if needed
+Create **init**.py if needed
+
+```bash
 touch ~/.config/yt-dlp/plugins/extractors/__init__.py
 ```
 
@@ -136,15 +163,22 @@ touch ~/.config/yt-dlp/plugins/extractors/__init__.py
 
 For plugin development and testing:
 
-```bash
-# Clone plugin repository
-git clone https://github.com/user/yt-dlp-plugin-repo.git
+Clone plugin repository
 
-# Install in development mode
+```bash
+git clone https://github.com/user/yt-dlp-plugin-repo.git
+```
+
+Install in development mode
+
+```bash
 cd yt-dlp-plugin-repo
 pip install -e .
+```
 
-# Link to plugin directory
+Link to plugin directory
+
+```bash
 ln -s $(pwd)/plugin.py ~/.config/yt-dlp/plugins/extractors/
 ```
 
@@ -162,21 +196,29 @@ Plugins can be configured through yt-dlp configuration files:
 
 ### **Environment Variables**
 
-```bash
-# Plugin search paths
-export PYTHONPATH="/custom/plugin/path:$PYTHONPATH"
+Plugin search paths
 
-# Plugin-specific environment variables
+```bash
+export PYTHONPATH="/custom/plugin/path:$PYTHONPATH"
+```
+
+Plugin-specific environment variables
+
+```bash
 export PLUGIN_CONFIG_VAR="value"
 ```
 
 ### **Command-Line Options**
 
-```bash
-# Use specific post-processor plugin
-yt-dlp --use-postprocessor PluginName "URL"
+Use specific post-processor plugin
 
-# Pass arguments to extractor plugins
+```bash
+yt-dlp --use-postprocessor PluginName "URL"
+```
+
+Pass arguments to extractor plugins
+
+```bash
 yt-dlp --extractor-args "plugin:option=value" "URL"
 ```
 
@@ -186,14 +228,21 @@ yt-dlp --extractor-args "plugin:option=value" "URL"
 
 Extractor plugins work automatically when you provide URLs they support:
 
+Plugin automatically detects and handles the URL
+
 ```bash
-# Plugin automatically detects and handles the URL
 yt-dlp "https://newsite.com/video/12345"
+```
 
-# Force specific extractor
+Force specific extractor
+
+```bash
 yt-dlp --force-generic-extractor "URL"
+```
 
-# List available extractors (including plugins)
+List available extractors (including plugins)
+
+```bash
 yt-dlp --list-extractors | grep -i "plugin"
 ```
 
@@ -201,14 +250,21 @@ yt-dlp --list-extractors | grep -i "plugin"
 
 Post-processor plugins require explicit activation:
 
+Use specific post-processor
+
 ```bash
-# Use specific post-processor
 yt-dlp --use-postprocessor CustomProcessor "URL"
+```
 
-# Chain multiple post-processors
+Chain multiple post-processors
+
+```bash
 yt-dlp --use-postprocessor "Processor1" --use-postprocessor "Processor2" "URL"
+```
 
-# Post-processor with options
+Post-processor with options
+
+```bash
 yt-dlp --use-postprocessor "CustomProcessor:option1=value1" "URL"
 ```
 
@@ -216,18 +272,23 @@ yt-dlp --use-postprocessor "CustomProcessor:option1=value1" "URL"
 
 #### **Plugin-Specific Arguments**
 
-```bash
-# Pass arguments to extractor plugins
-yt-dlp --extractor-args "youtube:player_client=web" "URL"
+Pass arguments to extractor plugins
 
-# Multiple plugin arguments
+```bash
+yt-dlp --extractor-args "youtube:player_client=web" "URL"
+```
+
+Multiple plugin arguments
+
+```bash
 yt-dlp --extractor-args "plugin1:arg1=val1" --extractor-args "plugin2:arg2=val2" "URL"
 ```
 
 #### **Conditional Plugin Loading**
 
+Use plugin only for specific conditions
+
 ```bash
-# Use plugin only for specific conditions
 yt-dlp --match-filter "duration > 300" --use-postprocessor ConditionalProcessor "URL"
 ```
 
@@ -235,40 +296,61 @@ yt-dlp --match-filter "duration > 300" --use-postprocessor ConditionalProcessor 
 
 ### **Listing Installed Plugins**
 
+List all extractors (including plugins)
+
 ```bash
-# List all extractors (including plugins)
 yt-dlp --list-extractors
+```
 
-# List all post-processors (including plugins)
+List all post-processors (including plugins)
+
+```bash
 yt-dlp --list-postprocessors
+```
 
-# Verbose output shows plugin loading
+Verbose output shows plugin loading
+
+```bash
 yt-dlp --verbose "URL"
 ```
 
 ### **Updating Plugins**
 
+Update pip-installed plugins
+
 ```bash
-# Update pip-installed plugins
 pip install --upgrade yt-dlp-plugin-name
+```
 
-# Update all yt-dlp related packages
+Update all yt-dlp related packages
+
+```bash
 pip list | grep yt-dlp | cut -d' ' -f1 | xargs pip install --upgrade
+```
 
-# Update manually installed plugins
+Update manually installed plugins
+
+```bash
 # Check plugin repository for updates and replace files
 ```
 
 ### **Removing Plugins**
 
+Uninstall pip-installed plugin
+
 ```bash
-# Uninstall pip-installed plugin
 pip uninstall yt-dlp-plugin-name
+```
 
-# Remove manually installed plugin
+Remove manually installed plugin
+
+```bash
 rm ~/.config/yt-dlp/plugins/extractors/plugin-name.py
+```
 
-# Remove plugin directory
+Remove plugin directory
+
+```bash
 rm -rf ~/.config/yt-dlp/plugins/extractors/plugin-directory/
 ```
 
@@ -278,55 +360,83 @@ rm -rf ~/.config/yt-dlp/plugins/extractors/plugin-directory/
 
 #### **Plugin Not Loading**
 
+Check plugin directory permissions
+
 ```bash
-# Check plugin directory permissions
 ls -la ~/.config/yt-dlp/plugins/
+```
 
-# Verify plugin syntax
+Verify plugin syntax
+
+```bash
 python -m py_compile ~/.config/yt-dlp/plugins/extractors/plugin.py
+```
 
-# Check for import errors
+Check for import errors
+
+```bash
 python -c "import sys; sys.path.append('~/.config/yt-dlp/plugins'); import extractors.plugin"
+```
 
-# Enable verbose logging
+Enable verbose logging
+
+```bash
 yt-dlp --verbose "URL"
 ```
 
 #### **Plugin Conflicts**
 
+Identify conflicting plugins by checking verbose output
+
 ```bash
-# Identify conflicting plugins by checking verbose output
 yt-dlp --verbose "URL"
+```
 
-# Test without plugins
+Test without plugins
+
+```bash
 yt-dlp --no-plugins "URL"
+```
 
-# Test with specific plugin only
+Test with specific plugin only
+
+```bash
 # Temporarily move other plugins out of the directory
 ```
 
 #### **Version Compatibility**
 
+Check yt-dlp version
+
 ```bash
-# Check yt-dlp version
 yt-dlp --version
-
-# Update yt-dlp to latest version
-pip install --upgrade yt-dlp
-
-# Check plugin documentation for compatibility requirements
 ```
+
+Update yt-dlp to latest version
+
+```bash
+pip install --upgrade yt-dlp
+```
+
+Check plugin documentation for compatibility requirements
 
 ### **Debug and Logging**
 
+Enable maximum verbosity
+
 ```bash
-# Enable maximum verbosity
 yt-dlp -vvv "URL"
+```
 
-# Check Python path and imports
+Check Python path and imports
+
+```bash
 python -c "import sys; print(sys.path)"
+```
 
-# Test plugin loading manually
+Test plugin loading manually
+
+```bash
 python -c "from yt_dlp.plugins import load_plugins; load_plugins()"
 ```
 
@@ -342,11 +452,15 @@ python -c "from yt_dlp.plugins import load_plugins; load_plugins()"
 
 ### **Safe Plugin Usage**
 
-```bash
-# Test plugin with simulation mode first
-yt-dlp --simulate --use-postprocessor plugin-name "URL"
+Test plugin with simulation mode first
 
-# Use plugins in isolated environment
+```bash
+yt-dlp --simulate --use-postprocessor plugin-name "URL"
+```
+
+Use plugins in isolated environment
+
+```bash
 python -m venv plugin-test
 source plugin-test/bin/activate
 pip install yt-dlp plugin-name
@@ -354,11 +468,15 @@ pip install yt-dlp plugin-name
 
 ### **Security Verification**
 
-```bash
-# Check plugin source code
-cat ~/.config/yt-dlp/plugins/extractors/plugin.py
+Check plugin source code
 
-# Verify plugin authenticity from official sources
+```bash
+cat ~/.config/yt-dlp/plugins/extractors/plugin.py
+```
+
+Verify plugin authenticity from official sources
+
+```bash
 # Check plugin repository, commits, and maintainer reputation
 ```
 
@@ -366,18 +484,23 @@ cat ~/.config/yt-dlp/plugins/extractors/plugin.py
 
 ### **Plugin Development Integration**
 
-```bash
-# Test plugin during development
-yt-dlp --extractor-args "plugin:debug=true" "URL"
+Test plugin during development
 
-# Plugin logging and debugging
+```bash
+yt-dlp --extractor-args "plugin:debug=true" "URL"
+```
+
+Plugin logging and debugging
+
+```bash
 yt-dlp --verbose --write-pages --write-info-json "URL"
 ```
 
 ### **Custom Plugin Configuration**
 
+Create plugin-specific config files
+
 ```bash
-# Create plugin-specific config files
 mkdir -p ~/.config/yt-dlp/plugins/config/
 echo "option=value" > ~/.config/yt-dlp/plugins/config/plugin-name.conf
 ```
@@ -386,21 +509,29 @@ echo "option=value" > ~/.config/yt-dlp/plugins/config/plugin-name.conf
 
 ### **Plugin Performance**
 
-```bash
-# Monitor plugin impact on performance
-time yt-dlp --use-postprocessor plugin-name "URL"
+Monitor plugin impact on performance
 
-# Compare performance with and without plugins
+```bash
+time yt-dlp --use-postprocessor plugin-name "URL"
+```
+
+Compare performance with and without plugins
+
+```bash
 time yt-dlp --no-plugins "URL"
 ```
 
 ### **Resource Management**
 
-```bash
-# Limit concurrent plugin operations
-yt-dlp --max-concurrent-fragments 2 "URL"
+Limit concurrent plugin operations
 
-# Monitor memory usage during plugin execution
+```bash
+yt-dlp --max-concurrent-fragments 2 "URL"
+```
+
+Monitor memory usage during plugin execution
+
+```bash
 yt-dlp --verbose "URL" & watch -n 1 'ps aux | grep yt-dlp'
 ```
 
@@ -431,27 +562,41 @@ yt-dlp --verbose "URL" & watch -n 1 'ps aux | grep yt-dlp'
 
 ### **Popular Extractor Plugins**
 
+Instagram enhanced extractor
+
 ```bash
-# Instagram enhanced extractor
 pip install yt-dlp-instagram-plugin
+```
 
-# TikTok watermark removal
+TikTok watermark removal
+
+```bash
 pip install yt-dlp-tiktok-plugin
+```
 
-# Educational platform support
+Educational platform support
+
+```bash
 pip install yt-dlp-edu-plugin
 ```
 
 ### **Useful Post-Processor Plugins**
 
+Advanced metadata embedding
+
 ```bash
-# Advanced metadata embedding
 yt-dlp --use-postprocessor MetadataPlus "URL"
+```
 
-# Custom thumbnail processing
+Custom thumbnail processing
+
+```bash
 yt-dlp --use-postprocessor ThumbnailProcessor "URL"
+```
 
-# File organization
+File organization
+
+```bash
 yt-dlp --use-postprocessor FileOrganizer "URL"
 ```
 
@@ -482,15 +627,22 @@ yt-dlp --use-postprocessor FileOrganizer "URL"
 
 ### **Development Tools**
 
-```bash
-# Plugin development template
-git clone https://github.com/yt-dlp/plugin-template.git
+Plugin development template
 
-# Testing framework
+```bash
+git clone https://github.com/yt-dlp/plugin-template.git
+```
+
+Testing framework
+
+```bash
 pip install pytest
 pytest test_plugin.py
+```
 
-# Code quality tools
+Code quality tools
+
+```bash
 pip install flake8 black
 flake8 plugin.py
 black plugin.py

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 8
 ---
 
 # Post-Processing Basics
@@ -10,30 +10,53 @@ yt-dlp provides extensive post-processing capabilities to convert, enhance, and 
 
 ### Audio Extraction and Conversion
 
+Extract audio to MP3
+
 ```bash
-# Extract audio to MP3
 yt-dlp -x --audio-format mp3 "VIDEO_URL"
+```
 
-# Extract audio with quality setting
+Extract audio with quality setting
+
+```bash
 yt-dlp -x --audio-format mp3 --audio-quality 0 "VIDEO_URL"
+```
 
-# Convert to different audio formats
+Convert to different audio formats
+
+```bash
 yt-dlp -x --audio-format aac "VIDEO_URL"
+```
+
+```bash
 yt-dlp -x --audio-format flac "VIDEO_URL"
+```
+
+```bash
 yt-dlp -x --audio-format wav "VIDEO_URL"
 ```
 
 ### Video Format Conversion
 
+Convert to MP4
+
 ```bash
-# Convert to MP4
 yt-dlp --remux-video mp4 "VIDEO_URL"
+```
 
-# Merge video and audio to specific format
+Merge video and audio to specific format
+
+```bash
 yt-dlp -f "bestvideo+bestaudio" --merge-output-format mp4 "VIDEO_URL"
+```
 
-# Convert to different video formats
+Convert to different video formats
+
+```bash
 yt-dlp --remux-video mkv "VIDEO_URL"
+```
+
+```bash
 yt-dlp --remux-video avi "VIDEO_URL"
 ```
 
@@ -41,30 +64,47 @@ yt-dlp --remux-video avi "VIDEO_URL"
 
 ### Adding Metadata
 
+Add basic metadata
+
 ```bash
-# Add basic metadata
 yt-dlp --add-metadata "VIDEO_URL"
+```
 
-# Add metadata to audio files
+Add metadata to audio files
+
+```bash
 yt-dlp -x --add-metadata "VIDEO_URL"
+```
 
-# Write metadata to external file
+Write metadata to external file
+
+```bash
 yt-dlp --write-info-json "VIDEO_URL"
 ```
 
 ### Thumbnail Processing
 
+Embed thumbnail in video
+
 ```bash
-# Embed thumbnail in video
 yt-dlp --embed-thumbnail "VIDEO_URL"
+```
 
-# Embed thumbnail in audio
+Embed thumbnail in audio
+
+```bash
 yt-dlp -x --embed-thumbnail "VIDEO_URL"
+```
 
-# Write thumbnail as separate file
+Write thumbnail as separate file
+
+```bash
 yt-dlp --write-thumbnail "VIDEO_URL"
+```
 
-# Convert thumbnail format
+Convert thumbnail format
+
+```bash
 yt-dlp --convert-thumbnails jpg "VIDEO_URL"
 ```
 
@@ -72,27 +112,41 @@ yt-dlp --convert-thumbnails jpg "VIDEO_URL"
 
 ### Subtitle Embedding
 
+Embed subtitles in video
+
 ```bash
-# Embed subtitles in video
 yt-dlp --embed-subs "VIDEO_URL"
+```
 
-# Embed specific language subtitles
+Embed specific language subtitles
+
+```bash
 yt-dlp --embed-subs --sub-lang en "VIDEO_URL"
+```
 
-# Embed all available subtitles
+Embed all available subtitles
+
+```bash
 yt-dlp --embed-subs --sub-lang all "VIDEO_URL"
 ```
 
 ### Subtitle Conversion
 
+Convert subtitle format
+
 ```bash
-# Convert subtitle format
 yt-dlp --convert-subs srt "VIDEO_URL"
+```
 
-# Convert to multiple formats
+Convert to multiple formats
+
+```bash
 yt-dlp --convert-subs "srt,vtt,ass" "VIDEO_URL"
+```
 
-# Write and convert subtitles
+Write and convert subtitles
+
+```bash
 yt-dlp --write-sub --convert-subs srt "VIDEO_URL"
 ```
 
@@ -100,46 +154,73 @@ yt-dlp --write-sub --convert-subs srt "VIDEO_URL"
 
 ### Custom FFmpeg Arguments
 
+Apply video filters
+
 ```bash
-# Apply video filters
 yt-dlp --postprocessor-args "ffmpeg:-vf scale=1280:720" "VIDEO_URL"
+```
 
-# Audio processing
+Audio processing
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-af loudnorm" "VIDEO_URL"
+```
 
-# Multiple filters
+Multiple filters
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-vf scale=1280:720,fps=30 -af loudnorm" "VIDEO_URL"
 ```
 
 ### Video Processing Examples
 
+Resize video
+
 ```bash
-# Resize video
 yt-dlp --postprocessor-args "ffmpeg:-vf scale=1920:1080" "VIDEO_URL"
+```
 
-# Change frame rate
+Change frame rate
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-vf fps=30" "VIDEO_URL"
+```
 
-# Apply video filters
+Apply video filters
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-vf brightness=0.1,contrast=1.1" "VIDEO_URL"
+```
 
-# Crop video
+Crop video
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-vf crop=1280:720:0:0" "VIDEO_URL"
 ```
 
 ### Audio Processing Examples
 
+Normalize audio
+
 ```bash
-# Normalize audio
 yt-dlp --postprocessor-args "ffmpeg:-af loudnorm" "VIDEO_URL"
+```
 
-# Change audio bitrate
+Change audio bitrate
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-b:a 192k" "VIDEO_URL"
+```
 
-# Apply audio filters
+Apply audio filters
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-af highpass=f=200,lowpass=f=3000" "VIDEO_URL"
+```
 
-# Audio fade effects
+Audio fade effects
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-af afade=t=in:d=2,afade=t=out:st=28:d=2" "VIDEO_URL"
 ```
 
@@ -147,27 +228,41 @@ yt-dlp --postprocessor-args "ffmpeg:-af afade=t=in:d=2,afade=t=out:st=28:d=2" "V
 
 ### Custom Execution Scripts
 
+Execute script after download
+
 ```bash
-# Execute script after download
 yt-dlp --exec "custom_script.sh {}" "VIDEO_URL"
+```
 
-# Execute before download
+Execute before download
+
+```bash
 yt-dlp --exec-before-download "prepare_script.sh {}" "VIDEO_URL"
+```
 
-# Multiple execution points
+Multiple execution points
+
+```bash
 yt-dlp --exec-before-download "pre_script.sh {}" --exec "post_script.sh {}" "VIDEO_URL"
 ```
 
 ### File Movement and Organization
 
+Move files after processing
+
 ```bash
-# Move files after processing
 yt-dlp --exec "mv {} /final/destination/" "VIDEO_URL"
+```
 
-# Organize by date
+Organize by date
+
+```bash
 yt-dlp --exec "mkdir -p $(date +%Y/%m) && mv {} $(date +%Y/%m)/" "VIDEO_URL"
+```
 
-# Custom organization script
+Custom organization script
+
+```bash
 yt-dlp --exec "organize_files.py {}" "VIDEO_URL"
 ```
 
@@ -175,24 +270,35 @@ yt-dlp --exec "organize_files.py {}" "VIDEO_URL"
 
 ### YouTube-Specific
 
+Process YouTube videos with chapters
+
 ```bash
-# Process YouTube videos with chapters
 yt-dlp --add-metadata --embed-chapters "YOUTUBE_URL"
+```
 
-# Extract YouTube comments
+Extract YouTube comments
+
+```bash
 yt-dlp --write-comments --embed-comments "YOUTUBE_URL"
+```
 
-# YouTube Music processing
+YouTube Music processing
+
+```bash
 yt-dlp -x --add-metadata --embed-thumbnail --parse-metadata "title:%(artist)s - %(title)s" "YOUTUBE_MUSIC_URL"
 ```
 
 ### Twitch-Specific
 
-```bash
-# Process Twitch VODs with chat
-yt-dlp --write-comments "TWITCH_VOD_URL"
+Process Twitch VODs with chat
 
-# Twitch highlights extraction
+```bash
+yt-dlp --write-comments "TWITCH_VOD_URL"
+```
+
+Twitch highlights extraction
+
+```bash
 yt-dlp --download-sections "*highlights*" "TWITCH_URL"
 ```
 
@@ -200,21 +306,29 @@ yt-dlp --download-sections "*highlights*" "TWITCH_URL"
 
 ### Processing Multiple Files
 
-```bash
-# Batch processing with same options
-yt-dlp -x --add-metadata --batch-file urls.txt
+Batch processing with same options
 
-# Different processing per URL
+```bash
+yt-dlp -x --add-metadata --batch-file urls.txt
+```
+
+Different processing per URL
+
+```bash
 yt-dlp --batch-file batch_config.txt
 ```
 
 ### Post-Processing Archives
 
-```bash
-# Process only new downloads
-yt-dlp --download-archive processed.txt --add-metadata "VIDEO_URL"
+Process only new downloads
 
-# Reprocess existing files
+```bash
+yt-dlp --download-archive processed.txt --add-metadata "VIDEO_URL"
+```
+
+Reprocess existing files
+
+```bash
 yt-dlp --force-overwrites --remux-video mp4 "VIDEO_URL"
 ```
 
@@ -222,27 +336,41 @@ yt-dlp --force-overwrites --remux-video mp4 "VIDEO_URL"
 
 ### Video Quality Enhancement
 
+Upscale video (requires appropriate ffmpeg build)
+
 ```bash
-# Upscale video (requires appropriate ffmpeg build)
 yt-dlp --postprocessor-args "ffmpeg:-vf scale=1920:1080:flags=lanczos" "VIDEO_URL"
+```
 
-# Deinterlace video
+Deinterlace video
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-vf yadif" "VIDEO_URL"
+```
 
-# Stabilize video
+Stabilize video
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-vf deshake" "VIDEO_URL"
 ```
 
 ### Audio Quality Enhancement
 
+Audio normalization
+
 ```bash
-# Audio normalization
 yt-dlp --postprocessor-args "ffmpeg:-af loudnorm=I=-23:LRA=7:TP=-2" "VIDEO_URL"
+```
 
-# Noise reduction
+Noise reduction
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-af highpass=f=200" "VIDEO_URL"
+```
 
-# Dynamic range compression
+Dynamic range compression
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-af compand" "VIDEO_URL"
 ```
 
@@ -266,11 +394,15 @@ class CustomPostProcessor(PostProcessor):
 
 ### Plugin-Based Post-Processing
 
-```bash
-# Use external post-processor plugins
-yt-dlp --use-postprocessor ExternalPlugin "VIDEO_URL"
+Use external post-processor plugins
 
-# Plugin with arguments
+```bash
+yt-dlp --use-postprocessor ExternalPlugin "VIDEO_URL"
+```
+
+Plugin with arguments
+
+```bash
 yt-dlp --use-postprocessor "ExternalPlugin:arg1=value1,arg2=value2" "VIDEO_URL"
 ```
 
@@ -278,24 +410,35 @@ yt-dlp --use-postprocessor "ExternalPlugin:arg1=value1,arg2=value2" "VIDEO_URL"
 
 ### Handling Post-Processing Failures
 
+Continue on post-processing errors
+
 ```bash
-# Continue on post-processing errors
 yt-dlp --ignore-errors --add-metadata "VIDEO_URL"
+```
 
-# Skip post-processing if it fails
+Skip post-processing if it fails
+
+```bash
 yt-dlp --no-post-overwrites --remux-video mp4 "VIDEO_URL"
+```
 
-# Verbose post-processing debugging
+Verbose post-processing debugging
+
+```bash
 yt-dlp --verbose --add-metadata "VIDEO_URL"
 ```
 
 ### Recovery and Retry
 
-```bash
-# Retry post-processing
-yt-dlp --force-overwrites --add-metadata "VIDEO_URL"
+Retry post-processing
 
-# Post-process existing files
+```bash
+yt-dlp --force-overwrites --add-metadata "VIDEO_URL"
+```
+
+Post-process existing files
+
+```bash
 yt-dlp --skip-download --add-metadata "VIDEO_URL"
 ```
 
@@ -303,21 +446,29 @@ yt-dlp --skip-download --add-metadata "VIDEO_URL"
 
 ### Parallel Post-Processing
 
-```bash
-# Process multiple files simultaneously
-parallel -j 4 "yt-dlp --add-metadata {}" ::: url1 url2 url3 url4
+Process multiple files simultaneously
 
-# Batch processing with GNU parallel
+```bash
+parallel -j 4 "yt-dlp --add-metadata {}" ::: url1 url2 url3 url4
+```
+
+Batch processing with GNU parallel
+
+```bash
 yt-dlp --batch-file urls.txt --exec "echo {} >> completed.txt"
 ```
 
 ### Resource Management
 
-```bash
-# Limit FFmpeg threads
-yt-dlp --postprocessor-args "ffmpeg:-threads 2" "VIDEO_URL"
+Limit FFmpeg threads
 
-# Memory-efficient processing
+```bash
+yt-dlp --postprocessor-args "ffmpeg:-threads 2" "VIDEO_URL"
+```
+
+Memory-efficient processing
+
+```bash
 yt-dlp --postprocessor-args "ffmpeg:-preset ultrafast" "VIDEO_URL"
 ```
 
@@ -360,27 +511,41 @@ yt-dlp --postprocessor-args "ffmpeg:-preset ultrafast" "VIDEO_URL"
 
 ### Common Issues
 
+Debug post-processing issues
+
 ```bash
-# Debug post-processing issues
 yt-dlp --verbose --debug --add-metadata "VIDEO_URL"
+```
 
-# Check FFmpeg installation
+Check FFmpeg installation
+
+```bash
 ffmpeg -version
+```
 
-# Test post-processing without download
+Test post-processing without download
+
+```bash
 yt-dlp --skip-download --add-metadata "VIDEO_URL"
 ```
 
 ### Format Compatibility
 
+Check supported formats
+
 ```bash
-# Check supported formats
 ffmpeg -formats
+```
 
-# Test format conversion
+Test format conversion
+
+```bash
 yt-dlp --remux-video mp4 --verbose "VIDEO_URL"
+```
 
-# Force format even if incompatible
+Force format even if incompatible
+
+```bash
 yt-dlp --force-overwrites --merge-output-format mp4 "VIDEO_URL"
 ```
 

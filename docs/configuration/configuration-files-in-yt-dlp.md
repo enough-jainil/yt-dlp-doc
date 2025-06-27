@@ -12,7 +12,7 @@ yt-dlp loads configuration from multiple locations in the following order:
 
 ### 1. Main Configuration
 
-- **File given to `--config-location`** - Explicitly specified configuration file
+- File given to `--config-location` - Explicitly specified configuration file
 
 ### 2. Portable Configuration (Recommended for portable installations)
 
@@ -21,8 +21,8 @@ yt-dlp loads configuration from multiple locations in the following order:
 
 ### 3. Home Configuration
 
-- **Custom home path**: `yt-dlp.conf` in the home path given to `-P`
-- **Current directory**: If `-P` is not given, the current directory is searched
+- Custom home path: `yt-dlp.conf` in the home path given to `-P`
+- Current directory: If `-P` is not given, the current directory is searched
 
 ### 4. User Configuration
 
@@ -97,32 +97,44 @@ Configuration files use the same options as command-line arguments, with these r
 ### Ignoring Configuration Files
 
 ```bash
-# Ignore all configuration files for this run
-yt-dlp --ignore-config URL
-
-# Alternative syntax
-yt-dlp --no-config URL
+--ignore-config
 ```
+
+Ignore all configuration files for this run.
+
+```bash
+--no-config
+```
+
+Alternative syntax to ignore all configuration files.
 
 ### Custom Configuration Location
 
 ```bash
-# Use specific configuration file
-yt-dlp --config-locations /path/to/custom-config.conf URL
-
-# Use configuration from stdin
-yt-dlp --config-locations - URL < config.conf
-
-# Use multiple configuration files
-yt-dlp --config-locations config1.conf --config-locations config2.conf URL
+--config-locations /path/to/custom-config.conf
 ```
+
+Use specific configuration file.
+
+```bash
+--config-locations -
+```
+
+Use configuration from stdin.
+
+```bash
+--config-locations config1.conf --config-locations config2.conf
+```
+
+Use multiple configuration files.
 
 ### Disable Custom Configuration Loading
 
 ```bash
-# Do not load any custom configuration files (use only default locations)
-yt-dlp --no-config-locations URL
+--no-config-locations
 ```
+
+Do not load any custom configuration files (use only default locations).
 
 ## Configuration File Encoding
 
@@ -163,15 +175,22 @@ To force a specific encoding, add a coding declaration at the beginning:
 While not directly supported, you can use multiple configuration files for different scenarios:
 
 ```bash
-# Configuration for high quality downloads
-yt-dlp --config-locations ~/.config/yt-dlp/high-quality.conf URL
-
-# Configuration for mobile/low bandwidth
-yt-dlp --config-locations ~/.config/yt-dlp/mobile.conf URL
-
-# Configuration for audio-only downloads
-yt-dlp --config-locations ~/.config/yt-dlp/audio-only.conf URL
+--config-locations ~/.config/yt-dlp/high-quality.conf
 ```
+
+Configuration for high quality downloads.
+
+```bash
+--config-locations ~/.config/yt-dlp/mobile.conf
+```
+
+Configuration for mobile/low bandwidth.
+
+```bash
+--config-locations ~/.config/yt-dlp/audio-only.conf
+```
+
+Configuration for audio-only downloads.
 
 ### Network-Specific Configuration
 
@@ -255,15 +274,17 @@ Configuration also respects environment variables:
 
 ```bash
 export XDG_CONFIG_HOME="$HOME/.config"
-yt-dlp URL  # Uses $XDG_CONFIG_HOME/yt-dlp/config
 ```
+
+Uses $XDG_CONFIG_HOME/yt-dlp/config.
 
 **Windows**:
 
-```cmd
+```bash
 set APPDATA=C:\Users\MyUser\AppData\Roaming
-yt-dlp URL
 ```
+
+Sets APPDATA for configuration path.
 
 ## Configuration Examples
 
@@ -369,15 +390,22 @@ yt-dlp URL
 ### Testing Configuration
 
 ```bash
-# Test configuration without downloading
-yt-dlp --simulate --print filename URL
-
-# Show effective configuration
-yt-dlp --verbose --print config URL
-
-# Test specific configuration file
-yt-dlp --config-locations test-config.conf --simulate URL
+--simulate --print filename
 ```
+
+Test configuration without downloading.
+
+```bash
+--verbose --print config
+```
+
+Show effective configuration.
+
+```bash
+--config-locations test-config.conf --simulate
+```
+
+Test specific configuration file.
 
 ### Common Configuration Issues
 
@@ -389,12 +417,16 @@ yt-dlp --config-locations test-config.conf --simulate URL
 ### Debug Configuration Loading
 
 ```bash
-# Show which configuration files are loaded
-yt-dlp --verbose URL 2>&1 | grep -i config
-
-# Ignore all configs to test command-line only
-yt-dlp --ignore-config --simulate URL
+--verbose
 ```
+
+Show which configuration files are loaded.
+
+```bash
+--ignore-config --simulate
+```
+
+Ignore all configs to test command-line only.
 
 ## Configuration Best Practices
 

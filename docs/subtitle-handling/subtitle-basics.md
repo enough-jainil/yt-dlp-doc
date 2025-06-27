@@ -10,30 +10,47 @@ yt-dlp provides comprehensive subtitle support, allowing you to download, conver
 
 ### List Available Subtitles
 
+List all available subtitles
+
 ```bash
-# List all available subtitles
 yt-dlp --list-subs "VIDEO_URL"
+```
 
-# List subtitles with details
+List subtitles with details
+
+```bash
 yt-dlp --list-subs --verbose "VIDEO_URL"
+```
 
-# List auto-generated subtitles
+List auto-generated subtitles
+
+```bash
 yt-dlp --list-subs --list-auto-subs "VIDEO_URL"
 ```
 
 ### Download Subtitles
 
+Download subtitles (default language)
+
 ```bash
-# Download subtitles (default language)
 yt-dlp --write-sub "VIDEO_URL"
+```
 
-# Download subtitles in specific language
+Download subtitles in specific language
+
+```bash
 yt-dlp --write-sub --sub-lang en "VIDEO_URL"
+```
 
-# Download auto-generated subtitles
+Download auto-generated subtitles
+
+```bash
 yt-dlp --write-auto-sub "VIDEO_URL"
+```
 
-# Download both manual and auto-generated
+Download both manual and auto-generated
+
+```bash
 yt-dlp --write-sub --write-auto-sub "VIDEO_URL"
 ```
 
@@ -41,37 +58,55 @@ yt-dlp --write-sub --write-auto-sub "VIDEO_URL"
 
 ### Single Language
 
+Download English subtitles
+
 ```bash
-# Download English subtitles
 yt-dlp --write-sub --sub-lang en "VIDEO_URL"
+```
 
-# Download Spanish subtitles
+Download Spanish subtitles
+
+```bash
 yt-dlp --write-sub --sub-lang es "VIDEO_URL"
+```
 
-# Download Japanese subtitles
+Download Japanese subtitles
+
+```bash
 yt-dlp --write-sub --sub-lang ja "VIDEO_URL"
 ```
 
 ### Multiple Languages
 
+Download multiple languages
+
 ```bash
-# Download multiple languages
 yt-dlp --write-sub --sub-lang "en,es,fr" "VIDEO_URL"
+```
 
-# Download all available languages
+Download all available languages
+
+```bash
 yt-dlp --write-sub --sub-lang all "VIDEO_URL"
+```
 
-# Download auto-generated in multiple languages
+Download auto-generated in multiple languages
+
+```bash
 yt-dlp --write-auto-sub --sub-lang "en,es" "VIDEO_URL"
 ```
 
 ### Language Fallback
 
-```bash
-# Language preference with fallback
-yt-dlp --write-sub --sub-lang "en,en-US,en-GB" "VIDEO_URL"
+Language preference with fallback
 
-# Try manual first, then auto-generated
+```bash
+yt-dlp --write-sub --sub-lang "en,en-US,en-GB" "VIDEO_URL"
+```
+
+Try manual first, then auto-generated
+
+```bash
 yt-dlp --write-sub --write-auto-sub --sub-lang en "VIDEO_URL"
 ```
 
@@ -79,33 +114,53 @@ yt-dlp --write-sub --write-auto-sub --sub-lang en "VIDEO_URL"
 
 ### Available Formats
 
+WebVTT format (default)
+
 ```bash
-# WebVTT format (default)
 yt-dlp --write-sub --sub-format vtt "VIDEO_URL"
+```
 
-# SRT format (most compatible)
+SRT format (most compatible)
+
+```bash
 yt-dlp --write-sub --sub-format srt "VIDEO_URL"
+```
 
-# ASS format (advanced formatting)
+ASS format (advanced formatting)
+
+```bash
 yt-dlp --write-sub --sub-format ass "VIDEO_URL"
+```
 
-# TTML format
+TTML format
+
+```bash
 yt-dlp --write-sub --sub-format ttml "VIDEO_URL"
 ```
 
 ### Format Conversion
 
+Convert to SRT
+
 ```bash
-# Convert to SRT
 yt-dlp --write-sub --convert-subs srt "VIDEO_URL"
+```
 
-# Convert to WebVTT
+Convert to WebVTT
+
+```bash
 yt-dlp --write-sub --convert-subs vtt "VIDEO_URL"
+```
 
-# Convert to ASS
+Convert to ASS
+
+```bash
 yt-dlp --write-sub --convert-subs ass "VIDEO_URL"
+```
 
-# Convert multiple formats
+Convert multiple formats
+
+```bash
 yt-dlp --write-sub --convert-subs "srt,vtt" "VIDEO_URL"
 ```
 
@@ -113,40 +168,61 @@ yt-dlp --write-sub --convert-subs "srt,vtt" "VIDEO_URL"
 
 ### Basic Embedding
 
+Embed subtitles in video
+
 ```bash
-# Embed subtitles in video
 yt-dlp --embed-subs "VIDEO_URL"
+```
 
-# Embed specific language
+Embed specific language
+
+```bash
 yt-dlp --embed-subs --sub-lang en "VIDEO_URL"
+```
 
-# Embed and keep separate files
+Embed and keep separate files
+
+```bash
 yt-dlp --embed-subs --write-sub "VIDEO_URL"
 ```
 
 ### Embedding Options
 
+Embed all available subtitles
+
 ```bash
-# Embed all available subtitles
 yt-dlp --embed-subs --sub-lang all "VIDEO_URL"
+```
 
-# Embed with specific format
+Embed with specific format
+
+```bash
 yt-dlp --embed-subs --sub-format srt "VIDEO_URL"
+```
 
-# Embed auto-generated subtitles
+Embed auto-generated subtitles
+
+```bash
 yt-dlp --embed-subs --write-auto-sub "VIDEO_URL"
 ```
 
 ### Container Compatibility
 
+Embed in MP4 (supports multiple subtitle tracks)
+
 ```bash
-# Embed in MP4 (supports multiple subtitle tracks)
 yt-dlp --embed-subs --merge-output-format mp4 "VIDEO_URL"
+```
 
-# Embed in MKV (best subtitle support)
+Embed in MKV (best subtitle support)
+
+```bash
 yt-dlp --embed-subs --merge-output-format mkv "VIDEO_URL"
+```
 
-# Embed in WebM
+Embed in WebM
+
+```bash
 yt-dlp --embed-subs --merge-output-format webm "VIDEO_URL"
 ```
 
@@ -154,27 +230,41 @@ yt-dlp --embed-subs --merge-output-format webm "VIDEO_URL"
 
 ### Subtitle Filtering
 
+Only download videos with subtitles
+
 ```bash
-# Only download videos with subtitles
 yt-dlp --match-filters "subtitles" "VIDEO_URL"
+```
 
-# Only download videos with specific language subtitles
+Only download videos with specific language subtitles
+
+```bash
 yt-dlp --match-filters "subtitles.en" "VIDEO_URL"
+```
 
-# Exclude videos without subtitles
+Exclude videos without subtitles
+
+```bash
 yt-dlp --match-filters "!subtitles" "VIDEO_URL"
 ```
 
 ### Custom Subtitle Processing
 
+Download subtitles only (no video)
+
 ```bash
-# Download subtitles only (no video)
 yt-dlp --skip-download --write-sub "VIDEO_URL"
+```
 
-# Download subtitles with specific naming
+Download subtitles with specific naming
+
+```bash
 yt-dlp --write-sub -o "%(title)s.%(ext)s" "VIDEO_URL"
+```
 
-# Download with metadata
+Download with metadata
+
+```bash
 yt-dlp --write-sub --write-info-json "VIDEO_URL"
 ```
 
@@ -182,24 +272,35 @@ yt-dlp --write-sub --write-info-json "VIDEO_URL"
 
 ### Output Templates
 
+Organize subtitles by language
+
 ```bash
-# Organize subtitles by language
 yt-dlp --write-sub --sub-lang all -o "%(uploader)s/%(title)s/%(title)s.%(ext)s" "VIDEO_URL"
+```
 
-# Include language in filename
+Include language in filename
+
+```bash
 yt-dlp --write-sub --sub-lang "en,es" -o "%(title)s.%(lang)s.%(ext)s" "VIDEO_URL"
+```
 
-# Organized subtitle structure
+Organized subtitle structure
+
+```bash
 yt-dlp --write-sub --sub-lang all -o "%(uploader)s/%(title)s/subs/%(title)s.%(lang)s.%(ext)s" "VIDEO_URL"
 ```
 
 ### Subtitle-Specific Templates
 
-```bash
-# Separate subtitle directory
-yt-dlp --write-sub -o "videos/%(title)s.%(ext)s" --sub-format srt "VIDEO_URL"
+Separate subtitle directory
 
-# Custom subtitle naming
+```bash
+yt-dlp --write-sub -o "videos/%(title)s.%(ext)s" --sub-format srt "VIDEO_URL"
+```
+
+Custom subtitle naming
+
+```bash
 yt-dlp --write-sub -o "%(title)s.%(ext)s" --sub-format "srt" "VIDEO_URL"
 ```
 
@@ -207,34 +308,49 @@ yt-dlp --write-sub -o "%(title)s.%(ext)s" --sub-format "srt" "VIDEO_URL"
 
 ### YouTube
 
+YouTube auto-generated subtitles
+
 ```bash
-# YouTube auto-generated subtitles
 yt-dlp --write-auto-sub --sub-lang en "YOUTUBE_URL"
+```
 
-# YouTube manual subtitles (preferred)
+YouTube manual subtitles (preferred)
+
+```bash
 yt-dlp --write-sub --sub-lang en "YOUTUBE_URL"
+```
 
-# YouTube multiple languages
+YouTube multiple languages
+
+```bash
 yt-dlp --write-sub --sub-lang "en,es,fr,de,ja" "YOUTUBE_URL"
+```
 
-# YouTube with timestamps
+YouTube with timestamps
+
+```bash
 yt-dlp --write-sub --sub-format vtt "YOUTUBE_URL"
 ```
 
 ### Twitch
 
-```bash
-# Twitch chat replay as subtitles
-yt-dlp --write-sub --sub-lang rechat "TWITCH_URL"
+Twitch chat replay as subtitles
 
-# Twitch VOD subtitles
+```bash
+yt-dlp --write-sub --sub-lang rechat "TWITCH_URL"
+```
+
+Twitch VOD subtitles
+
+```bash
 yt-dlp --write-sub --sub-lang en "TWITCH_URL"
 ```
 
 ### Netflix/Prime Video (with appropriate access)
 
+Platform-specific subtitle extraction
+
 ```bash
-# Platform-specific subtitle extraction
 yt-dlp --write-sub --sub-lang all "PLATFORM_URL"
 ```
 
@@ -242,21 +358,29 @@ yt-dlp --write-sub --sub-lang all "PLATFORM_URL"
 
 ### Timing Adjustment
 
-```bash
-# Adjust subtitle timing with FFmpeg
-yt-dlp --write-sub --postprocessor-args "ffmpeg:-itsoffset 2" "VIDEO_URL"
+Adjust subtitle timing with FFmpeg
 
-# Custom subtitle processing
+```bash
+yt-dlp --write-sub --postprocessor-args "ffmpeg:-itsoffset 2" "VIDEO_URL"
+```
+
+Custom subtitle processing
+
+```bash
 yt-dlp --write-sub --exec "custom_subtitle_processor.py {}" "VIDEO_URL"
 ```
 
 ### Subtitle Cleanup
 
-```bash
-# Remove positioning information
-yt-dlp --write-sub --convert-subs srt "VIDEO_URL"
+Remove positioning information
 
-# Custom subtitle processing script
+```bash
+yt-dlp --write-sub --convert-subs srt "VIDEO_URL"
+```
+
+Custom subtitle processing script
+
+```bash
 yt-dlp --write-sub --exec-before-download "subtitle_cleaner.py {}" "VIDEO_URL"
 ```
 
@@ -264,24 +388,35 @@ yt-dlp --write-sub --exec-before-download "subtitle_cleaner.py {}" "VIDEO_URL"
 
 ### Playlist Subtitles
 
+Download subtitles for entire playlist
+
 ```bash
-# Download subtitles for entire playlist
 yt-dlp --write-sub --sub-lang en "PLAYLIST_URL"
+```
 
-# Organize playlist subtitles
+Organize playlist subtitles
+
+```bash
 yt-dlp --write-sub --sub-lang all -o "%(playlist)s/%(title)s/%(title)s.%(ext)s" "PLAYLIST_URL"
+```
 
-# Subtitle-only playlist download
+Subtitle-only playlist download
+
+```bash
 yt-dlp --skip-download --write-sub --sub-lang all "PLAYLIST_URL"
 ```
 
 ### Batch Processing
 
-```bash
-# Process multiple URLs with subtitles
-yt-dlp --write-sub --batch-file urls.txt
+Process multiple URLs with subtitles
 
-# Archive subtitles separately
+```bash
+yt-dlp --write-sub --batch-file urls.txt
+```
+
+Archive subtitles separately
+
+```bash
 yt-dlp --write-sub --download-archive subs_archive.txt "VIDEO_URL"
 ```
 
@@ -289,24 +424,35 @@ yt-dlp --write-sub --download-archive subs_archive.txt "VIDEO_URL"
 
 ### Preference Order
 
+Prefer manual over auto-generated
+
 ```bash
-# Prefer manual over auto-generated
 yt-dlp --write-sub --write-auto-sub --sub-lang en "VIDEO_URL"
+```
 
-# Specific subtitle source preference
+Specific subtitle source preference
+
+```bash
 yt-dlp --write-sub --sub-format "srt,vtt,ass" "VIDEO_URL"
+```
 
-# Quality-based selection
+Quality-based selection
+
+```bash
 yt-dlp --write-sub --sub-lang "en-US,en-GB,en" "VIDEO_URL"
 ```
 
 ### Subtitle Metadata
 
-```bash
-# Include subtitle metadata
-yt-dlp --write-sub --write-info-json "VIDEO_URL"
+Include subtitle metadata
 
-# Subtitle with descriptions
+```bash
+yt-dlp --write-sub --write-info-json "VIDEO_URL"
+```
+
+Subtitle with descriptions
+
+```bash
 yt-dlp --write-sub --write-description "VIDEO_URL"
 ```
 
@@ -314,34 +460,49 @@ yt-dlp --write-sub --write-description "VIDEO_URL"
 
 ### Common Issues
 
+Force subtitle download even if unavailable
+
 ```bash
-# Force subtitle download even if unavailable
 yt-dlp --write-sub --ignore-errors --sub-lang en "VIDEO_URL"
+```
 
-# Skip videos without subtitles
+Skip videos without subtitles
+
+```bash
 yt-dlp --match-filters "subtitles" "VIDEO_URL"
+```
 
-# Verbose subtitle debugging
+Verbose subtitle debugging
+
+```bash
 yt-dlp --write-sub --verbose --sub-lang en "VIDEO_URL"
 ```
 
 ### Subtitle Encoding Issues
 
-```bash
-# Force UTF-8 encoding
-yt-dlp --write-sub --encoding utf-8 "VIDEO_URL"
+Force UTF-8 encoding
 
-# Handle encoding errors
+```bash
+yt-dlp --write-sub --encoding utf-8 "VIDEO_URL"
+```
+
+Handle encoding errors
+
+```bash
 yt-dlp --write-sub --ignore-errors "VIDEO_URL"
 ```
 
 ### Format Compatibility
 
-```bash
-# Test subtitle formats
-yt-dlp --list-subs --sub-format all "VIDEO_URL"
+Test subtitle formats
 
-# Fallback format selection
+```bash
+yt-dlp --list-subs --sub-format all "VIDEO_URL"
+```
+
+Fallback format selection
+
+```bash
 yt-dlp --write-sub --sub-format "srt,vtt,ass,ttml" "VIDEO_URL"
 ```
 
@@ -359,10 +520,10 @@ echo "--embed-subs" >> ~/.config/yt-dlp/config
 
 ### Multi-language Setup
 
+Download videos with multiple subtitle languages
+
 ```bash
-# Download videos with multiple subtitle languages
-yt-dlp --write-sub --embed-subs --sub-lang "en,es,fr,de" \
-       --merge-output-format mkv "VIDEO_URL"
+yt-dlp --write-sub --embed-subs --sub-lang "en,es,fr,de" --merge-output-format mkv "VIDEO_URL"
 ```
 
 ## Best Practices

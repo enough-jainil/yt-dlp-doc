@@ -14,8 +14,8 @@ The general syntax for yt-dlp commands is:
 yt-dlp [OPTIONS] URL [URL...]
 ```
 
-- **`[OPTIONS]`** - Optional flags and parameters that modify behavior
-- **`URL`** - The video, playlist, or channel URL to download
+- **[OPTIONS]** - Optional flags and parameters that modify behavior
+- **URL** - The video, playlist, or channel URL to download
 - **Multiple URLs** - You can specify multiple URLs to download in batch
 
 ## Essential First Steps
@@ -23,78 +23,114 @@ yt-dlp [OPTIONS] URL [URL...]
 ### 1. Simple Video Download
 
 ```bash
-# Download a single video (best quality available)
 yt-dlp "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+```
 
-# Download from any supported site
+Download a single video (best quality available).
+
+```bash
 yt-dlp "https://vimeo.com/123456789"
 ```
+
+Download from any supported site.
 
 ### 2. Check Available Formats
 
 Before downloading, see what formats are available:
 
 ```bash
-# List all available formats
 yt-dlp -F "https://www.youtube.com/watch?v=VIDEO_ID"
+```
 
-# Or use --list-formats
+List all available formats.
+
+```bash
 yt-dlp --list-formats URL
 ```
+
+List all available formats.
 
 ### 3. Download Specific Quality
 
 ```bash
-# Download best quality up to 720p
 yt-dlp -f "best[height<=720]" URL
+```
 
-# Download best MP4 format
+Download best quality up to 720p.
+
+```bash
 yt-dlp -f "best[ext=mp4]" URL
+```
 
-# Download specific format by ID (from -F list)
+Download best MP4 format.
+
+```bash
 yt-dlp -f 22 URL
 ```
+
+Download specific format by ID (from -F list).
 
 ## Common Use Cases
 
 ### Audio-Only Downloads
 
 ```bash
-# Extract audio in best quality
 yt-dlp -x URL
+```
 
-# Extract audio as MP3
+Extract audio in best quality.
+
+```bash
 yt-dlp -x --audio-format mp3 URL
+```
 
-# Extract audio with specific quality
+Extract audio as MP3.
+
+```bash
 yt-dlp -x --audio-format mp3 --audio-quality 0 URL
 ```
+
+Extract audio with specific quality.
 
 ### Playlist Downloads
 
 ```bash
-# Download entire playlist
 yt-dlp "https://www.youtube.com/playlist?list=PLAYLIST_ID"
+```
 
-# Download specific items from playlist
+Download entire playlist.
+
+```bash
 yt-dlp -I 1-5,10,15-20 PLAYLIST_URL
+```
 
-# Download playlist starting from item 10
+Download specific items from playlist.
+
+```bash
 yt-dlp --playlist-start 10 PLAYLIST_URL
 ```
+
+Download playlist starting from item 10.
 
 ### Custom File Organization
 
 ```bash
-# Organize by uploader
 yt-dlp -o "%(uploader)s/%(title)s.%(ext)s" URL
+```
 
-# Include upload date
+Organize by uploader.
+
+```bash
 yt-dlp -o "%(upload_date)s - %(title)s.%(ext)s" URL
+```
 
-# Playlist organization
+Include upload date.
+
+```bash
 yt-dlp -o "%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" PLAYLIST_URL
 ```
+
+Playlist organization.
 
 ## Essential Options Reference
 
@@ -144,147 +180,203 @@ yt-dlp -o "%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" PLAYLIST_URL
 ### High-Quality Video Download
 
 ```bash
-# Best quality with fallbacks
-yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" \
-       --merge-output-format mp4 URL
+yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" --merge-output-format mp4 URL
 ```
+
+Best quality with fallbacks.
 
 ### Audio Collection Download
 
 ```bash
-# Download playlist as MP3 with good organization
-yt-dlp -x --audio-format mp3 --audio-quality 0 \
-       -o "%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" \
-       PLAYLIST_URL
+yt-dlp -x --audio-format mp3 --audio-quality 0 -o "%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" PLAYLIST_URL
 ```
+
+Download playlist as MP3 with good organization.
 
 ### Archive and Resume Downloads
 
 ```bash
-# Large playlist with resume capability
-yt-dlp --download-archive downloaded.txt \
-       --continue --ignore-errors \
-       -o "%(uploader)s/%(upload_date)s - %(title)s.%(ext)s" \
-       CHANNEL_URL
+yt-dlp --download-archive downloaded.txt --continue --ignore-errors -o "%(uploader)s/%(upload_date)s - %(title)s.%(ext)s" CHANNEL_URL
 ```
+
+Large playlist with resume capability.
 
 ### Subtitle Download
 
 ```bash
-# Download video with English subtitles
-yt-dlp --write-subs --sub-langs en --embed-subs \
-       -f "best[height<=720]" URL
+yt-dlp --write-subs --sub-langs en --embed-subs -f "best[height<=720]" URL
 ```
+
+Download video with English subtitles.
 
 ## Command-Line Tips
 
 ### Quoting and Special Characters
 
 ```bash
-# Always quote URLs with special characters
 yt-dlp "https://example.com/video?param=value&other=value"
+```
 
-# Quote output templates with spaces or special chars
+Always quote URLs with special characters.
+
+```bash
 yt-dlp -o "%(uploader)s - %(title)s.%(ext)s" URL
 ```
+
+Quote output templates with spaces or special chars.
 
 ### Using Configuration Files
 
 Create a config file to avoid repeating options:
 
 ```bash
-# Create ~/.config/yt-dlp/config
 echo "--download-archive archive.txt" >> ~/.config/yt-dlp/config
-echo "--continue" >> ~/.config/yt-dlp/config
-echo "--ignore-errors" >> ~/.config/yt-dlp/config
+```
 
-# Now yt-dlp will use these options automatically
+Add download archive option to config.
+
+```bash
+echo "--continue" >> ~/.config/yt-dlp/config
+```
+
+Add continue option to config.
+
+```bash
+echo "--ignore-errors" >> ~/.config/yt-dlp/config
+```
+
+Add ignore errors option to config.
+
+Now yt-dlp will use these options automatically:
+
+```bash
 yt-dlp URL
 ```
 
 ### Batch Processing
 
 ```bash
-# Create a file with URLs (urls.txt)
-# Then process all at once
 yt-dlp --batch-file urls.txt
+```
 
-# Or use shell features
+Process all URLs from a file.
+
+```bash
 cat urls.txt | xargs -I {} yt-dlp {}
 ```
+
+Use shell features to process URLs.
 
 ## Testing and Simulation
 
 ### Safe Testing
 
 ```bash
-# Simulate download (don't actually download)
 yt-dlp -s URL
+```
 
-# Print what the filename would be
+Simulate download (don't actually download).
+
+```bash
 yt-dlp --print filename -o "%(title)s.%(ext)s" URL
+```
 
-# Check formats without downloading
+Print what the filename would be.
+
+```bash
 yt-dlp -F URL
 ```
+
+Check formats without downloading.
 
 ### Verbose Output
 
 ```bash
-# See detailed information about what yt-dlp is doing
 yt-dlp -v URL
+```
 
-# Even more verbose for debugging
+See detailed information about what yt-dlp is doing.
+
+```bash
 yt-dlp -vv URL
 ```
+
+Even more verbose for debugging.
 
 ## Getting Help
 
 ### Built-in Help
 
 ```bash
-# Full help text
 yt-dlp --help
+```
 
-# Help for specific option
+Full help text.
+
+```bash
 yt-dlp --help | grep -A5 -B5 "option-name"
 ```
+
+Help for specific option.
 
 ### Version and Updates
 
 ```bash
-# Check current version
 yt-dlp --version
+```
 
-# Update to latest version
+Check current version.
+
+```bash
 yt-dlp -U
+```
 
-# Update to nightly builds (recommended)
+Update to latest version.
+
+```bash
 yt-dlp --update-to nightly
 ```
+
+Update to nightly builds (recommended).
 
 ## Quick Reference Card
 
 ### Most Common Commands
 
 ```bash
-# Basic download
 yt-dlp URL
+```
 
-# Audio only
+Basic download.
+
+```bash
 yt-dlp -x URL
+```
 
-# Specific quality
+Audio only.
+
+```bash
 yt-dlp -f "best[height<=720]" URL
+```
 
-# With subtitles
+Specific quality.
+
+```bash
 yt-dlp --write-subs --sub-langs en URL
+```
 
-# Playlist with numbering
+With subtitles.
+
+```bash
 yt-dlp -o "%(playlist_index)s - %(title)s.%(ext)s" PLAYLIST_URL
+```
 
-# Resume interrupted downloads
+Playlist with numbering.
+
+```bash
 yt-dlp --continue --download-archive archive.txt URL
 ```
+
+Resume interrupted downloads.
 
 This guide covers the essential basics. For comprehensive option references, advanced features, and detailed explanations, refer to the other documentation sections.

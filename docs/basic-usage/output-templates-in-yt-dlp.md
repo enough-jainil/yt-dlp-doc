@@ -11,12 +11,16 @@ Output templates in yt-dlp allow you to customize the naming and organization of
 The simplest usage is to specify a fixed filename:
 
 ```bash
-# Fixed filename (not recommended for multiple videos)
 yt-dlp -o "funny_video.mp4" "https://some/video"
+```
 
-# Template with video title and ID
+Fixed filename (not recommended for multiple videos).
+
+```bash
 yt-dlp -o "%(title)s [%(id)s].%(ext)s" URL
 ```
+
+Template with video title and ID.
 
 ## Template Format
 
@@ -153,221 +157,376 @@ The general syntax for complex field operations is:
 Navigate through dictionaries and lists using dot notation:
 
 ```bash
-# Access first tag
 %(tags.0)s
+```
 
-# Access last subtitle
+Access first tag.
+
+```bash
 %(subtitles.en.-1.ext)s
+```
 
-# Python slicing
+Access last subtitle.
+
+```bash
 %(id.3:7)s
-%(formats.:.format_id)s
+```
 
-# Build dictionaries with specific keys
+Python slicing.
+
+```bash
+%(formats.:.format_id)s
+```
+
+Python slicing.
+
+```bash
 %(formats.:.{format_id,height})#j
 ```
+
+Build dictionaries with specific keys.
 
 ### Arithmetic Operations
 
 Perform simple math on numeric fields:
 
 ```bash
-# Add to playlist index
 %(playlist_index+10)03d
+```
 
-# Calculate remaining items
+Add to playlist index.
+
+```bash
 %(n_entries+1-playlist_index)d
+```
 
-# Multiply duration
+Calculate remaining items.
+
+```bash
 %(duration*2)d
 ```
+
+Multiply duration.
 
 ### Date/Time Formatting
 
 Format date/time fields using strftime:
 
 ```bash
-# Format duration as HH-MM-SS
 %(duration>%H-%M-%S)s
+```
 
-# Format upload date
+Format duration as HH-MM-SS.
+
+```bash
 %(upload_date>%Y-%m-%d)s
+```
 
-# Format with timezone offset
+Format upload date.
+
+```bash
 %(epoch-3600>%H-%M-%S)s
 ```
+
+Format with timezone offset.
 
 ### Alternative Fields
 
 Specify fallback values with comma separation:
 
 ```bash
-# Use release_date, fallback to upload_date, then "Unknown"
 %(release_date>%Y,upload_date>%Y|Unknown)s
+```
 
-# Use multiple alternatives
+Use release_date, fallback to upload_date, then "Unknown".
+
+```bash
 %(artist,creator,uploader|Unknown Artist)s
 ```
+
+Use multiple alternatives.
 
 ### Replacement Values
 
 Use `&` to provide replacement text when field is not empty:
 
 ```bash
-# Replace with custom text if chapters exist
 %(chapters&has chapters|no chapters)s
+```
 
-# Format title with custom template
+Replace with custom text if chapters exist.
+
+```bash
 %(title&TITLE={:>20}|NO TITLE)s
 ```
+
+Format title with custom template.
 
 ### Default Values
 
 Use `|` to specify default values for empty fields:
 
 ```bash
-# Default uploader if unknown
 %(uploader|Unknown)s
+```
 
-# Default language
+Default uploader if unknown.
+
+```bash
 %(language|en)s
 ```
+
+Default language.
 
 ### Format Conversions
 
 Special conversion types beyond standard Python formatting:
 
 ```bash
-# Bytes conversion
 %(filesize)B
-
-# JSON formatting
-%(formats)j          # Compact JSON
-%(formats)#j         # Pretty-printed JSON
-%(formats)+j         # Unicode JSON
-
-# HTML escaping
-%(description)h
-
-# List formatting
-%(tags)l             # Comma-separated list
-%(tags)#l            # Newline-separated list
-
-# Shell quoting
-%(title)q            # Quote for terminal
-%(tags)#q            # Split list into separate arguments
-
-# Decimal suffixes
-%(filesize)D         # 10M, 1.5G, etc.
-%(filesize)#D        # Use 1024 as factor
-
-# Filename sanitization
-%(title)S            # Sanitize for filename
-%(title)#S           # Restricted sanitization
-
-# Unicode normalization
-%(title)U            # NFC normalization
-%(title)#U           # NFD normalization
-%(title)+U           # NFKC normalization
 ```
+
+Bytes conversion.
+
+```bash
+%(formats)j
+```
+
+Compact JSON.
+
+```bash
+%(formats)#j
+```
+
+Pretty-printed JSON.
+
+```bash
+%(formats)+j
+```
+
+Unicode JSON.
+
+```bash
+%(description)h
+```
+
+HTML escaping.
+
+```bash
+%(tags)l
+```
+
+Comma-separated list.
+
+```bash
+%(tags)#l
+```
+
+Newline-separated list.
+
+```bash
+%(title)q
+```
+
+Quote for terminal.
+
+```bash
+%(tags)#q
+```
+
+Split list into separate arguments.
+
+```bash
+%(filesize)D
+```
+
+Decimal suffixes (10M, 1.5G, etc.).
+
+```bash
+%(filesize)#D
+```
+
+Use 1024 as factor.
+
+```bash
+%(title)S
+```
+
+Sanitize for filename.
+
+```bash
+%(title)#S
+```
+
+Restricted sanitization.
+
+```bash
+%(title)U
+```
+
+NFC normalization.
+
+```bash
+%(title)#U
+```
+
+NFD normalization.
+
+```bash
+%(title)+U
+```
+
+NFKC normalization.
 
 ## Output Template Examples
 
 ### Basic Examples
 
 ```bash
-# Simple filename with title and ID
 yt-dlp -o "%(title)s [%(id)s].%(ext)s" URL
+```
 
-# Include uploader name
+Simple filename with title and ID.
+
+```bash
 yt-dlp -o "%(uploader)s - %(title)s.%(ext)s" URL
+```
 
-# Add upload date
+Include uploader name.
+
+```bash
 yt-dlp -o "%(upload_date)s - %(title)s.%(ext)s" URL
+```
 
-# Restrict filename characters
+Add upload date.
+
+```bash
 yt-dlp -o "%(title)s.%(ext)s" --restrict-filenames URL
 ```
+
+Restrict filename characters.
 
 ### Hierarchical Organization
 
 ```bash
-# Organize by uploader
 yt-dlp -o "%(uploader)s/%(title)s.%(ext)s" URL
+```
 
-# Organize by upload year
+Organize by uploader.
+
+```bash
 yt-dlp -o "%(upload_date>%Y)s/%(title)s.%(ext)s" URL
+```
 
-# Complex hierarchy
+Organize by upload year.
+
+```bash
 yt-dlp -o "%(uploader)s/%(upload_date>%Y)s/%(title)s [%(id)s].%(ext)s" URL
 ```
+
+Complex hierarchy.
 
 ### Playlist Organization
 
 ```bash
-# Organize playlist with index
 yt-dlp -o "%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" PLAYLIST_URL
+```
 
-# Separate playlists by uploader
+Organize playlist with index.
+
+```bash
 yt-dlp -o "%(uploader)s/%(playlist)s/%(playlist_index)s - %(title)s.%(ext)s" PLAYLIST_URL
+```
 
-# Chapter organization for courses
+Separate playlists by uploader.
+
+```bash
 yt-dlp -o "%(playlist)s/%(chapter_number)s - %(chapter)s/%(title)s.%(ext)s" COURSE_URL
 ```
+
+Chapter organization for courses.
 
 ### Series and Episodes
 
 ```bash
-# TV series organization
 yt-dlp -o "%(series)s/Season %(season_number)02d/S%(season_number)02dE%(episode_number)02d - %(episode)s.%(ext)s" URL
+```
 
-# Alternative series format
+TV series organization.
+
+```bash
 yt-dlp -o "%(series)s/%(season_number)s - %(season)s/%(episode_number)s - %(episode)s.%(ext)s" URL
 ```
+
+Alternative series format.
 
 ### Music Organization
 
 ```bash
-# Album organization
 yt-dlp -o "%(artist)s/%(album)s/%(track_number)02d - %(track)s.%(ext)s" URL
+```
 
-# Various artists compilation
+Album organization.
+
+```bash
 yt-dlp -o "%(album_artist)s/%(album)s/%(track_number)02d - %(artist)s - %(track)s.%(ext)s" URL
+```
 
-# Single tracks
+Various artists compilation.
+
+```bash
 yt-dlp -o "%(artist)s - %(track)s.%(ext)s" URL
 ```
+
+Single tracks.
 
 ### Advanced Examples
 
 ```bash
-# Conditional formatting
 yt-dlp -o "%(playlist_index&{} - |)s%(title)s.%(ext)s" URL
+```
 
-# Size-based organization
+Conditional formatting.
+
+```bash
 yt-dlp -o "%(filesize>1000000000&Large/|Normal/)s%(title)s.%(ext)s" URL
+```
 
-# Quality-based naming
+Size-based organization.
+
+```bash
 yt-dlp -o "%(title)s [%(height)sp].%(ext)s" URL
+```
 
-# Multi-field fallbacks
+Quality-based naming.
+
+```bash
 yt-dlp -o "%(creator,uploader,channel|Unknown)s - %(title)s.%(ext)s" URL
 ```
+
+Multi-field fallbacks.
 
 ## File Type Specific Templates
 
 Set different templates for different file types:
 
 ```bash
-# Different templates for videos and thumbnails
 yt-dlp -o "%(title)s.%(ext)s" -o "thumbnail:%(title)s/%(title)s.%(ext)s" URL
+```
 
-# Separate subtitle organization
+Different templates for videos and thumbnails.
+
+```bash
 yt-dlp -o "%(title)s.%(ext)s" -o "subtitle:%(title)s/subs/%(title)s.%(ext)s" URL --write-subs
+```
 
-# Info JSON in separate directory
+Separate subtitle organization.
+
+```bash
 yt-dlp -o "videos/%(title)s.%(ext)s" -o "infojson:metadata/%(title)s.%(ext)s" URL --write-info-json
 ```
+
+Info JSON in separate directory.
 
 ### Available File Types
 
@@ -388,68 +547,100 @@ yt-dlp -o "videos/%(title)s.%(ext)s" -o "infojson:metadata/%(title)s.%(ext)s" UR
 Use `-P` to set base paths for different file types:
 
 ```bash
-# Set different base paths
 yt-dlp -P "~/Videos" -P "subtitle:~/Videos/Subs" -P "thumbnail:~/Videos/Thumbs" URL
+```
 
-# Temporary directory for intermediate files
+Set different base paths.
+
+```bash
 yt-dlp -P "~/Videos" -P "temp:/tmp/yt-dlp" URL
+```
 
-# Home directory override
+Temporary directory for intermediate files.
+
+```bash
 yt-dlp -P "home:~/Downloads" -o "%(title)s.%(ext)s" URL
 ```
+
+Home directory override.
 
 ## Best Practices
 
 ### Filename Safety
 
 ```bash
-# Use restricted filenames for cross-platform compatibility
 yt-dlp -o "%(title)S.%(ext)s" --restrict-filenames URL
+```
 
-# Limit filename length
+Use restricted filenames for cross-platform compatibility.
+
+```bash
 yt-dlp -o "%(title).100s.%(ext)s" --trim-filenames 100 URL
+```
 
-# Avoid special characters
+Limit filename length.
+
+```bash
 yt-dlp -o "%(title)s.%(ext)s" --windows-filenames URL
 ```
+
+Avoid special characters.
 
 ### Organization Strategies
 
 ```bash
-# By content type
 yt-dlp -o "%(extractor)s/%(uploader)s/%(title)s.%(ext)s" URL
+```
 
-# By date with fallbacks
+By content type.
+
+```bash
 yt-dlp -o "%(release_date>%Y,upload_date>%Y|Unknown)s/%(title)s.%(ext)s" URL
+```
 
-# Comprehensive organization
+By date with fallbacks.
+
+```bash
 yt-dlp -o "%(extractor)s/%(uploader)s/%(upload_date>%Y)s/%(title)s [%(id)s].%(ext)s" URL
 ```
+
+Comprehensive organization.
 
 ### Handling Missing Fields
 
 ```bash
-# Provide defaults for all important fields
 yt-dlp -o "%(uploader|Unknown)s/%(title|Untitled)s [%(id)s].%(ext)s" URL
+```
 
-# Use field availability checks
+Provide defaults for all important fields.
+
+```bash
 yt-dlp -o "%(uploader&%(uploader)s/|)s%(title)s.%(ext)s" URL
 ```
+
+Use field availability checks.
 
 ## Troubleshooting
 
 ### Testing Templates
 
 ```bash
-# Print filename without downloading
 yt-dlp --print filename -o "your_template" URL
+```
 
-# Check all available fields
+Print filename without downloading.
+
+```bash
 yt-dlp -j URL | jq .
+```
 
-# Test template with simulation
+Check all available fields.
+
+```bash
 yt-dlp -s -o "your_template" URL
 ```
+
+Test template with simulation.
 
 ### Common Issues
 

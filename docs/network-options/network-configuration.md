@@ -10,47 +10,69 @@ yt-dlp provides extensive network configuration options to handle various connec
 
 ### Basic Proxy Setup
 
+HTTP proxy
+
 ```bash
-# HTTP proxy
 yt-dlp --proxy http://proxy.example.com:8080 URL
+```
 
-# HTTPS proxy
+HTTPS proxy
+
+```bash
 yt-dlp --proxy https://proxy.example.com:8080 URL
+```
 
-# SOCKS4 proxy
+SOCKS4 proxy
+
+```bash
 yt-dlp --proxy socks4://proxy.example.com:1080 URL
+```
 
-# SOCKS5 proxy
+SOCKS5 proxy
+
+```bash
 yt-dlp --proxy socks5://proxy.example.com:1080 URL
 ```
 
 ### Proxy with Authentication
 
-```bash
-# HTTP proxy with username/password
-yt-dlp --proxy http://username:password@proxy.example.com:8080 URL
+HTTP proxy with username/password
 
-# SOCKS5 proxy with authentication
+```bash
+yt-dlp --proxy http://username:password@proxy.example.com:8080 URL
+```
+
+SOCKS5 proxy with authentication
+
+```bash
 yt-dlp --proxy socks5://username:password@proxy.example.com:1080 URL
 ```
 
 ### Socket Address Proxy
 
-```bash
-# Unix socket (Linux/macOS)
-yt-dlp --proxy socks5://localhost:port URL
+Unix socket (Linux/macOS)
 
-# Use proxy for specific domains only
+```bash
+yt-dlp --proxy socks5://localhost:port URL
+```
+
+Use proxy for specific domains only
+
+```bash
 yt-dlp --proxy http://proxy.example.com:8080 --proxy-exception "*.youtube.com" URL
 ```
 
 ### No Proxy Configuration
 
-```bash
-# Bypass proxy for specific patterns
-yt-dlp --proxy http://proxy.example.com:8080 --proxy-exception "localhost,127.0.0.1,*.local" URL
+Bypass proxy for specific patterns
 
-# No proxy at all (override system proxy)
+```bash
+yt-dlp --proxy http://proxy.example.com:8080 --proxy-exception "localhost,127.0.0.1,*.local" URL
+```
+
+No proxy at all (override system proxy)
+
+```bash
 yt-dlp --no-proxy URL
 ```
 
@@ -58,17 +80,27 @@ yt-dlp --no-proxy URL
 
 Control which network interface to use for connections:
 
+Bind to specific IPv4 address
+
 ```bash
-# Bind to specific IPv4 address
 yt-dlp --source-address 192.168.1.100 URL
+```
 
-# Bind to specific IPv6 address
+Bind to specific IPv6 address
+
+```bash
 yt-dlp --source-address 2001:db8::1 URL
+```
 
-# Force IPv4 only
+Force IPv4 only
+
+```bash
 yt-dlp --force-ipv4 URL
+```
 
-# Force IPv6 only
+Force IPv6 only
+
+```bash
 yt-dlp --force-ipv6 URL
 ```
 
@@ -76,17 +108,27 @@ yt-dlp --force-ipv6 URL
 
 ### Download Speed Limiting
 
+Limit to 1 MB/s
+
 ```bash
-# Limit to 1 MB/s
 yt-dlp --limit-rate 1M URL
+```
 
-# Limit to 500 KB/s
+Limit to 500 KB/s
+
+```bash
 yt-dlp --limit-rate 500K URL
+```
 
-# Limit to 50 bytes/s (very slow)
+Limit to 50 bytes/s (very slow)
+
+```bash
 yt-dlp --limit-rate 50 URL
+```
 
-# No rate limit (default)
+No rate limit (default)
+
+```bash
 yt-dlp --limit-rate infinite URL
 ```
 
@@ -94,17 +136,27 @@ yt-dlp --limit-rate infinite URL
 
 Add delays between downloads to reduce server load:
 
+Sleep 3 seconds between downloads
+
 ```bash
-# Sleep 3 seconds between downloads
 yt-dlp --sleep-interval 3 URL1 URL2 URL3
+```
 
-# Random sleep between 1-5 seconds
+Random sleep between 1-5 seconds
+
+```bash
 yt-dlp --min-sleep-interval 1 --max-sleep-interval 5 URL
+```
 
-# Sleep only before first request
+Sleep only before first request
+
+```bash
 yt-dlp --sleep-requests 2 URL
+```
 
-# Sleep between subtitle downloads
+Sleep between subtitle downloads
+
+```bash
 yt-dlp --sleep-subtitles 1 URL
 ```
 
@@ -112,11 +164,15 @@ yt-dlp --sleep-subtitles 1 URL
 
 Control fragment download behavior for segmented media:
 
-```bash
-# Limit concurrent fragments
-yt-dlp --concurrent-fragments 4 URL
+Limit concurrent fragments
 
-# Sleep between fragments
+```bash
+yt-dlp --concurrent-fragments 4 URL
+```
+
+Sleep between fragments
+
+```bash
 yt-dlp --sleep-interval 0.5 URL
 ```
 
@@ -124,33 +180,53 @@ yt-dlp --sleep-interval 0.5 URL
 
 ### Retry Configuration
 
+Retry downloads 10 times
+
 ```bash
-# Retry downloads 10 times
 yt-dlp --retries 10 URL
+```
 
-# Retry fragments 5 times
+Retry fragments 5 times
+
+```bash
 yt-dlp --fragment-retries 5 URL
+```
 
-# Infinite retries (not recommended)
+Infinite retries (not recommended)
+
+```bash
 yt-dlp --retries infinite URL
+```
 
-# No retries
+No retries
+
+```bash
 yt-dlp --retries 0 URL
 ```
 
 ### Error Handling Options
 
+Continue downloading despite errors
+
 ```bash
-# Continue downloading despite errors
 yt-dlp --ignore-errors URL1 URL2 URL3
+```
 
-# Abort on first error (default)
+Abort on first error (default)
+
+```bash
 yt-dlp --abort-on-error URL
+```
 
-# Skip unavailable fragments
+Skip unavailable fragments
+
+```bash
 yt-dlp --skip-unavailable-fragments URL
+```
 
-# Keep partial fragments on error
+Keep partial fragments on error
+
+```bash
 yt-dlp --keep-fragments URL
 ```
 
@@ -158,25 +234,35 @@ yt-dlp --keep-fragments URL
 
 ### User Agent
 
-```bash
-# Custom user agent
-yt-dlp --user-agent "Mozilla/5.0 (compatible; yt-dlp)" URL
+Custom user agent
 
-# Use specific browser user agent
+```bash
+yt-dlp --user-agent "Mozilla/5.0 (compatible; yt-dlp)" URL
+```
+
+Use specific browser user agent
+
+```bash
 yt-dlp --user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" URL
 ```
 
 ### Custom Headers
 
+Add custom header
+
 ```bash
-# Add custom header
 yt-dlp --add-header "Referer:https://example.com" URL
+```
 
-# Add multiple headers
-yt-dlp --add-header "Referer:https://example.com" \
-       --add-header "X-Custom-Header:value" URL
+Add multiple headers
 
-# Remove default headers
+```bash
+yt-dlp --add-header "Referer:https://example.com" --add-header "X-Custom-Header:value" URL
+```
+
+Remove default headers
+
+```bash
 yt-dlp --add-header "User-Agent:" URL
 ```
 
@@ -184,54 +270,77 @@ yt-dlp --add-header "User-Agent:" URL
 
 ### Certificate Verification
 
+Skip SSL certificate verification (not recommended)
+
 ```bash
-# Skip SSL certificate verification (not recommended)
 yt-dlp --no-check-certificate URL
+```
 
-# Use custom CA certificate bundle
+Use custom CA certificate bundle
+
+```bash
 yt-dlp --ca-certs /path/to/ca-bundle.crt URL
+```
 
-# Use system certificate store (default)
+Use system certificate store (default)
+
+```bash
 yt-dlp URL
 ```
 
 ### Client Certificates
 
+Use client certificate for authentication
+
 ```bash
-# Use client certificate for authentication
 yt-dlp --client-certificate /path/to/client.crt URL
+```
 
-# Client certificate with private key
-yt-dlp --client-certificate /path/to/client.pem \
-       --client-certificate-key /path/to/private.key URL
+Client certificate with private key
 
-# Client certificate with password
-yt-dlp --client-certificate /path/to/client.p12 \
-       --client-certificate-password mypassword URL
+```bash
+yt-dlp --client-certificate /path/to/client.pem --client-certificate-key /path/to/private.key URL
+```
+
+Client certificate with password
+
+```bash
+yt-dlp --client-certificate /path/to/client.p12 --client-certificate-password mypassword URL
 ```
 
 ## Geo-restriction Bypass
 
 ### Proxy-based Geo-bypass
 
-```bash
-# Use proxy in specific country
-yt-dlp --proxy http://us-proxy.example.com:8080 URL
+Use proxy in specific country
 
-# Chain multiple proxies
+```bash
+yt-dlp --proxy http://us-proxy.example.com:8080 URL
+```
+
+Chain multiple proxies
+
+```bash
 yt-dlp --proxy http://proxy1.com:8080 --proxy http://proxy2.com:8080 URL
 ```
 
 ### DNS Configuration
 
+Use specific DNS servers
+
 ```bash
-# Use specific DNS servers
 yt-dlp --dns-servers 8.8.8.8,8.8.4.4 URL
+```
 
-# Use DNS over HTTPS
+Use DNS over HTTPS
+
+```bash
 yt-dlp --dns-servers https://cloudflare-dns.com/dns-query URL
+```
 
-# Use DNS over TLS
+Use DNS over TLS
+
+```bash
 yt-dlp --dns-servers tls://1.1.1.1 URL
 ```
 
@@ -239,31 +348,43 @@ yt-dlp --dns-servers tls://1.1.1.1 URL
 
 ### Connection Timeouts
 
-```bash
-# Socket timeout (seconds)
-yt-dlp --socket-timeout 30 URL
+Socket timeout (seconds)
 
-# Default timeout for network operations
+```bash
+yt-dlp --socket-timeout 30 URL
+```
+
+Default timeout for network operations
+
+```bash
 yt-dlp --timeout 60 URL
 ```
 
 ### Keep-Alive and Connection Reuse
 
-```bash
-# Disable keep-alive
-yt-dlp --no-keepalive URL
+Disable keep-alive
 
-# Configure keep-alive timeout
+```bash
+yt-dlp --no-keepalive URL
+```
+
+Configure keep-alive timeout
+
+```bash
 yt-dlp --keepalive-timeout 30 URL
 ```
 
 ### HTTP Method Override
 
-```bash
-# Force specific HTTP methods
-yt-dlp --http-method GET URL
+Force specific HTTP methods
 
-# Use POST for all requests
+```bash
+yt-dlp --http-method GET URL
+```
+
+Use POST for all requests
+
+```bash
 yt-dlp --http-method POST URL
 ```
 
@@ -271,27 +392,47 @@ yt-dlp --http-method POST URL
 
 ### Cookie Files
 
+Use Netscape format cookies
+
 ```bash
-# Use Netscape format cookies
 yt-dlp --cookies /path/to/cookies.txt URL
+```
 
-# Extract cookies from browser
+Extract cookies from browser
+
+```bash
 yt-dlp --cookies-from-browser chrome URL
-yt-dlp --cookies-from-browser firefox URL
-yt-dlp --cookies-from-browser safari URL
-yt-dlp --cookies-from-browser edge URL
+```
 
-# Extract from specific browser profile
+```bash
+yt-dlp --cookies-from-browser firefox URL
+```
+
+```bash
+yt-dlp --cookies-from-browser safari URL
+```
+
+```bash
+yt-dlp --cookies-from-browser edge URL
+```
+
+Extract from specific browser profile
+
+```bash
 yt-dlp --cookies-from-browser "chrome:Profile 1" URL
 ```
 
 ### Cookie Security
 
-```bash
-# Clear cookies after use
-yt-dlp --cookies cookies.txt --clear-cookies URL
+Clear cookies after use
 
-# No cookies at all
+```bash
+yt-dlp --cookies cookies.txt --clear-cookies URL
+```
+
+No cookies at all
+
+```bash
 yt-dlp --no-cookies URL
 ```
 
@@ -299,30 +440,47 @@ yt-dlp --no-cookies URL
 
 ### Verbose Network Logging
 
+Enable verbose output
+
 ```bash
-# Enable verbose output
 yt-dlp --verbose URL
+```
 
-# Print HTTP headers
+Print HTTP headers
+
+```bash
 yt-dlp --print-traffic URL
+```
 
-# Dump pages to files
+Dump pages to files
+
+```bash
 yt-dlp --dump-pages URL
+```
 
-# Write debug info
+Write debug info
+
+```bash
 yt-dlp --write-debug URL
 ```
 
 ### Connection Testing
 
+Test network connectivity
+
 ```bash
-# Test network connectivity
 yt-dlp --simulate --verbose URL
+```
 
-# Check available formats without downloading
+Check available formats without downloading
+
+```bash
 yt-dlp --list-formats URL
+```
 
-# Test proxy connection
+Test proxy connection
+
+```bash
 yt-dlp --proxy http://proxy.example.com:8080 --simulate URL
 ```
 
@@ -330,29 +488,26 @@ yt-dlp --proxy http://proxy.example.com:8080 --simulate URL
 
 ### YouTube Network Optimization
 
+Optimize for YouTube
+
 ```bash
-# Optimize for YouTube
-yt-dlp --extractor-args "youtube:player_client=tv,ios" \
-       --concurrent-fragments 4 \
-       --retries 10 URL
+yt-dlp --extractor-args "youtube:player_client=tv,ios" --concurrent-fragments 4 --retries 10 URL
 ```
 
 ### Twitch Network Settings
 
+Twitch with proxy
+
 ```bash
-# Twitch with proxy
-yt-dlp --proxy socks5://proxy.example.com:1080 \
-       --extractor-args "twitch:client_id=your_client_id" URL
+yt-dlp --proxy socks5://proxy.example.com:1080 --extractor-args "twitch:client_id=your_client_id" URL
 ```
 
 ### Generic Site Optimization
 
+General optimization for most sites
+
 ```bash
-# General optimization for most sites
-yt-dlp --retries 5 \
-       --fragment-retries 10 \
-       --limit-rate 2M \
-       --sleep-interval 1 URL
+yt-dlp --retries 5 --fragment-retries 10 --limit-rate 2M --sleep-interval 1 URL
 ```
 
 ## Configuration File Examples
@@ -440,45 +595,59 @@ yt-dlp --retries 5 \
 
 ### Connection Timeouts
 
+Increase timeouts for slow connections
+
 ```bash
-# Increase timeouts for slow connections
 yt-dlp --socket-timeout 60 --timeout 120 URL
 ```
 
 ### Rate Limiting by Server
 
+Add delays to avoid rate limiting
+
 ```bash
-# Add delays to avoid rate limiting
 yt-dlp --sleep-interval 3 --min-sleep-interval 2 --max-sleep-interval 5 URL
 ```
 
 ### Proxy Connection Issues
 
-```bash
-# Test proxy connectivity
-curl --proxy http://proxy.example.com:8080 http://httpbin.org/ip
+Test proxy connectivity
 
-# Use proxy with specific protocol
+```bash
+curl --proxy http://proxy.example.com:8080 http://httpbin.org/ip
+```
+
+Use proxy with specific protocol
+
+```bash
 yt-dlp --proxy http://proxy.example.com:8080 --force-ipv4 URL
 ```
 
 ### SSL Certificate Errors
 
-```bash
-# Use system certificates
-yt-dlp --ca-certs system URL
+Use system certificates
 
-# Bypass certificate checking (not recommended)
+```bash
+yt-dlp --ca-certs system URL
+```
+
+Bypass certificate checking (not recommended)
+
+```bash
 yt-dlp --no-check-certificate URL
 ```
 
 ### DNS Resolution Issues
 
-```bash
-# Use alternative DNS servers
-yt-dlp --dns-servers 8.8.8.8,1.1.1.1 URL
+Use alternative DNS servers
 
-# Force IPv4 resolution
+```bash
+yt-dlp --dns-servers 8.8.8.8,1.1.1.1 URL
+```
+
+Force IPv4 resolution
+
+```bash
 yt-dlp --force-ipv4 URL
 ```
 
@@ -486,32 +655,32 @@ yt-dlp --force-ipv4 URL
 
 ### Bandwidth Monitoring
 
-```bash
-# Monitor download speed
-yt-dlp --newline --progress URL
+Monitor download speed
 
-# Log network statistics
+```bash
+yt-dlp --newline --progress URL
+```
+
+Log network statistics
+
+```bash
 yt-dlp --verbose --print-traffic URL 2>&1 | tee network.log
 ```
 
 ### Performance Tuning
 
+Optimize for your connection
+
 ```bash
-# Optimize for your connection
-yt-dlp --concurrent-fragments $(nproc) \
-       --limit-rate 5M \
-       --retries 5 URL
+yt-dlp --concurrent-fragments $(nproc) --limit-rate 5M --retries 5 URL
 ```
 
 ### Batch Download Optimization
 
+Optimize for batch processing
+
 ```bash
-# Optimize for batch processing
-yt-dlp --sleep-interval 1 \
-       --retries 3 \
-       --ignore-errors \
-       --download-archive archive.txt \
-       --batch-file urls.txt
+yt-dlp --sleep-interval 1 --retries 3 --ignore-errors --download-archive archive.txt --batch-file urls.txt
 ```
 
 ## Security Considerations
@@ -532,11 +701,10 @@ yt-dlp --sleep-interval 1 \
 
 ### Privacy Protection
 
+Minimize tracking
+
 ```bash
-# Minimize tracking
-yt-dlp --user-agent "Mozilla/5.0 (generic)" \
-       --no-cookies \
-       --proxy socks5://localhost:9050 URL  # Tor proxy
+yt-dlp --user-agent "Mozilla/5.0 (generic)" --no-cookies --proxy socks5://localhost:9050 URL
 ```
 
 Network configuration in yt-dlp is highly flexible and can be adapted to virtually any network environment. Start with basic settings and adjust based on your specific network conditions, security requirements, and performance needs.

@@ -10,27 +10,41 @@ yt-dlp provides comprehensive support for downloading live streams, including on
 
 ### Download Active Live Stream
 
+Download ongoing live stream
+
 ```bash
-# Download ongoing live stream
 yt-dlp "LIVE_STREAM_URL"
+```
 
-# Download with specific quality
+Download with specific quality
+
+```bash
 yt-dlp -f "best[height<=1080]" "LIVE_STREAM_URL"
+```
 
-# Download audio only from live stream
+Download audio only from live stream
+
+```bash
 yt-dlp -x "LIVE_STREAM_URL"
 ```
 
 ### Live Stream Recording
 
+Record live stream from start
+
 ```bash
-# Record live stream from start
 yt-dlp --live-from-start "LIVE_STREAM_URL"
+```
 
-# Record from current point
+Record from current point
+
+```bash
 yt-dlp --no-live-from-start "LIVE_STREAM_URL"
+```
 
-# Record with time limit
+Record with time limit
+
+```bash
 yt-dlp --live-from-start --download-sections "*0:30:00" "LIVE_STREAM_URL"
 ```
 
@@ -38,27 +52,41 @@ yt-dlp --live-from-start --download-sections "*0:30:00" "LIVE_STREAM_URL"
 
 ### Wait for Scheduled Streams
 
+Wait for stream to start
+
 ```bash
-# Wait for stream to start
 yt-dlp --wait-for-video 30 "SCHEDULED_STREAM_URL"
+```
 
-# Wait with range (min-max minutes)
+Wait with range (min-max minutes)
+
+```bash
 yt-dlp --wait-for-video 10-60 "SCHEDULED_STREAM_URL"
+```
 
-# Don't wait for streams
+Don't wait for streams
+
+```bash
 yt-dlp --no-wait-for-video "SCHEDULED_STREAM_URL"
 ```
 
 ### Monitoring Stream Status
 
+Check if stream is live
+
 ```bash
-# Check if stream is live
 yt-dlp --list-formats "STREAM_URL"
+```
 
-# Monitor stream with verbose output
+Monitor stream with verbose output
+
+```bash
 yt-dlp --verbose --wait-for-video 60 "STREAM_URL"
+```
 
-# Get stream information without downloading
+Get stream information without downloading
+
+```bash
 yt-dlp --skip-download --write-info-json "STREAM_URL"
 ```
 
@@ -66,30 +94,47 @@ yt-dlp --skip-download --write-info-json "STREAM_URL"
 
 ### Format Selection for Streams
 
+Best available live quality
+
 ```bash
-# Best available live quality
 yt-dlp -f "best[protocol=m3u8_native]/best[protocol=dash]/best" "STREAM_URL"
+```
 
-# Specific protocol preference
+Specific protocol preference
+
+```bash
 yt-dlp -f "best[protocol=m3u8_native]" "STREAM_URL"
+```
 
-# HLS stream selection
+HLS stream selection
+
+```bash
 yt-dlp -f "best[protocol^=m3u8]" "STREAM_URL"
+```
 
-# DASH stream selection
+DASH stream selection
+
+```bash
 yt-dlp -f "best[protocol=dash]" "STREAM_URL"
 ```
 
 ### Quality Control
 
+Limit stream quality
+
 ```bash
-# Limit stream quality
 yt-dlp -f "best[height<=720][protocol=m3u8_native]" "STREAM_URL"
+```
 
-# Audio bitrate preference for live streams
+Audio bitrate preference for live streams
+
+```bash
 yt-dlp -f "best[abr>=128][protocol=m3u8_native]" "STREAM_URL"
+```
 
-# Mobile-friendly live stream
+Mobile-friendly live stream
+
+```bash
 yt-dlp -f "worst[height>=480]" "STREAM_URL"
 ```
 
@@ -97,47 +142,69 @@ yt-dlp -f "worst[height>=480]" "STREAM_URL"
 
 ### YouTube Live
 
+YouTube live stream
+
 ```bash
-# YouTube live stream
 yt-dlp --live-from-start "https://youtube.com/watch?v=LIVE_VIDEO_ID"
+```
 
-# YouTube premiere
+YouTube premiere
+
+```bash
 yt-dlp --wait-for-video 60 "https://youtube.com/watch?v=PREMIERE_ID"
+```
 
-# YouTube live with chat
+YouTube live with chat
+
+```bash
 yt-dlp --write-comments "https://youtube.com/watch?v=LIVE_VIDEO_ID"
 ```
 
 ### Twitch
 
+Twitch live stream
+
 ```bash
-# Twitch live stream
 yt-dlp "https://twitch.tv/streamer_name"
+```
 
-# Twitch with chat
+Twitch with chat
+
+```bash
 yt-dlp --write-comments "https://twitch.tv/streamer_name"
+```
 
-# Twitch VOD recording
+Twitch VOD recording
+
+```bash
 yt-dlp "https://twitch.tv/videos/VOD_ID"
 ```
 
 ### Facebook Live
 
-```bash
-# Facebook live stream
-yt-dlp --cookies-from-browser chrome "https://facebook.com/user/videos/LIVE_ID"
+Facebook live stream
 
-# Facebook with authentication
+```bash
+yt-dlp --cookies-from-browser chrome "https://facebook.com/user/videos/LIVE_ID"
+```
+
+Facebook with authentication
+
+```bash
 yt-dlp --username user --password pass "https://facebook.com/live_url"
 ```
 
 ### Instagram Live
 
-```bash
-# Instagram live story
-yt-dlp --cookies-from-browser chrome "https://instagram.com/stories/user/LIVE_ID"
+Instagram live story
 
-# Instagram IGTV live
+```bash
+yt-dlp --cookies-from-browser chrome "https://instagram.com/stories/user/LIVE_ID"
+```
+
+Instagram IGTV live
+
+```bash
 yt-dlp --cookies-from-browser firefox "https://instagram.com/tv/LIVE_ID"
 ```
 
@@ -145,37 +212,55 @@ yt-dlp --cookies-from-browser firefox "https://instagram.com/tv/LIVE_ID"
 
 ### Fragment Handling
 
+Keep live fragments
+
 ```bash
-# Keep live fragments
 yt-dlp --keep-fragments "STREAM_URL"
+```
 
-# Skip unavailable fragments
+Skip unavailable fragments
+
+```bash
 yt-dlp --skip-unavailable-fragments "STREAM_URL"
+```
 
-# Abort on fragment errors
+Abort on fragment errors
+
+```bash
 yt-dlp --abort-on-unavailable-fragments "STREAM_URL"
 ```
 
 ### Live Stream Retry Logic
 
+Retry configuration for live streams
+
 ```bash
-# Retry configuration for live streams
 yt-dlp --retries 10 --fragment-retries 5 "STREAM_URL"
+```
 
-# Sleep between retries
+Sleep between retries
+
+```bash
 yt-dlp --retry-sleep linear=1::2 "STREAM_URL"
+```
 
-# Retry with exponential backoff
+Retry with exponential backoff
+
+```bash
 yt-dlp --retry-sleep exp=1:120 "STREAM_URL"
 ```
 
 ### Concurrent Download
 
-```bash
-# Concurrent fragment download for live streams
-yt-dlp --concurrent-fragments 4 "STREAM_URL"
+Concurrent fragment download for live streams
 
-# External downloader for live streams
+```bash
+yt-dlp --concurrent-fragments 4 "STREAM_URL"
+```
+
+External downloader for live streams
+
+```bash
 yt-dlp --external-downloader ffmpeg "STREAM_URL"
 ```
 
@@ -183,40 +268,61 @@ yt-dlp --external-downloader ffmpeg "STREAM_URL"
 
 ### Continuous Recording
 
+Record entire stream duration
+
 ```bash
-# Record entire stream duration
 yt-dlp --live-from-start --no-part "STREAM_URL"
+```
 
-# Record with restart on connection loss
+Record with restart on connection loss
+
+```bash
 yt-dlp --live-from-start --retries infinite "STREAM_URL"
+```
 
-# Record with custom timeout
+Record with custom timeout
+
+```bash
 yt-dlp --socket-timeout 30 "STREAM_URL"
 ```
 
 ### Segmented Recording
 
+Record in segments
+
 ```bash
-# Record in segments
 yt-dlp --download-sections "*0:60:00" "STREAM_URL"
+```
 
-# Multiple time segments
+Multiple time segments
+
+```bash
 yt-dlp --download-sections "*0:30:00,*30:00-60:00" "STREAM_URL"
+```
 
-# Skip beginning of stream
+Skip beginning of stream
+
+```bash
 yt-dlp --download-sections "*10:00-inf" "STREAM_URL"
 ```
 
 ### Stream Archiving
 
+Archive live stream with metadata
+
 ```bash
-# Archive live stream with metadata
 yt-dlp --live-from-start --write-info-json --write-description "STREAM_URL"
+```
 
-# Archive with thumbnail
+Archive with thumbnail
+
+```bash
 yt-dlp --live-from-start --write-thumbnail "STREAM_URL"
+```
 
-# Complete archival package
+Complete archival package
+
+```bash
 yt-dlp --live-from-start --write-info-json --write-description --write-thumbnail --write-comments "STREAM_URL"
 ```
 
@@ -224,9 +330,10 @@ yt-dlp --live-from-start --write-info-json --write-description --write-thumbnail
 
 ### Automated Stream Recording
 
+Live stream monitoring script
+
 ```bash
 #!/bin/bash
-# Live stream monitoring script
 STREAM_URL="$1"
 OUTPUT_DIR="$2"
 
@@ -240,21 +347,29 @@ done
 
 ### Stream Notification
 
-```bash
-# Record with notification
-yt-dlp --live-from-start --exec "notify-send 'Stream ended'" "STREAM_URL"
+Record with notification
 
-# Execute custom script on completion
+```bash
+yt-dlp --live-from-start --exec "notify-send 'Stream ended'" "STREAM_URL"
+```
+
+Execute custom script on completion
+
+```bash
 yt-dlp --live-from-start --exec "upload_to_cloud.sh {}" "STREAM_URL"
 ```
 
 ### Multiple Stream Monitoring
 
-```bash
-# Monitor multiple streams
-yt-dlp --wait-for-video 60 --batch-file live_streams.txt
+Monitor multiple streams
 
-# Parallel stream recording
+```bash
+yt-dlp --wait-for-video 60 --batch-file live_streams.txt
+```
+
+Parallel stream recording
+
+```bash
 parallel -j 4 "yt-dlp --live-from-start {} -o 'streams/%(uploader)s_%(title)s.%(ext)s'" :::: stream_urls.txt
 ```
 
@@ -262,27 +377,41 @@ parallel -j 4 "yt-dlp --live-from-start {} -o 'streams/%(uploader)s_%(title)s.%(
 
 ### Real-time Processing
 
+Post-process during recording
+
 ```bash
-# Post-process during recording
 yt-dlp --live-from-start --embed-thumbnail --add-metadata "STREAM_URL"
+```
 
-# Convert format during recording
+Convert format during recording
+
+```bash
 yt-dlp --live-from-start --merge-output-format mp4 "STREAM_URL"
+```
 
-# Extract audio from live stream
+Extract audio from live stream
+
+```bash
 yt-dlp --live-from-start -x --audio-format mp3 "STREAM_URL"
 ```
 
 ### Stream Analysis
 
+Analyze stream quality
+
 ```bash
-# Analyze stream quality
 yt-dlp --list-formats --verbose "STREAM_URL"
+```
 
-# Monitor bitrate and quality
+Monitor bitrate and quality
+
+```bash
 yt-dlp --verbose --print-traffic "STREAM_URL"
+```
 
-# Stream metadata extraction
+Stream metadata extraction
+
+```bash
 yt-dlp --skip-download --write-info-json "STREAM_URL"
 ```
 
@@ -290,24 +419,35 @@ yt-dlp --skip-download --write-info-json "STREAM_URL"
 
 ### Chat Recording
 
+Record live chat (YouTube)
+
 ```bash
-# Record live chat (YouTube)
 yt-dlp --write-comments "YOUTUBE_LIVE_URL"
+```
 
-# Chat with specific format
+Chat with specific format
+
+```bash
 yt-dlp --write-comments --comment-format json "STREAM_URL"
+```
 
-# Embedded chat in video (where supported)
+Embedded chat in video (where supported)
+
+```bash
 yt-dlp --embed-comments "STREAM_URL"
 ```
 
 ### Chat Processing
 
-```bash
-# Process chat separately
-yt-dlp --skip-download --write-comments "STREAM_URL"
+Process chat separately
 
-# Chat with timestamps
+```bash
+yt-dlp --skip-download --write-comments "STREAM_URL"
+```
+
+Chat with timestamps
+
+```bash
 yt-dlp --write-comments --write-info-json "STREAM_URL"
 ```
 
@@ -315,27 +455,41 @@ yt-dlp --write-comments --write-info-json "STREAM_URL"
 
 ### Connection Issues
 
+Handle connection drops
+
 ```bash
-# Handle connection drops
 yt-dlp --live-from-start --retries infinite --fragment-retries 10 "STREAM_URL"
+```
 
-# Ignore network errors
+Ignore network errors
+
+```bash
 yt-dlp --live-from-start --ignore-errors "STREAM_URL"
+```
 
-# Continue on fragment loss
+Continue on fragment loss
+
+```bash
 yt-dlp --live-from-start --skip-unavailable-fragments "STREAM_URL"
 ```
 
 ### Stream Interruption Recovery
 
+Resume interrupted stream
+
 ```bash
-# Resume interrupted stream
 yt-dlp --continue --live-from-start "STREAM_URL"
+```
 
-# Force restart on failure
+Force restart on failure
+
+```bash
 yt-dlp --no-continue --live-from-start "STREAM_URL"
+```
 
-# Custom recovery script
+Custom recovery script
+
+```bash
 yt-dlp --live-from-start --exec-before-download "backup_progress.sh {}" "STREAM_URL"
 ```
 
@@ -343,54 +497,83 @@ yt-dlp --live-from-start --exec-before-download "backup_progress.sh {}" "STREAM_
 
 ### Network Optimization
 
+Optimize for live streams
+
 ```bash
-# Optimize for live streams
 yt-dlp --live-from-start --buffer-size 2048 --http-chunk-size 1M "STREAM_URL"
+```
 
-# Reduce latency
+Reduce latency
+
+```bash
 yt-dlp --live-from-start --socket-timeout 10 "STREAM_URL"
+```
 
-# Increase connection pooling
+Increase connection pooling
+
+```bash
 yt-dlp --live-from-start --source-address YOUR_IP "STREAM_URL"
 ```
 
 ### Resource Management
 
-```bash
-# Limit disk usage during recording
-yt-dlp --live-from-start --max-filesize 1G "STREAM_URL"
+Limit disk usage during recording
 
-# Rotate recordings
-yt-dlp --live-from-start --download-sections "*0:60:00" \
-       -o "stream_%(timestamp)s.%(ext)s" "STREAM_URL"
+```bash
+yt-dlp --live-from-start --max-filesize 1G "STREAM_URL"
+```
+
+Rotate recordings
+
+```bash
+yt-dlp --live-from-start --download-sections "*0:60:00" -o "stream_%(timestamp)s.%(ext)s" "STREAM_URL"
 ```
 
 ## Troubleshooting Live Streams
 
 ### Common Issues
 
+Debug live stream problems
+
 ```bash
-# Debug live stream problems
 yt-dlp --verbose --debug --live-from-start "STREAM_URL"
+```
 
-# Test stream availability
+Test stream availability
+
+```bash
 yt-dlp --list-formats "STREAM_URL"
+```
 
-# Check protocol support
+Check protocol support
+
+```bash
 yt-dlp --verbose "STREAM_URL" 2>&1 | grep -i protocol
 ```
 
 ### Stream Quality Issues
 
+Force specific protocol
+
 ```bash
-# Force specific protocol
 yt-dlp -f "best[protocol=m3u8_native]" "STREAM_URL"
+```
 
-# Avoid problematic formats
+Avoid problematic formats
+
+```bash
 yt-dlp -f "best[protocol!=dash]" "STREAM_URL"
+```
 
-# Manual format selection
-yt-dlp -F "STREAM_URL"  # List formats
+Manual format selection
+
+```bash
+yt-dlp -F "STREAM_URL"
+```
+
+List formats
+
+```bash
 yt-dlp -f FORMAT_CODE "STREAM_URL"
 ```
 

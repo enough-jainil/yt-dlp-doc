@@ -48,14 +48,21 @@ yt-dlp supports all SponsorBlock categories:
 
 SponsorBlock is disabled by default. Enable it with:
 
+Mark all default categories as chapters
+
 ```bash
-# Mark all default categories as chapters
 yt-dlp --sponsorblock-mark default URL
+```
 
-# Remove all default categories from video
+Remove all default categories from video
+
+```bash
 yt-dlp --sponsorblock-remove default URL
+```
 
-# Mark sponsors, remove intros and outros
+Mark sponsors, remove intros and outros
+
+```bash
 yt-dlp --sponsorblock-mark sponsor --sponsorblock-remove intro,outro URL
 ```
 
@@ -79,14 +86,21 @@ yt-dlp --sponsorblock-mark sponsor --sponsorblock-remove intro,outro URL
 
 ### Category Selection
 
+Mark specific categories
+
 ```bash
-# Mark specific categories
 yt-dlp --sponsorblock-mark sponsor,intro,outro URL
+```
 
-# Remove all except music_offtopic
+Remove all except music_offtopic
+
+```bash
 yt-dlp --sponsorblock-remove default,-music_offtopic URL
+```
 
-# Mark sponsors and highlights, remove intros
+Mark sponsors and highlights, remove intros
+
+```bash
 yt-dlp --sponsorblock-mark sponsor,poi_highlight --sponsorblock-remove intro URL
 ```
 
@@ -94,14 +108,21 @@ yt-dlp --sponsorblock-mark sponsor,poi_highlight --sponsorblock-remove intro URL
 
 Customize how SponsorBlock segments are labeled:
 
+Default chapter title format
+
 ```bash
-# Default chapter title format
 yt-dlp --sponsorblock-mark default --sponsorblock-chapter-title "[SponsorBlock]: %(category)s" URL
+```
 
-# Custom format with timestamps
+Custom format with timestamps
+
+```bash
 yt-dlp --sponsorblock-mark default --sponsorblock-chapter-title "%(category_names)s (%(start_time)s-%(end_time)s)" URL
+```
 
-# Simple category names
+Simple category names
+
+```bash
 yt-dlp --sponsorblock-mark default --sponsorblock-chapter-title "%(category_names)s" URL
 ```
 
@@ -117,18 +138,23 @@ yt-dlp --sponsorblock-mark default --sponsorblock-chapter-title "%(category_name
 
 Use alternative SponsorBlock API servers:
 
-```bash
-# Use custom API endpoint
-yt-dlp --sponsorblock-api "https://sponsor.ajay.app" --sponsorblock-mark default URL
+Use custom API endpoint
 
-# Use local SponsorBlock instance
+```bash
+yt-dlp --sponsorblock-api "https://sponsor.ajay.app" --sponsorblock-mark default URL
+```
+
+Use local SponsorBlock instance
+
+```bash
 yt-dlp --sponsorblock-api "http://localhost:8080" --sponsorblock-mark default URL
 ```
 
 ### Disable SponsorBlock
 
+Explicitly disable SponsorBlock (useful in config files)
+
 ```bash
-# Explicitly disable SponsorBlock (useful in config files)
 yt-dlp --no-sponsorblock URL
 ```
 
@@ -136,86 +162,76 @@ yt-dlp --no-sponsorblock URL
 
 ### Content Creator Workflow
 
+Download with sponsor segments marked for editing
+
 ```bash
-# Download with sponsor segments marked for editing
-yt-dlp --sponsorblock-mark sponsor,selfpromo \
-       --sponsorblock-chapter-title "Edit: Remove %(category_names)s" \
-       -f "bestvideo+bestaudio" URL
+yt-dlp --sponsorblock-mark sponsor,selfpromo --sponsorblock-chapter-title "Edit: Remove %(category_names)s" -f "bestvideo+bestaudio" URL
 ```
 
 ### Clean Viewing Experience
 
+Remove all distractions for clean viewing
+
 ```bash
-# Remove all distractions for clean viewing
-yt-dlp --sponsorblock-remove sponsor,intro,outro,interaction \
-       --embed-chapters \
-       -f "best[height<=1080]" URL
+yt-dlp --sponsorblock-remove sponsor,intro,outro,interaction --embed-chapters -f "best[height<=1080]" URL
 ```
 
 ### Music Video Processing
 
+Keep music, remove talking segments
+
 ```bash
-# Keep music, remove talking segments
-yt-dlp --sponsorblock-remove music_offtopic \
-       --sponsorblock-mark sponsor,intro,outro \
-       -x --audio-format mp3 URL
+yt-dlp --sponsorblock-remove music_offtopic --sponsorblock-mark sponsor,intro,outro -x --audio-format mp3 URL
 ```
 
 ### Educational Content
 
+Remove sponsors but keep educational content
+
 ```bash
-# Remove sponsors but keep educational content
-yt-dlp --sponsorblock-remove sponsor \
-       --sponsorblock-mark intro,outro \
-       --write-info-json URL
+yt-dlp --sponsorblock-remove sponsor --sponsorblock-mark intro,outro --write-info-json URL
 ```
 
 ### Batch Processing with Archive
 
+Process playlist with SponsorBlock and archiving
+
 ```bash
-# Process playlist with SponsorBlock and archiving
-yt-dlp --sponsorblock-remove sponsor,intro,outro \
-       --download-archive processed.txt \
-       -o "%(uploader)s/%(title)s.%(ext)s" \
-       PLAYLIST_URL
+yt-dlp --sponsorblock-remove sponsor,intro,outro --download-archive processed.txt -o "%(uploader)s/%(title)s.%(ext)s" PLAYLIST_URL
 ```
 
 ## Integration with Other Features
 
 ### Combining with Format Selection
 
+High-quality download with SponsorBlock
+
 ```bash
-# High-quality download with SponsorBlock
-yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" \
-       --sponsorblock-remove sponsor \
-       --merge-output-format mp4 URL
+yt-dlp -f "bestvideo[height<=1080]+bestaudio/best[height<=1080]" --sponsorblock-remove sponsor --merge-output-format mp4 URL
 ```
 
 ### With Subtitle Processing
 
+Download with subtitles and SponsorBlock
+
 ```bash
-# Download with subtitles and SponsorBlock
-yt-dlp --write-subs --embed-subs \
-       --sponsorblock-mark default \
-       --sub-langs en,en-US URL
+yt-dlp --write-subs --embed-subs --sponsorblock-mark default --sub-langs en,en-US URL
 ```
 
 ### With Post-Processing
 
+Convert to MP3 with sponsor removal
+
 ```bash
-# Convert to MP3 with sponsor removal
-yt-dlp -x --audio-format mp3 \
-       --sponsorblock-remove sponsor,intro,outro \
-       --embed-metadata URL
+yt-dlp -x --audio-format mp3 --sponsorblock-remove sponsor,intro,outro --embed-metadata URL
 ```
 
 ### With Chapter Splitting
 
+Split by chapters and remove sponsors
+
 ```bash
-# Split by chapters and remove sponsors
-yt-dlp --split-chapters \
-       --sponsorblock-remove sponsor \
-       -o "%(title)s/%(section_title)s.%(ext)s" URL
+yt-dlp --split-chapters --sponsorblock-remove sponsor -o "%(title)s/%(section_title)s.%(ext)s" URL
 ```
 
 ## Configuration File Examples
@@ -274,11 +290,15 @@ SponsorBlock integration requires additional API calls:
 
 ### Error Handling
 
-```bash
-# Continue if SponsorBlock data unavailable
-yt-dlp --sponsorblock-mark default --ignore-errors URL
+Continue if SponsorBlock data unavailable
 
-# Verbose output for debugging
+```bash
+yt-dlp --sponsorblock-mark default --ignore-errors URL
+```
+
+Verbose output for debugging
+
+```bash
 yt-dlp --sponsorblock-mark default --verbose URL
 ```
 
@@ -288,38 +308,51 @@ yt-dlp --sponsorblock-mark default --verbose URL
 
 **No SponsorBlock data available:**
 
+Check if video has SponsorBlock data
+
 ```bash
-# Check if video has SponsorBlock data
 yt-dlp --simulate --verbose --sponsorblock-mark default URL
 ```
 
 **API connectivity issues:**
 
-```bash
-# Test API connectivity
-curl "https://sponsor.ajay.app/api/skipSegments?videoID=VIDEO_ID"
+Test API connectivity
 
-# Use alternative API
+```bash
+curl "https://sponsor.ajay.app/api/skipSegments?videoID=VIDEO_ID"
+```
+
+Use alternative API
+
+```bash
 yt-dlp --sponsorblock-api "https://sponsor.ajay.app" URL
 ```
 
 **Segment processing errors:**
 
-```bash
-# Skip problematic segments
-yt-dlp --sponsorblock-mark default --ignore-errors URL
+Skip problematic segments
 
-# Debug segment processing
+```bash
+yt-dlp --sponsorblock-mark default --ignore-errors URL
+```
+
+Debug segment processing
+
+```bash
 yt-dlp --sponsorblock-mark default --verbose --keep-fragments URL
 ```
 
 ### Verification
 
-```bash
-# Check chapter markers in output
-ffprobe -v quiet -show_chapters -print_format csv output.mp4
+Check chapter markers in output
 
-# Verify removed segments
+```bash
+ffprobe -v quiet -show_chapters -print_format csv output.mp4
+```
+
+Verify removed segments
+
+```bash
 ffprobe -v quiet -show_format -print_format json output.mp4
 ```
 
@@ -338,34 +371,35 @@ ffprobe -v quiet -show_format -print_format json output.mp4
 **Conservative approach:**
 
 ```bash
---sponsorblock-remove sponsor
---sponsorblock-mark intro,outro
+yt-dlp --sponsorblock-remove sponsor --sponsorblock-mark intro,outro URL
 ```
 
 **Aggressive cleaning:**
 
 ```bash
---sponsorblock-remove sponsor,intro,outro,interaction,selfpromo
+yt-dlp --sponsorblock-remove sponsor,intro,outro,interaction,selfpromo URL
 ```
 
 **Content-aware:**
 
-```bash
-# Music videos
---sponsorblock-remove music_offtopic
+Music videos
 
-# Educational content
---sponsorblock-remove sponsor,interaction
+```bash
+yt-dlp --sponsorblock-remove music_offtopic URL
+```
+
+Educational content
+
+```bash
+yt-dlp --sponsorblock-remove sponsor,interaction URL
 ```
 
 ### Performance Optimization
 
+Batch processing optimization
+
 ```bash
-# Batch processing optimization
-yt-dlp --sponsorblock-remove sponsor \
-       --concurrent-fragments 4 \
-       --sleep-interval 1 \
-       --batch-file urls.txt
+yt-dlp --sponsorblock-remove sponsor --concurrent-fragments 4 --sleep-interval 1 --batch-file urls.txt
 ```
 
 ## Ethical Considerations

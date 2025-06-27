@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 6
 ---
 
 # Using Release Binaries
@@ -46,25 +46,57 @@ The following binaries are recommended for most users:
 
 1. Download the appropriate `.exe` file
 2. Place it in a directory that's in your PATH, or create a new directory and add it to PATH
-3. Open Command Prompt or PowerShell and test: `yt-dlp --version`
+3. Open Command Prompt or PowerShell and test:
+
+```cmd
+yt-dlp --version
+```
 
 ### Linux/BSD
 
 1. Download the `yt-dlp` binary
-2. Make it executable: `chmod a+rx yt-dlp`
-3. Move to PATH: `sudo mv yt-dlp /usr/local/bin/`
-4. Test: `yt-dlp --version`
+2. Make it executable:
+
+```bash
+chmod a+rx yt-dlp
+```
+
+3. Move to PATH:
+
+```bash
+sudo mv yt-dlp /usr/local/bin/
+```
+
+4. Test:
+
+```bash
+yt-dlp --version
+```
 
 ### macOS
 
 1. Download the `yt-dlp_macos` binary
 2. Rename and make executable:
-   ```bash
-   mv yt-dlp_macos yt-dlp
-   chmod a+rx yt-dlp
-   ```
-3. Move to PATH: `sudo mv yt-dlp /usr/local/bin/`
-4. Test: `yt-dlp --version`
+
+```bash
+mv yt-dlp_macos yt-dlp
+```
+
+```bash
+chmod a+rx yt-dlp
+```
+
+3. Move to PATH:
+
+```bash
+sudo mv yt-dlp /usr/local/bin/
+```
+
+4. Test:
+
+```bash
+yt-dlp --version
+```
 
 ## Updating Binaries
 
@@ -83,35 +115,56 @@ There are three release channels available:
 #### Stable (Default)
 
 - Default channel with tested releases
-- Update: `yt-dlp -U`
+
+```bash
+yt-dlp -U
+```
 
 #### Nightly (Recommended)
 
 - Daily builds with latest patches and changes
 - **Recommended for regular users**
-- Update to nightly: `yt-dlp --update-to nightly`
-- Available from [yt-dlp-nightly-builds](https://github.com/yt-dlp/yt-dlp-nightly-builds/releases)
+
+```bash
+yt-dlp --update-to nightly
+```
+
+Available from [yt-dlp-nightly-builds](https://github.com/yt-dlp/yt-dlp-nightly-builds/releases)
 
 #### Master
 
 - Built after each commit to master branch
 - Latest fixes but may have regressions
-- Update to master: `yt-dlp --update-to master`
-- Available from [yt-dlp-master-builds](https://github.com/yt-dlp/yt-dlp-master-builds/releases)
+
+```bash
+yt-dlp --update-to master
+```
+
+Available from [yt-dlp-master-builds](https://github.com/yt-dlp/yt-dlp-master-builds/releases)
 
 ### Advanced Update Options
 
+Switch to a different channel
+
 ```bash
-# Switch to a different channel
 yt-dlp --update-to nightly
+```
 
-# Upgrade/downgrade to specific version
+Upgrade/downgrade to specific version
+
+```bash
 yt-dlp --update-to stable@2023.07.06
+```
 
-# Update to specific tag
+Update to specific tag
+
+```bash
 yt-dlp --update-to 2023.10.07
+```
 
-# Update from different repository
+Update from different repository
+
+```bash
 yt-dlp --update-to example/yt-dlp@2023.09.24
 ```
 
@@ -126,12 +179,19 @@ For security-conscious users, verification files are available:
 
 ### Verifying Downloads
 
-```bash
-# Import the public key
-curl -L https://github.com/yt-dlp/yt-dlp/raw/master/public.key | gpg --import
+Import the public key
 
-# Verify signatures
+```bash
+curl -L https://github.com/yt-dlp/yt-dlp/raw/master/public.key | gpg --import
+```
+
+Verify signatures
+
+```bash
 gpg --verify SHA2-256SUMS.sig SHA2-256SUMS
+```
+
+```bash
 gpg --verify SHA2-512SUMS.sig SHA2-512SUMS
 ```
 
@@ -146,7 +206,6 @@ gpg --verify SHA2-512SUMS.sig SHA2-512SUMS
 If you experience issues with the **stable** release, install the **nightly** release before submitting a bug report:
 
 ```bash
-# For stable users experiencing issues
 yt-dlp --update-to nightly
 ```
 
@@ -164,3 +223,7 @@ On Windows, if you get an error about missing `MSVCR100.dll`, install the [Micro
 ## All Releases
 
 You can find all releases at: [https://github.com/yt-dlp/yt-dlp/releases](https://github.com/yt-dlp/yt-dlp/releases)
+
+```
+
+```

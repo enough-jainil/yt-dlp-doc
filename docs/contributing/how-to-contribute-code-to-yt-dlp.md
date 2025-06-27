@@ -31,70 +31,120 @@ Before contributing, ensure you have:
 ### **1. Fork and Clone the Repository**
 
 ```bash
-# Fork the repository on GitHub first, then clone your fork
 git clone https://github.com/YOUR_USERNAME/yt-dlp.git
-cd yt-dlp
+```
 
-# Add upstream remote for staying updated
+Clone your fork.
+
+```bash
+cd yt-dlp
+```
+
+```bash
 git remote add upstream https://github.com/yt-dlp/yt-dlp.git
 ```
+
+Add upstream remote for staying updated.
 
 ### **2. Set Up Development Environment**
 
 ```bash
-# Create and activate virtual environment
 python -m venv venv
+```
 
-# Activate virtual environment
-# On Windows:
+Create virtual environment.
+
+```bash
 venv\Scripts\activate
-# On macOS/Linux:
+```
+
+Activate virtual environment (Windows).
+
+```bash
 source venv/bin/activate
+```
 
-# Install development dependencies
+Activate virtual environment (macOS/Linux).
+
+```bash
 pip install -r requirements.txt
-pip install -r devscripts/requirements.txt
+```
 
-# Install in development mode
+Install development dependencies.
+
+```bash
+pip install -r devscripts/requirements.txt
+```
+
+Install additional development dependencies.
+
+```bash
 pip install -e .
 ```
+
+Install in development mode.
 
 ### **3. Verify Installation**
 
 ```bash
-# Test basic functionality
 python -m yt_dlp --version
-python -m yt_dlp --help
+```
 
-# Run basic tests
+Test basic functionality (version).
+
+```bash
+python -m yt_dlp --help
+```
+
+Test basic functionality (help).
+
+```bash
 python -m pytest test/test_download.py -v
 ```
+
+Run basic tests.
 
 ## Development Workflow
 
 ### **1. Stay Updated with Upstream**
 
 ```bash
-# Fetch latest changes from upstream
 git fetch upstream
+```
 
-# Update your main branch
+Fetch latest changes from upstream.
+
+```bash
 git checkout master
-git merge upstream/master
+```
 
-# Push updates to your fork
+Switch to main branch.
+
+```bash
+git merge upstream/master
+```
+
+Update your main branch.
+
+```bash
 git push origin master
 ```
+
+Push updates to your fork.
 
 ### **2. Create Feature Branch**
 
 ```bash
-# Create and switch to feature branch
 git checkout -b feature/your-feature-name
+```
 
-# Or for bug fixes
+Create and switch to feature branch.
+
+```bash
 git checkout -b fix/issue-description
 ```
+
+Create and switch to bug fix branch.
 
 ### **3. Make Your Changes**
 
@@ -108,27 +158,44 @@ Follow these development practices:
 ### **4. Testing Your Changes**
 
 ```bash
-# Run all tests
 python -m pytest
+```
 
-# Run specific test categories
+Run all tests.
+
+```bash
 python -m pytest test/test_extractors.py
+```
+
+Run specific test category (extractors).
+
+```bash
 python -m pytest test/test_postprocessors.py
+```
 
-# Test with specific extractors
+Run specific test category (postprocessors).
+
+```bash
 python -m pytest test/test_extractors.py::test_youtube
+```
 
-# Run linting
+Test with specific extractor (YouTube).
+
+```bash
 python -m flake8 yt_dlp/
 ```
+
+Run linting.
 
 ### **5. Commit Your Changes**
 
 ```bash
-# Stage your changes
 git add .
+```
 
-# Commit with descriptive message
+Stage your changes.
+
+```bash
 git commit -m "Add support for NewSite extractor
 
 - Implement NewSiteIE class with video extraction
@@ -136,6 +203,8 @@ git commit -m "Add support for NewSite extractor
 - Include metadata extraction for title, description
 - Add tests for various URL patterns"
 ```
+
+Commit with descriptive message.
 
 ## Types of Contributions
 
@@ -301,19 +370,46 @@ def test_new_site_extraction(self):
 ### **1. Prepare Your Pull Request**
 
 ```bash
-# Ensure your branch is up to date
 git checkout master
+```
+
+Switch to main branch.
+
+```bash
 git pull upstream master
+```
+
+Ensure your branch is up to date.
+
+```bash
 git checkout your-feature-branch
+```
+
+Switch to feature branch.
+
+```bash
 git rebase master
+```
 
-# Run final tests
+Rebase onto master.
+
+```bash
 python -m pytest
-python -m flake8 yt_dlp/
+```
 
-# Push your changes
+Run final tests.
+
+```bash
+python -m flake8 yt_dlp/
+```
+
+Run final linting.
+
+```bash
 git push origin your-feature-branch
 ```
+
+Push your changes.
 
 ### **2. Create Pull Request**
 
@@ -419,24 +515,82 @@ Regular, high-quality contributions may lead to:
 ### **Common Commands**
 
 ```bash
-# Development setup
 git clone https://github.com/YOUR_USERNAME/yt-dlp.git
+```
+
+Clone repository.
+
+```bash
 cd yt-dlp
+```
+
+Navigate to repository.
+
+```bash
 python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+```
+
+Create virtual environment.
+
+```bash
+source venv/bin/activate
+```
+
+Activate virtual environment (macOS/Linux).
+
+```bash
+venv\Scripts\activate
+```
+
+Activate virtual environment (Windows).
+
+```bash
 pip install -e .
+```
 
-# Testing
+Install in development mode.
+
+```bash
 python -m pytest
-python -m pytest test/test_extractors.py::TestYoutube
-python -m flake8 yt_dlp/
+```
 
-# Git workflow
+Run all tests.
+
+```bash
+python -m pytest test/test_extractors.py::TestYoutube
+```
+
+Test specific extractor.
+
+```bash
+python -m flake8 yt_dlp/
+```
+
+Run linting.
+
+```bash
 git checkout -b feature/new-feature
+```
+
+Create feature branch.
+
+```bash
 git add .
+```
+
+Stage changes.
+
+```bash
 git commit -m "Descriptive commit message"
+```
+
+Commit changes.
+
+```bash
 git push origin feature/new-feature
 ```
+
+Push to feature branch.
 
 ### **Contribution Checklist**
 

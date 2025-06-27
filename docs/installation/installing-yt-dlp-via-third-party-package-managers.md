@@ -38,55 +38,89 @@ Chocolatey is a popular Windows package manager that simplifies software install
 
 #### Installation of Chocolatey
 
+Run as Administrator in PowerShell
+
 ```powershell
-# Run as Administrator in PowerShell
 Set-ExecutionPolicy Bypass -Scope Process -Force
+```
+
+```powershell
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+```
+
+```powershell
 iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
 #### Installing yt-dlp
 
+Basic installation
+
 ```powershell
-# Basic installation
 choco install yt-dlp
+```
 
-# Install with confirmation prompts disabled
+Install with confirmation prompts disabled
+
+```powershell
 choco install yt-dlp -y
+```
 
-# Install specific version
+Install specific version
+
+```powershell
 choco install yt-dlp --version 2023.12.30
 ```
 
 #### Managing yt-dlp
 
+Update to latest version
+
 ```powershell
-# Update to latest version
 choco upgrade yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```powershell
 choco upgrade all
+```
 
-# Check for available updates
+Check for available updates
+
+```powershell
 choco outdated
+```
 
-# Uninstall
+Uninstall
+
+```powershell
 choco uninstall yt-dlp
+```
 
-# Get package information
+Get package information
+
+```powershell
 choco info yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```powershell
 choco list --local-only
 ```
 
 #### Configuration
 
-```powershell
-# Set default installation directory
-choco config set cacheLocation C:\temp\choco
+Set default installation directory
 
-# Enable global confirmation
+```powershell
+choco config set cacheLocation C:\temp\choco
+```
+
+Enable global confirmation
+
+```powershell
 choco feature enable -n allowGlobalConfirmation
 ```
 
@@ -101,65 +135,111 @@ Scoop is a command-line installer for Windows that installs programs to your use
 
 #### Installation of Scoop
 
-```powershell
-# Set execution policy for current user
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+Set execution policy for current user
 
-# Install Scoop
+```powershell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Install Scoop
+
+```powershell
 irm get.scoop.sh | iex
 ```
 
 #### Installing yt-dlp
 
+Basic installation
+
 ```powershell
-# Basic installation
 scoop install yt-dlp
+```
 
-# Install from specific bucket
+Install from specific bucket
+
+```powershell
 scoop bucket add extras
-scoop install extras/yt-dlp
+```
 
-# Install specific version
+```powershell
+scoop install extras/yt-dlp
+```
+
+Install specific version
+
+```powershell
 scoop install yt-dlp@2023.12.30
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```powershell
-# Update yt-dlp
 scoop update yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```powershell
 scoop update *
+```
 
-# Check for updates
+Check for updates
+
+```powershell
 scoop status
+```
 
-# Uninstall
+Uninstall
+
+```powershell
 scoop uninstall yt-dlp
+```
 
-# Get package information
+Get package information
+
+```powershell
 scoop info yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```powershell
 scoop list
 ```
 
 #### Advanced Scoop Usage
 
+Add additional buckets
+
 ```powershell
-# Add additional buckets
 scoop bucket add main
+```
+
+```powershell
 scoop bucket add extras
+```
+
+```powershell
 scoop bucket add versions
+```
 
-# Install with specific architecture
+Install with specific architecture
+
+```powershell
 scoop install yt-dlp --arch 64bit
+```
 
-# Hold a specific version
+Hold a specific version
+
+```powershell
 scoop hold yt-dlp
+```
 
-# Cleanup old versions
+Cleanup old versions
+
+```powershell
 scoop cleanup yt-dlp
 ```
 
@@ -175,55 +255,91 @@ Microsoft's official package manager for Windows 10 1709+ and Windows 11.
 
 #### Installing yt-dlp
 
+Basic installation
+
 ```cmd
-# Basic installation
 winget install yt-dlp.yt-dlp
+```
 
-# Install with specific ID
+Install with specific ID
+
+```cmd
 winget install --id yt-dlp.yt-dlp
+```
 
-# Install interactively
+Install interactively
+
+```cmd
 winget install yt-dlp.yt-dlp --interactive
+```
 
-# Install to specific location
+Install to specific location
+
+```cmd
 winget install yt-dlp.yt-dlp --location "C:\Tools"
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```cmd
-# Update yt-dlp
 winget upgrade yt-dlp.yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```cmd
 winget upgrade --all
+```
 
-# Check for available updates
+Check for available updates
+
+```cmd
 winget upgrade
+```
 
-# Uninstall
+Uninstall
+
+```cmd
 winget uninstall yt-dlp.yt-dlp
+```
 
-# Get package information
+Get package information
+
+```cmd
 winget show yt-dlp.yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```cmd
 winget list
 ```
 
 #### Advanced winget Usage
 
+Search for packages
+
 ```cmd
-# Search for packages
 winget search yt-dlp
+```
 
-# Install specific version
+Install specific version
+
+```cmd
 winget install yt-dlp.yt-dlp --version 2023.12.30
+```
 
-# Export installed packages
+Export installed packages
+
+```cmd
 winget export --output packages.json
+```
 
-# Import packages
+Import packages
+
+```cmd
 winget import --import-file packages.json
 ```
 
@@ -240,72 +356,121 @@ The most popular package manager for macOS and Linux.
 
 #### Installation of Homebrew
 
-```bash
-# Install Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+Install Homebrew
 
-# Add to PATH (for Apple Silicon Macs)
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Add to PATH (for Apple Silicon Macs)
+
+```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+```
+
+```bash
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
 
 #### Installing yt-dlp
 
+Basic installation
+
 ```bash
-# Basic installation
 brew install yt-dlp
+```
 
-# Install from cask (if available)
+Install from cask (if available)
+
+```bash
 brew install --cask yt-dlp
+```
 
-# Install specific version (if available)
+Install specific version (if available)
+
+```bash
 brew install yt-dlp@2023.12.30
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 brew upgrade yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 brew upgrade
+```
 
-# Check for available updates
+Check for available updates
+
+```bash
 brew outdated
+```
 
-# Uninstall
+Uninstall
+
+```bash
 brew uninstall yt-dlp
+```
 
-# Get package information
+Get package information
+
+```bash
 brew info yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 brew list
+```
 
-# Search for packages
+Search for packages
+
+```bash
 brew search yt-dlp
 ```
 
 #### Advanced Homebrew Usage
 
+Pin a specific version
+
 ```bash
-# Pin a specific version
 brew pin yt-dlp
+```
 
-# Unpin to allow updates
+Unpin to allow updates
+
+```bash
 brew unpin yt-dlp
+```
 
-# Install development version
+Install development version
+
+```bash
 brew install --HEAD yt-dlp
+```
 
-# Cleanup old versions
+Cleanup old versions
+
+```bash
 brew cleanup
+```
 
-# Check system for potential issues
+Check system for potential issues
+
+```bash
 brew doctor
+```
 
-# Create a Brewfile for reproducible setups
+Create a Brewfile for reproducible setups
+
+```bash
 brew bundle dump
 ```
 
@@ -331,53 +496,89 @@ sudo port selfupdate
 
 #### Installing yt-dlp
 
+Basic installation
+
 ```bash
-# Basic installation
 sudo port install yt-dlp
+```
 
-# Install with specific variants
+Install with specific variants
+
+```bash
 sudo port install yt-dlp +universal
+```
 
-# Install and activate
+Install and activate
+
+```bash
 sudo port install yt-dlp +python311
 ```
 
 #### Managing yt-dlp
 
+Update MacPorts and packages
+
 ```bash
-# Update MacPorts and packages
 sudo port selfupdate
+```
+
+```bash
 sudo port upgrade yt-dlp
+```
 
-# Update all outdated packages
+Update all outdated packages
+
+```bash
 sudo port upgrade outdated
+```
 
-# Uninstall
+Uninstall
+
+```bash
 sudo port uninstall yt-dlp
+```
 
-# Get package information
+Get package information
+
+```bash
 port info yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 port installed
+```
 
-# Search for packages
+Search for packages
+
+```bash
 port search yt-dlp
 ```
 
 #### Advanced MacPorts Usage
 
+Clean build files
+
 ```bash
-# Clean build files
 sudo port clean yt-dlp
+```
 
-# Show dependencies
+Show dependencies
+
+```bash
 port deps yt-dlp
+```
 
-# Show dependents
+Show dependents
+
+```bash
 port dependents yt-dlp
+```
 
-# Install with build options
+Install with build options
+
+```bash
 sudo port install yt-dlp +debug +universal
 ```
 
@@ -389,73 +590,125 @@ The Advanced Package Tool used by Debian and Ubuntu-based distributions.
 
 #### Official PPA (Recommended)
 
+Add official yt-dlp PPA
+
 ```bash
-# Add official yt-dlp PPA
 sudo add-apt-repository ppa:yt-dlp/stable
+```
 
-# Update package list
+Update package list
+
+```bash
 sudo apt update
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 sudo apt install yt-dlp
 ```
 
 #### Distribution Packages
 
-```bash
-# Install from distribution repository (may be older)
-sudo apt update
-sudo apt install yt-dlp
+Install from distribution repository (may be older)
 
-# Install specific version
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install yt-dlp
+```
+
+Install specific version
+
+```bash
 sudo apt install yt-dlp=2023.12.30-1
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 sudo apt upgrade yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 sudo apt upgrade
+```
 
-# Check for available updates
+Check for available updates
+
+```bash
 apt list --upgradable
+```
 
-# Uninstall
+Uninstall
+
+```bash
 sudo apt remove yt-dlp
+```
 
-# Complete removal with config files
+Complete removal with config files
+
+```bash
 sudo apt purge yt-dlp
+```
 
-# Get package information
+Get package information
+
+```bash
 apt show yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 apt list --installed | grep yt-dlp
 ```
 
 #### Advanced APT Usage
 
+Hold package at current version
+
 ```bash
-# Hold package at current version
 sudo apt-mark hold yt-dlp
+```
 
-# Unhold package
+Unhold package
+
+```bash
 sudo apt-mark unhold yt-dlp
+```
 
-# Download package without installing
+Download package without installing
+
+```bash
 apt download yt-dlp
+```
 
-# Show package dependencies
+Show package dependencies
+
+```bash
 apt depends yt-dlp
+```
 
-# Show reverse dependencies
+Show reverse dependencies
+
+```bash
 apt rdepends yt-dlp
+```
 
-# Clean package cache
+Clean package cache
+
+```bash
 sudo apt clean
+```
+
+```bash
 sudo apt autoclean
 ```
 
@@ -465,53 +718,88 @@ Red Hat-based distributions using DNF (newer) or YUM (older).
 
 #### Fedora
 
-```bash
-# Install from official repositories
-sudo dnf install yt-dlp
+Install from official repositories
 
-# Install from RPM Fusion (if needed)
+```bash
+sudo dnf install yt-dlp
+```
+
+Install from RPM Fusion (if needed)
+
+```bash
 sudo dnf install \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+```
 
+```bash
 sudo dnf install yt-dlp
 ```
 
 #### CentOS/RHEL
 
+Enable EPEL repository
+
 ```bash
-# Enable EPEL repository
 sudo dnf install epel-release
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 sudo dnf install yt-dlp
+```
 
-# For older versions using YUM
+For older versions using YUM
+
+```bash
 sudo yum install epel-release
+```
+
+```bash
 sudo yum install yt-dlp
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 sudo dnf upgrade yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 sudo dnf upgrade
+```
 
-# Check for available updates
+Check for available updates
+
+```bash
 dnf check-update
+```
 
-# Uninstall
+Uninstall
+
+```bash
 sudo dnf remove yt-dlp
+```
 
-# Get package information
+Get package information
+
+```bash
 dnf info yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 dnf list installed | grep yt-dlp
+```
 
-# Search for packages
+Search for packages
+
+```bash
 dnf search yt-dlp
 ```
 
@@ -521,54 +809,93 @@ The package manager for Arch Linux and derivatives.
 
 #### Official Repository
 
-```bash
-# Install from official repository
-sudo pacman -S yt-dlp
+Install from official repository
 
-# Install with confirmation
+```bash
+sudo pacman -S yt-dlp
+```
+
+Install with confirmation
+
+```bash
 sudo pacman -S --noconfirm yt-dlp
 ```
 
 #### AUR (Arch User Repository)
 
+Using yay AUR helper
+
 ```bash
-# Using yay AUR helper
 yay -S yt-dlp-git
+```
 
-# Using paru AUR helper
+Using paru AUR helper
+
+```bash
 paru -S yt-dlp-git
+```
 
-# Manual AUR installation
+Manual AUR installation
+
+```bash
 git clone https://aur.archlinux.org/yt-dlp-git.git
+```
+
+```bash
 cd yt-dlp-git
+```
+
+```bash
 makepkg -si
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 sudo pacman -S yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 sudo pacman -Syu
+```
 
-# Check for available updates
+Check for available updates
+
+```bash
 checkupdates
+```
 
-# Uninstall
+Uninstall
+
+```bash
 sudo pacman -R yt-dlp
+```
 
-# Complete removal with dependencies
+Complete removal with dependencies
+
+```bash
 sudo pacman -Rs yt-dlp
+```
 
-# Get package information
+Get package information
+
+```bash
 pacman -Si yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 pacman -Q | grep yt-dlp
+```
 
-# Search for packages
+Search for packages
+
+```bash
 pacman -Ss yt-dlp
 ```
 
@@ -578,41 +905,73 @@ Package manager for openSUSE distributions.
 
 #### Installation
 
+Install from official repository
+
 ```bash
-# Install from official repository
 sudo zypper install yt-dlp
+```
 
-# Install with automatic dependency resolution
+Install with automatic dependency resolution
+
+```bash
 sudo zypper install --auto-agree-with-licenses yt-dlp
+```
 
-# Install from specific repository
+Install from specific repository
+
+```bash
 sudo zypper addrepo https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/ multimedia
+```
+
+```bash
 sudo zypper refresh
+```
+
+```bash
 sudo zypper install yt-dlp
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 sudo zypper update yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 sudo zypper update
+```
 
-# Check for available updates
+Check for available updates
+
+```bash
 zypper list-updates
+```
 
-# Uninstall
+Uninstall
+
+```bash
 sudo zypper remove yt-dlp
+```
 
-# Get package information
+Get package information
+
+```bash
 zypper info yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 zypper search --installed-only yt-dlp
+```
 
-# Search for packages
+Search for packages
+
+```bash
 zypper search yt-dlp
 ```
 
@@ -622,38 +981,67 @@ Lightweight package manager for Alpine Linux.
 
 #### Installation
 
+Update package index
+
 ```bash
-# Update package index
 apk update
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 apk add yt-dlp
+```
 
-# Install from edge repository (latest versions)
+Install from edge repository (latest versions)
+
+```bash
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+```
+
+```bash
 apk update
+```
+
+```bash
 apk add yt-dlp
 ```
 
 #### Managing yt-dlp
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 apk upgrade yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 apk upgrade
+```
 
-# Uninstall
+Uninstall
+
+```bash
 apk del yt-dlp
+```
 
-# Get package information
+Get package information
+
+```bash
 apk info yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 apk list -I | grep yt-dlp
+```
 
-# Search for packages
+Search for packages
+
+```bash
 apk search yt-dlp
 ```
 
@@ -665,33 +1053,53 @@ Cross-platform package manager with reproducible builds.
 
 #### Installation
 
+Install yt-dlp
+
 ```bash
-# Install yt-dlp
 nix-env -iA nixpkgs.yt-dlp
+```
 
-# Install imperatively
+Install imperatively
+
+```bash
 nix-env -i yt-dlp
+```
 
-# Install in nix-shell
+Install in nix-shell
+
+```bash
 nix-shell -p yt-dlp
 ```
 
 #### Managing with Nix
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 nix-env -u yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 nix-env -u
+```
 
-# Uninstall
+Uninstall
+
+```bash
 nix-env -e yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 nix-env -q
+```
 
-# Search for packages
+Search for packages
+
+```bash
 nix-env -qaP | grep yt-dlp
 ```
 
@@ -701,30 +1109,47 @@ GNU package manager focusing on reproducible builds.
 
 #### Installation
 
-```bash
-# Install yt-dlp
-guix install yt-dlp
+Install yt-dlp
 
-# Install to specific profile
+```bash
+guix install yt-dlp
+```
+
+Install to specific profile
+
+```bash
 guix install yt-dlp -p ~/my-profile
 ```
 
 #### Managing with Guix
 
+Update yt-dlp
+
 ```bash
-# Update yt-dlp
 guix upgrade yt-dlp
+```
 
-# Update all packages
+Update all packages
+
+```bash
 guix upgrade
+```
 
-# Uninstall
+Uninstall
+
+```bash
 guix remove yt-dlp
+```
 
-# List installed packages
+List installed packages
+
+```bash
 guix package -I
+```
 
-# Search for packages
+Search for packages
+
+```bash
 guix search yt-dlp
 ```
 
@@ -736,11 +1161,15 @@ Universal package manager for Linux applications.
 
 #### Installation
 
-```bash
-# Add Flathub repository
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+Add Flathub repository
 
-# Install yt-dlp (if available)
+```bash
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+```
+
+Install yt-dlp (if available)
+
+```bash
 flatpak install flathub org.yt_dlp.yt_dlp
 ```
 
@@ -750,11 +1179,15 @@ Universal package manager by Canonical.
 
 #### Installation
 
-```bash
-# Install yt-dlp snap (if available)
-sudo snap install yt-dlp
+Install yt-dlp snap (if available)
 
-# Install from edge channel
+```bash
+sudo snap install yt-dlp
+```
+
+Install from edge channel
+
+```bash
 sudo snap install yt-dlp --edge
 ```
 
@@ -769,22 +1202,31 @@ sudo snap install yt-dlp --edge
 
 ### Security Considerations
 
+Verify package signatures (where supported)
+
+APT
+
 ```bash
-# Verify package signatures (where supported)
-# APT
 apt-key list
+```
 
-# RPM-based
+RPM-based
+
+```bash
 rpm --checksig package.rpm
+```
 
-# Arch Linux
+Arch Linux
+
+```bash
 pacman-key --list-keys
 ```
 
 ### Automation and Scripting
 
+Create installation scripts
+
 ```bash
-# Create installation scripts
 #!/bin/bash
 if command -v apt >/dev/null 2>&1; then
     sudo apt update && sudo apt install -y yt-dlp
@@ -802,12 +1244,19 @@ fi
 
 ### Keeping Packages Updated
 
-```bash
-# Set up automatic updates (Ubuntu/Debian)
-sudo apt install unattended-upgrades
+Set up automatic updates (Ubuntu/Debian)
 
-# Configure automatic updates (Fedora)
+```bash
+sudo apt install unattended-upgrades
+```
+
+Configure automatic updates (Fedora)
+
+```bash
 sudo dnf install dnf-automatic
+```
+
+```bash
 sudo systemctl enable --now dnf-automatic.timer
 ```
 
@@ -824,31 +1273,43 @@ sudo systemctl enable --now dnf-automatic.timer
 
 **Ubuntu/Debian:**
 
-```bash
-# Fix broken packages
-sudo apt --fix-broken install
+Fix broken packages
 
-# Reconfigure packages
+```bash
+sudo apt --fix-broken install
+```
+
+Reconfigure packages
+
+```bash
 sudo dpkg-reconfigure yt-dlp
 ```
 
 **Fedora:**
 
-```bash
-# Clean package cache
-sudo dnf clean all
+Clean package cache
 
-# Rebuild package database
+```bash
+sudo dnf clean all
+```
+
+Rebuild package database
+
+```bash
 sudo dnf makecache
 ```
 
 **Arch Linux:**
 
-```bash
-# Update package database
-sudo pacman -Sy
+Update package database
 
-# Fix corrupted database
+```bash
+sudo pacman -Sy
+```
+
+Fix corrupted database
+
+```bash
 sudo pacman -Sc
 ```
 

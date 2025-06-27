@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Installing Plugins for yt-dlp
@@ -31,20 +31,33 @@ This comprehensive guide covers all aspects of installing plugins for yt-dlp, fr
 
 The most reliable method for well-maintained plugins:
 
+Search for available plugins
+
 ```bash
-# Search for available plugins
 pip search yt-dlp-plugin
+```
 
-# Install from PyPI
+Install from PyPI
+
+```bash
 pip install yt-dlp-plugin-name
+```
 
-# Install specific version
+Install specific version
+
+```bash
 pip install yt-dlp-plugin-name==1.2.3
+```
 
-# Install with optional dependencies
+Install with optional dependencies
+
+```bash
 pip install yt-dlp-plugin-name[extra-features]
+```
 
-# Install from requirements file
+Install from requirements file
+
+```bash
 pip install -r plugin-requirements.txt
 ```
 
@@ -52,15 +65,25 @@ pip install -r plugin-requirements.txt
 
 For plugins not on PyPI or development versions:
 
+Install latest version from GitHub
+
 ```bash
-# Install latest version from GitHub
 pip install git+https://github.com/user/yt-dlp-plugin-repo.git
+```
 
-# Install specific branch or tag
+Install specific branch or tag
+
+```bash
 pip install git+https://github.com/user/yt-dlp-plugin-repo.git@main
-pip install git+https://github.com/user/yt-dlp-plugin-repo.git@v1.0.0
+```
 
-# Install from private repository (with authentication)
+```bash
+pip install git+https://github.com/user/yt-dlp-plugin-repo.git@v1.0.0
+```
+
+Install from private repository (with authentication)
+
+```bash
 pip install git+https://username:token@github.com/user/private-plugin.git
 ```
 
@@ -68,20 +91,39 @@ pip install git+https://username:token@github.com/user/private-plugin.git
 
 Some plugins may be available through system package managers:
 
+Homebrew (macOS)
+
 ```bash
-# Homebrew (macOS)
 brew search yt-dlp-plugin
+```
+
+```bash
 brew install yt-dlp-plugin-name
+```
 
-# APT (Debian/Ubuntu)
+APT (Debian/Ubuntu)
+
+```bash
 apt search yt-dlp-plugin
+```
+
+```bash
 sudo apt install yt-dlp-plugin-name
+```
 
-# DNF (Fedora)
+DNF (Fedora)
+
+```bash
 dnf search yt-dlp-plugin
-sudo dnf install yt-dlp-plugin-name
+```
 
-# AUR (Arch Linux)
+```bash
+sudo dnf install yt-dlp-plugin-name
+```
+
+AUR (Arch Linux)
+
+```bash
 yay -S yt-dlp-plugin-name
 ```
 
@@ -123,29 +165,52 @@ Plugin Search Paths (in order of priority):
 
 **Step 1: Create Plugin Directories**
 
-```bash
-# Create the main plugin directory structure
-mkdir -p ~/.config/yt-dlp/plugins/{extractors,postprocessors,downloaders,utils}
+Create the main plugin directory structure
 
-# Create __init__.py files for Python package recognition
+```bash
+mkdir -p ~/.config/yt-dlp/plugins/{extractors,postprocessors,downloaders,utils}
+```
+
+Create **init**.py files for Python package recognition
+
+```bash
 touch ~/.config/yt-dlp/plugins/__init__.py
+```
+
+```bash
 touch ~/.config/yt-dlp/plugins/extractors/__init__.py
+```
+
+```bash
 touch ~/.config/yt-dlp/plugins/postprocessors/__init__.py
+```
+
+```bash
 touch ~/.config/yt-dlp/plugins/downloaders/__init__.py
+```
+
+```bash
 touch ~/.config/yt-dlp/plugins/utils/__init__.py
 ```
 
 **Step 2: Download Plugin Files**
 
-```bash
-# Download single plugin file
-wget https://raw.githubusercontent.com/user/repo/main/extractor.py -O ~/.config/yt-dlp/plugins/extractors/custom_site.py
+Download single plugin file
 
-# Download entire plugin repository
+```bash
+wget https://raw.githubusercontent.com/user/repo/main/extractor.py -O ~/.config/yt-dlp/plugins/extractors/custom_site.py
+```
+
+Download entire plugin repository
+
+```bash
 git clone https://github.com/user/plugin-repo.git /tmp/plugin
 cp -r /tmp/plugin/yt_dlp_plugins/* ~/.config/yt-dlp/plugins/
+```
 
-# Download and extract archive
+Download and extract archive
+
+```bash
 curl -L https://github.com/user/repo/archive/main.zip -o plugin.zip
 unzip plugin.zip
 cp plugin-main/*.py ~/.config/yt-dlp/plugins/extractors/
@@ -153,14 +218,21 @@ cp plugin-main/*.py ~/.config/yt-dlp/plugins/extractors/
 
 **Step 3: Install Dependencies**
 
+Install plugin dependencies if requirements.txt exists
+
 ```bash
-# Install plugin dependencies if requirements.txt exists
 pip install -r plugin-requirements.txt
+```
 
-# Install individual dependencies
+Install individual dependencies
+
+```bash
 pip install requests beautifulsoup4 lxml
+```
 
-# Install optional dependencies
+Install optional dependencies
+
+```bash
 pip install pillow[extra] ffmpeg-python
 ```
 
@@ -170,30 +242,43 @@ pip install pillow[extra] ffmpeg-python
 
 For plugin development or testing unreleased versions:
 
+Clone plugin repository
+
 ```bash
-# Clone plugin repository
 git clone https://github.com/user/yt-dlp-plugin-repo.git
 cd yt-dlp-plugin-repo
+```
 
-# Create virtual environment
+Create virtual environment
+
+```bash
 python -m venv plugin-dev-env
-source plugin-dev-env/bin/activate  # Linux/macOS
-# plugin-dev-env\Scripts\activate   # Windows
+source plugin-dev-env/bin/activate
+```
 
-# Install in development mode
+Install in development mode
+
+```bash
 pip install -e .
+```
 
-# Or install with development dependencies
+Install with development dependencies
+
+```bash
 pip install -e .[dev,test]
 ```
 
 #### **Linking Development Plugins**
 
-```bash
-# Create symbolic links for development
-ln -s /path/to/plugin/development/extractor.py ~/.config/yt-dlp/plugins/extractors/
+Create symbolic links for development
 
-# For Windows (requires admin privileges)
+```bash
+ln -s /path/to/plugin/development/extractor.py ~/.config/yt-dlp/plugins/extractors/
+```
+
+For Windows (requires admin privileges)
+
+```bash
 mklink ~/.config/yt-dlp/plugins/extractors/extractor.py /path/to/plugin/development/extractor.py
 ```
 
@@ -214,12 +299,19 @@ Configure plugins through yt-dlp configuration files:
 
 ### **Environment Variables**
 
-```bash
-# Plugin-specific environment variables
-export PLUGIN_API_KEY="your-api-key"
-export PLUGIN_DEBUG="true"
+Plugin-specific environment variables
 
-# Python path for custom plugins
+```bash
+export PLUGIN_API_KEY="your-api-key"
+```
+
+```bash
+export PLUGIN_DEBUG="true"
+```
+
+Python path for custom plugins
+
+```bash
 export PYTHONPATH="/custom/plugin/path:$PYTHONPATH"
 ```
 
@@ -229,30 +321,47 @@ export PYTHONPATH="/custom/plugin/path:$PYTHONPATH"
 
 #### **Basic Verification**
 
+Check if plugin is loaded
+
 ```bash
-# Check if plugin is loaded
 yt-dlp --verbose "URL" 2>&1 | grep -i "plugin"
+```
 
-# List all loaded extractors (includes plugins)
+List all loaded extractors (includes plugins)
+
+```bash
 yt-dlp --list-extractors | grep -i "custom"
+```
 
-# List all post-processors (includes plugins)
+List all post-processors (includes plugins)
+
+```bash
 yt-dlp --list-postprocessors | grep -i "custom"
+```
 
-# Check plugin version
+Check plugin version
+
+```bash
 python -c "import yt_dlp_plugins.plugin_name; print(plugin_name.__version__)"
 ```
 
 #### **Testing Plugin Functionality**
 
+Simulation mode (no actual download)
+
 ```bash
-# Simulation mode (no actual download)
 yt-dlp --simulate --use-postprocessor PluginName "URL"
+```
 
-# Test with verbose output
+Test with verbose output
+
+```bash
 yt-dlp --verbose --use-postprocessor PluginName "URL"
+```
 
-# Test specific plugin features
+Test specific plugin features
+
+```bash
 yt-dlp --extractor-args "plugin:test_mode=true" "URL"
 ```
 
@@ -262,27 +371,41 @@ yt-dlp --extractor-args "plugin:test_mode=true" "URL"
 
 #### **Plugin Not Found**
 
+Check plugin search paths
+
 ```bash
-# Check plugin search paths
 python -c "import sys; print('\n'.join(sys.path))"
+```
 
-# Verify directory structure
+Verify directory structure
+
+```bash
 ls -la ~/.config/yt-dlp/plugins/
+```
 
-# Test manual import
+Test manual import
+
+```bash
 python -c "import sys; sys.path.append('~/.config/yt-dlp/plugins'); import extractors.plugin_name"
 ```
 
 #### **Import Errors**
 
+Check for syntax errors
+
 ```bash
-# Check for syntax errors
 python -m py_compile ~/.config/yt-dlp/plugins/extractors/plugin.py
+```
 
-# Check missing dependencies
+Check missing dependencies
+
+```bash
 pip check
+```
 
-# Test import with detailed error
+Test import with detailed error
+
+```bash
 python -c "
 import sys
 sys.path.append('~/.config/yt-dlp/plugins')
@@ -296,28 +419,45 @@ except Exception as e:
 
 #### **Permission Issues**
 
+Check file permissions
+
 ```bash
-# Check file permissions
 ls -la ~/.config/yt-dlp/plugins/
+```
 
-# Fix permissions
+Fix permissions
+
+```bash
 chmod -R 755 ~/.config/yt-dlp/plugins/
-chmod 644 ~/.config/yt-dlp/plugins/*/*.py
+```
 
-# Check ownership
+```bash
+chmod 644 ~/.config/yt-dlp/plugins/*/*.py
+```
+
+Check ownership
+
+```bash
 chown -R $USER:$USER ~/.config/yt-dlp/plugins/
 ```
 
 #### **Version Compatibility Issues**
 
+Check yt-dlp version
+
 ```bash
-# Check yt-dlp version
 yt-dlp --version
+```
 
-# Check plugin compatibility
+Check plugin compatibility
+
+```bash
 pip show yt-dlp-plugin-name | grep Requires
+```
 
-# Update to compatible versions
+Update to compatible versions
+
+```bash
 pip install "yt-dlp>=2024.1.1" "yt-dlp-plugin-name>=1.0.0"
 ```
 
@@ -325,11 +465,15 @@ pip install "yt-dlp>=2024.1.1" "yt-dlp-plugin-name>=1.0.0"
 
 #### **Enable Debug Logging**
 
-```bash
-# Maximum verbosity
-yt-dlp -vvv "URL"
+Maximum verbosity
 
-# Save debug output
+```bash
+yt-dlp -vvv "URL"
+```
+
+Save debug output
+
+```bash
 yt-dlp --verbose "URL" 2>&1 | tee debug.log
 ```
 
@@ -346,11 +490,15 @@ yt-dlp --verbose "URL" 2>&1 | tee debug.log
 
 #### **Installation Security**
 
-```bash
-# Install from trusted sources only
-pip install --trusted-host pypi.org yt-dlp-plugin-name
+Install from trusted sources only
 
-# Use virtual environments for isolation
+```bash
+pip install --trusted-host pypi.org yt-dlp-plugin-name
+```
+
+Use virtual environments for isolation
+
+```bash
 python -m venv secure-plugin-env
 source secure-plugin-env/bin/activate
 pip install yt-dlp plugin-name
@@ -358,11 +506,15 @@ pip install yt-dlp plugin-name
 
 #### **Runtime Security**
 
-```bash
-# Run with restricted permissions
-yt-dlp --no-exec --no-shell-escape "URL"
+Run with restricted permissions
 
-# Monitor plugin behavior
+```bash
+yt-dlp --no-exec --no-shell-escape "URL"
+```
+
+Monitor plugin behavior
+
+```bash
 strace -e network yt-dlp --use-postprocessor PluginName "URL"
 ```
 
@@ -372,28 +524,45 @@ strace -e network yt-dlp --use-postprocessor PluginName "URL"
 
 #### **Plugin Updates**
 
+Update all pip-installed plugins
+
 ```bash
-# Update all pip-installed plugins
 pip list | grep yt-dlp-plugin | cut -d' ' -f1 | xargs pip install --upgrade
+```
 
-# Check for plugin updates
+Check for plugin updates
+
+```bash
 pip list --outdated | grep yt-dlp-plugin
+```
 
-# Update specific plugin
+Update specific plugin
+
+```bash
 pip install --upgrade yt-dlp-plugin-name
 ```
 
 #### **Cleanup and Optimization**
 
+Remove unused plugins
+
 ```bash
-# Remove unused plugins
 pip uninstall unused-plugin-name
+```
 
-# Clean plugin cache
+Clean plugin cache
+
+```bash
 rm -rf ~/.cache/yt-dlp/plugins/
+```
 
-# Optimize plugin directory
+Optimize plugin directory
+
+```bash
 find ~/.config/yt-dlp/plugins/ -name "*.pyc" -delete
+```
+
+```bash
 find ~/.config/yt-dlp/plugins/ -name "__pycache__" -type d -exec rm -rf {} +
 ```
 
@@ -401,24 +570,35 @@ find ~/.config/yt-dlp/plugins/ -name "__pycache__" -type d -exec rm -rf {} +
 
 #### **Plugin Backup**
 
-```bash
-# Backup plugin directory
-tar -czf yt-dlp-plugins-backup-$(date +%Y%m%d).tar.gz ~/.config/yt-dlp/plugins/
+Backup plugin directory
 
-# Backup pip-installed plugins list
+```bash
+tar -czf yt-dlp-plugins-backup-$(date +%Y%m%d).tar.gz ~/.config/yt-dlp/plugins/
+```
+
+Backup pip-installed plugins list
+
+```bash
 pip freeze | grep yt-dlp-plugin > yt-dlp-plugins-requirements.txt
 ```
 
 #### **Recovery Procedures**
 
+Restore from backup
+
 ```bash
-# Restore from backup
 tar -xzf yt-dlp-plugins-backup-20240101.tar.gz -C ~/
+```
 
-# Reinstall from requirements
+Reinstall from requirements
+
+```bash
 pip install -r yt-dlp-plugins-requirements.txt
+```
 
-# Reset to clean state
+Reset to clean state
+
+```bash
 rm -rf ~/.config/yt-dlp/plugins/
 mkdir -p ~/.config/yt-dlp/plugins/{extractors,postprocessors,downloaders}
 ```

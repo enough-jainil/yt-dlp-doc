@@ -14,41 +14,41 @@ yt-dlp recognizes environment variables prefixed with `YTD_LP_`. The rest of the
 
 Here are some commonly used environment variables for yt-dlp:
 
-- `YTD_LP_USERNAME`: Set the default username for sites requiring authentication
+```bash
+YTD_LP_USERNAME=your_username
+```
 
-  ```sh
-  export YTD_LP_USERNAME=your_username
-  ```
+Set the default username for sites requiring authentication.
 
-- `YTD_LP_PASSWORD`: Set the default password
+```bash
+YTD_LP_PASSWORD=your_password
+```
 
-  ```sh
-  export YTD_LP_PASSWORD=your_password
-  ```
+Set the default password.
 
-- `YTD_LP_PROXY`: Specify a default proxy
+```bash
+YTD_LP_PROXY=socks5://127.0.0.1:9150
+```
 
-  ```sh
-  export YTD_LP_PROXY=socks5://127.0.0.1:9150
-  ```
+Specify a default proxy.
 
-- `YTD_LP_FORMAT`: Set the default download format
+```bash
+YTD_LP_FORMAT="bestvideo+bestaudio/best"
+```
 
-  ```sh
-  export YTD_LP_FORMAT="bestvideo+bestaudio/best"
-  ```
+Set the default download format.
 
-- `YTD_LP_OUTPUT_TEMPLATE`: Define the default output template
+```bash
+YTD_LP_OUTPUT_TEMPLATE="%(title)s-%(id)s.%(ext)s"
+```
 
-  ```sh
-  export YTD_LP_OUTPUT_TEMPLATE="%(title)s-%(id)s.%(ext)s"
-  ```
+Define the default output template.
 
-- `YTD_LP_CACHEDIR`: Specify the cache directory
+```bash
+YTD_LP_CACHEDIR="/path/to/cache"
+```
 
-  ```sh
-  export YTD_LP_CACHEDIR="/path/to/cache"
-  ```
+Specify the cache directory.
 
 ## Setting Environment Variables
 
@@ -56,13 +56,13 @@ Here are some commonly used environment variables for yt-dlp:
 
 #### Temporarily
 
-```sh
+```bash
 export YTD_LP_VARIABLE_NAME=value
 ```
 
 #### Permanently (add to `~/.bashrc`, `~/.zshrc`, or equivalent)
 
-```sh
+```bash
 echo 'export YTD_LP_VARIABLE_NAME=value' >> ~/.bashrc
 ```
 
@@ -70,7 +70,7 @@ echo 'export YTD_LP_VARIABLE_NAME=value' >> ~/.bashrc
 
 #### Temporarily (Command Prompt)
 
-```sh
+```bash
 set YTD_LP_VARIABLE_NAME=value
 ```
 
@@ -95,25 +95,43 @@ This means environment variables will override settings in configuration files b
 
 ### Setting up a Default Proxy and Format
 
-```sh
+```bash
 export YTD_LP_PROXY="socks5://127.0.0.1:9150"
+```
+
+```bash
 export YTD_LP_FORMAT="bestvideo[height<=1080]+bestaudio/best"
+```
+
+```bash
 yt-dlp https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ```
 
 ### Configuring Default Authentication
 
-```sh
+```bash
 export YTD_LP_USERNAME="your_username"
+```
+
+```bash
 export YTD_LP_PASSWORD="your_password"
+```
+
+```bash
 yt-dlp https://www.example.com/private_video
 ```
 
 ### Setting a Custom Output Template and Download Archive
 
-```sh
+```bash
 export YTD_LP_OUTPUT_TEMPLATE="~/Videos/%(uploader)s/%(title)s.%(ext)s"
+```
+
+```bash
 export YTD_LP_DOWNLOAD_ARCHIVE="~/yt-dlp_archive.txt"
+```
+
+```bash
 yt-dlp https://www.youtube.com/playlist?list=PLxxxxxxxx
 ```
 

@@ -16,17 +16,27 @@ yt-dlp "https://www.youtube.com/playlist?list=PLxxxxxxxxxxxxxx"
 
 ### Download Only Specific Items
 
+Download items 1, 3, and 5-10
+
 ```bash
-# Download items 1, 3, and 5-10
 yt-dlp -I 1,3,5-10 "PLAYLIST_URL"
+```
 
-# Download first 5 items
+Download first 5 items
+
+```bash
 yt-dlp -I 1:5 "PLAYLIST_URL"
+```
 
-# Download items starting from 10
+Download items starting from 10
+
+```bash
 yt-dlp -I 10: "PLAYLIST_URL"
+```
 
-# Download last 5 items
+Download last 5 items
+
+```bash
 yt-dlp -I -5: "PLAYLIST_URL"
 ```
 
@@ -34,15 +44,17 @@ yt-dlp -I -5: "PLAYLIST_URL"
 
 ### Force Playlist Download
 
+When URL could be either playlist or single video
+
 ```bash
-# When URL could be either playlist or single video
 yt-dlp --yes-playlist "URL"
 ```
 
 ### Download Only Single Video
 
+Skip playlist, download only the specific video
+
 ```bash
-# Skip playlist, download only the specific video
 yt-dlp --no-playlist "URL"
 ```
 
@@ -50,14 +62,21 @@ yt-dlp --no-playlist "URL"
 
 ### Output Templates for Playlists
 
+Organize by playlist name
+
 ```bash
-# Organize by playlist name
 yt-dlp -o "%(playlist)s/%(title)s.%(ext)s" "PLAYLIST_URL"
+```
 
-# Include playlist index
+Include playlist index
+
+```bash
 yt-dlp -o "%(playlist)s/%(playlist_index)02d - %(title)s.%(ext)s" "PLAYLIST_URL"
+```
 
-# Full organization template
+Full organization template
+
+```bash
 yt-dlp -o "%(uploader)s/%(playlist)s/%(playlist_index)02d - %(title)s.%(ext)s" "PLAYLIST_URL"
 ```
 
@@ -65,40 +84,61 @@ yt-dlp -o "%(uploader)s/%(playlist)s/%(playlist_index)02d - %(title)s.%(ext)s" "
 
 ### Playlist Behavior Control
 
+Reverse playlist order
+
 ```bash
-# Reverse playlist order
 yt-dlp --playlist-reverse "PLAYLIST_URL"
+```
 
-# Random playlist order
+Random playlist order
+
+```bash
 yt-dlp --playlist-random "PLAYLIST_URL"
+```
 
-# Start from specific item
+Start from specific item
+
+```bash
 yt-dlp --playlist-start NUMBER "PLAYLIST_URL"
+```
 
-# End at specific item
+End at specific item
+
+```bash
 yt-dlp --playlist-end NUMBER "PLAYLIST_URL"
 ```
 
 ### Archive Management
 
+Use archive file to skip already downloaded videos
+
 ```bash
-# Use archive file to skip already downloaded videos
 yt-dlp --download-archive downloaded.txt "PLAYLIST_URL"
+```
 
-# Break on existing files
+Break on existing files
+
+```bash
 yt-dlp --break-on-existing "PLAYLIST_URL"
+```
 
-# Skip playlist after N consecutive failures
+Skip playlist after N consecutive failures
+
+```bash
 yt-dlp --skip-playlist-after-errors 3 "PLAYLIST_URL"
 ```
 
 ### Lazy Playlist Processing
 
-```bash
-# Process playlist entries as they're received (for large playlists)
-yt-dlp --lazy-playlist "PLAYLIST_URL"
+Process playlist entries as they're received (for large playlists)
 
-# Flat playlist mode (extract URLs only, no metadata)
+```bash
+yt-dlp --lazy-playlist "PLAYLIST_URL"
+```
+
+Flat playlist mode (extract URLs only, no metadata)
+
+```bash
 yt-dlp --flat-playlist "PLAYLIST_URL"
 ```
 
@@ -106,27 +146,41 @@ yt-dlp --flat-playlist "PLAYLIST_URL"
 
 ### Download All Channel Videos
 
+YouTube channel
+
 ```bash
-# YouTube channel
 yt-dlp "https://www.youtube.com/@channelname/videos"
+```
 
-# Channel uploads
+Channel uploads
+
+```bash
 yt-dlp "https://www.youtube.com/c/channelname/videos"
+```
 
-# User uploads
+User uploads
+
+```bash
 yt-dlp "https://www.youtube.com/user/username/videos"
 ```
 
 ### Channel-Specific Options
 
+Download only recent uploads (last 30 days)
+
 ```bash
-# Download only recent uploads (last 30 days)
 yt-dlp --dateafter "30 days ago" "CHANNEL_URL"
+```
 
-# Download specific number of videos
+Download specific number of videos
+
+```bash
 yt-dlp --max-downloads 10 "CHANNEL_URL"
+```
 
-# Download with view count filter
+Download with view count filter
+
+```bash
 yt-dlp --match-filters "view_count > 1000" "CHANNEL_URL"
 ```
 
@@ -134,33 +188,53 @@ yt-dlp --match-filters "view_count > 1000" "CHANNEL_URL"
 
 ### Date-Based Filtering
 
+Videos from specific date
+
 ```bash
-# Videos from specific date
 yt-dlp --date "20240101" "PLAYLIST_URL"
+```
 
-# Videos after specific date
+Videos after specific date
+
+```bash
 yt-dlp --dateafter "2024-01-01" "PLAYLIST_URL"
+```
 
-# Videos before specific date
+Videos before specific date
+
+```bash
 yt-dlp --datebefore "2024-12-31" "PLAYLIST_URL"
+```
 
-# Date range
+Date range
+
+```bash
 yt-dlp --dateafter "2024-01-01" --datebefore "2024-12-31" "PLAYLIST_URL"
 ```
 
 ### Content Filtering
 
+Filter by duration (videos longer than 10 minutes)
+
 ```bash
-# Filter by duration (videos longer than 10 minutes)
 yt-dlp --match-filters "duration > 600" "PLAYLIST_URL"
+```
 
-# Filter by view count
+Filter by view count
+
+```bash
 yt-dlp --match-filters "view_count > 10000" "PLAYLIST_URL"
+```
 
-# Multiple filters
+Multiple filters
+
+```bash
 yt-dlp --match-filters "duration > 300 & view_count > 1000" "PLAYLIST_URL"
+```
 
-# Exclude specific uploaders
+Exclude specific uploaders
+
+```bash
 yt-dlp --match-filters "uploader !*= 'BadUploader'" "PLAYLIST_URL"
 ```
 
@@ -168,11 +242,15 @@ yt-dlp --match-filters "uploader !*= 'BadUploader'" "PLAYLIST_URL"
 
 ### Using File with URLs
 
-```bash
-# Download from file containing URLs
-yt-dlp --batch-file urls.txt
+Download from file containing URLs
 
-# Batch file with different options per URL
+```bash
+yt-dlp --batch-file urls.txt
+```
+
+Batch file with different options per URL
+
+```bash
 yt-dlp --batch-file batch.txt
 ```
 
@@ -189,24 +267,35 @@ https://www.youtube.com/playlist?list=PLxxxxxx
 
 ### Concurrent Downloads
 
-```bash
-# Download multiple videos simultaneously
-yt-dlp --concurrent-fragments 4 "PLAYLIST_URL"
+Download multiple videos simultaneously
 
-# External downloader for better performance
+```bash
+yt-dlp --concurrent-fragments 4 "PLAYLIST_URL"
+```
+
+External downloader for better performance
+
+```bash
 yt-dlp --external-downloader aria2c --external-downloader-args "-x 4 -s 4" "PLAYLIST_URL"
 ```
 
 ### Rate Limiting
 
+Limit download rate to avoid being blocked
+
 ```bash
-# Limit download rate to avoid being blocked
 yt-dlp --limit-rate 1M "PLAYLIST_URL"
+```
 
-# Add sleep between downloads
+Add sleep between downloads
+
+```bash
 yt-dlp --sleep-interval 2 "PLAYLIST_URL"
+```
 
-# Random sleep interval
+Random sleep interval
+
+```bash
 yt-dlp --sleep-interval 1:5 "PLAYLIST_URL"
 ```
 
@@ -214,27 +303,41 @@ yt-dlp --sleep-interval 1:5 "PLAYLIST_URL"
 
 ### Robust Playlist Downloads
 
+Continue on errors
+
 ```bash
-# Continue on errors
 yt-dlp --ignore-errors "PLAYLIST_URL"
+```
 
-# Skip unavailable videos
+Skip unavailable videos
+
+```bash
 yt-dlp --no-abort-on-error "PLAYLIST_URL"
+```
 
-# Retry failed downloads
+Retry failed downloads
+
+```bash
 yt-dlp --retries 5 "PLAYLIST_URL"
 ```
 
 ### Progress Tracking
 
+Show progress for each video
+
 ```bash
-# Show progress for each video
 yt-dlp --progress "PLAYLIST_URL"
+```
 
-# Verbose output for debugging
+Verbose output for debugging
+
+```bash
 yt-dlp --verbose "PLAYLIST_URL"
+```
 
-# Log to file
+Log to file
+
+```bash
 yt-dlp --verbose --log-file playlist.log "PLAYLIST_URL"
 ```
 
@@ -242,30 +345,47 @@ yt-dlp --verbose --log-file playlist.log "PLAYLIST_URL"
 
 ### YouTube
 
+All videos from a channel
+
 ```bash
-# All videos from a channel
 yt-dlp "https://www.youtube.com/@channelname/videos"
+```
 
-# Channel playlists
+Channel playlists
+
+```bash
 yt-dlp "https://www.youtube.com/@channelname/playlists"
+```
 
-# Specific playlist
+Specific playlist
+
+```bash
 yt-dlp "https://www.youtube.com/playlist?list=PLxxxxxx"
+```
 
-# User's liked videos (requires authentication)
+User's liked videos (requires authentication)
+
+```bash
 yt-dlp --cookies-from-browser firefox "https://www.youtube.com/playlist?list=LL"
 ```
 
 ### Other Platforms
 
+Twitch VODs
+
 ```bash
-# Twitch VODs
 yt-dlp "https://www.twitch.tv/username/videos"
+```
 
-# SoundCloud playlists
+SoundCloud playlists
+
+```bash
 yt-dlp "https://soundcloud.com/user/sets/playlist-name"
+```
 
-# Vimeo albums
+Vimeo albums
+
+```bash
 yt-dlp "https://vimeo.com/album/123456"
 ```
 

@@ -429,12 +429,10 @@ if __name__ == '__main__':
 ### **Basic Downloads**
 
 ```bash
-# CLI
 yt-dlp "https://example.com/video"
 ```
 
 ```python
-# API
 ydl_opts = {}
 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
     ydl.download(['https://example.com/video'])
@@ -443,12 +441,10 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 ### **Format Selection**
 
 ```bash
-# CLI
-yt-dlp -f "best[height<=720]" URL
+-f "best[height<=720]"
 ```
 
 ```python
-# API
 ydl_opts = {
     'format': 'best[height<=720]'
 }
@@ -457,17 +453,39 @@ ydl_opts = {
 ### **Audio Extraction**
 
 ```bash
-# CLI
-yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 URL
+--extract-audio
 ```
 
 ```python
-# API
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio'
+    }]
+}
+```
+
+```bash
+--audio-format mp3
+```
+
+```python
 ydl_opts = {
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '0',
+        'preferredcodec': 'mp3'
+    }]
+}
+```
+
+```bash
+--audio-quality 0
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredquality': '0'
     }]
 }
 ```
@@ -475,12 +493,10 @@ ydl_opts = {
 ### **Output Template**
 
 ```bash
-# CLI
-yt-dlp -o "%(uploader)s - %(title)s.%(ext)s" URL
+-o "%(uploader)s - %(title)s.%(ext)s"
 ```
 
 ```python
-# API
 ydl_opts = {
     'outtmpl': '%(uploader)s - %(title)s.%(ext)s'
 }
@@ -489,31 +505,63 @@ ydl_opts = {
 ### **Playlist Handling**
 
 ```bash
-# CLI
-yt-dlp --playlist-start 5 --playlist-end 10 --max-downloads 3 URL
+--playlist-start 5
 ```
 
 ```python
-# API
 ydl_opts = {
-    'playliststart': 5,
-    'playlistend': 10,
-    'max_downloads': 3,
+    'playliststart': 5
+}
+```
+
+```bash
+--playlist-end 10
+```
+
+```python
+ydl_opts = {
+    'playlistend': 10
+}
+```
+
+```bash
+--max-downloads 3
+```
+
+```python
+ydl_opts = {
+    'max_downloads': 3
 }
 ```
 
 ### **Subtitle Options**
 
 ```bash
-# CLI
-yt-dlp --write-sub --sub-lang en,es --embed-subs URL
+--write-sub
 ```
 
 ```python
-# API
 ydl_opts = {
-    'writesubtitles': True,
-    'subtitleslangs': ['en', 'es'],
+    'writesubtitles': True
+}
+```
+
+```bash
+--sub-lang en,es
+```
+
+```python
+ydl_opts = {
+    'subtitleslangs': ['en', 'es']
+}
+```
+
+```bash
+--embed-subs
+```
+
+```python
+ydl_opts = {
     'postprocessors': [{
         'key': 'FFmpegEmbedSubtitle'
     }]
@@ -523,42 +571,80 @@ ydl_opts = {
 ### **Multiple Post-Processors**
 
 ```bash
-# CLI
-yt-dlp --extract-audio --audio-format mp3 --embed-thumbnail --add-metadata URL
+--extract-audio
 ```
 
 ```python
-# API
 ydl_opts = {
-    'postprocessors': [
-        {
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-        },
-        {
-            'key': 'EmbedThumbnail',
-        },
-        {
-            'key': 'FFmpegMetadata',
-        }
-    ]
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio'
+    }]
+}
+```
+
+```bash
+--audio-format mp3
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3'
+    }]
+}
+```
+
+```bash
+--embed-thumbnail
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'EmbedThumbnail'
+    }]
+}
+```
+
+```bash
+--add-metadata
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegMetadata'
+    }]
 }
 ```
 
 ### **SponsorBlock Integration**
 
 ```bash
-# CLI
-yt-dlp --sponsorblock-mark sponsor,intro --sponsorblock-remove selfpromo URL
+--sponsorblock-mark sponsor,intro
 ```
 
 ```python
-# API
 ydl_opts = {
     'postprocessors': [{
         'key': 'SponsorBlock',
-        'categories': ['sponsor', 'intro', 'selfpromo'],
-        'actions': ['mark', 'remove']
+        'categories': ['sponsor', 'intro'],
+        'actions': ['mark']
+    }]
+}
+```
+
+```bash
+--sponsorblock-remove selfpromo
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'SponsorBlock',
+        'categories': ['selfpromo'],
+        'actions': ['remove']
     }]
 }
 ```
@@ -566,32 +652,64 @@ ydl_opts = {
 ### **Network Configuration**
 
 ```bash
-# CLI
-yt-dlp --proxy socks5://127.0.0.1:1080 --socket-timeout 30 --retries 5 URL
+--proxy socks5://127.0.0.1:1080
 ```
 
 ```python
-# API
 ydl_opts = {
-    'proxy': 'socks5://127.0.0.1:1080',
-    'socket_timeout': 30,
-    'retries': 5,
+    'proxy': 'socks5://127.0.0.1:1080'
+}
+```
+
+```bash
+--socket-timeout 30
+```
+
+```python
+ydl_opts = {
+    'socket_timeout': 30
+}
+```
+
+```bash
+--retries 5
+```
+
+```python
+ydl_opts = {
+    'retries': 5
 }
 ```
 
 ### **Authentication**
 
 ```bash
-# CLI
-yt-dlp --username user@example.com --password mypassword --twofactor 123456 URL
+--username user@example.com
 ```
 
 ```python
-# API
 ydl_opts = {
-    'username': 'user@example.com',
-    'password': 'mypassword',
-    'twofactor': '123456',
+    'username': 'user@example.com'
+}
+```
+
+```bash
+--password mypassword
+```
+
+```python
+ydl_opts = {
+    'password': 'mypassword'
+}
+```
+
+```bash
+--twofactor 123456
+```
+
+```python
+ydl_opts = {
+    'twofactor': '123456'
 }
 ```
 
@@ -600,14 +718,21 @@ ydl_opts = {
 ### **Advanced Format Selection with Sorting**
 
 ```bash
-# CLI
-yt-dlp -f "best[height<=1080]" -S "res:720,fps,codec:h264" URL
+-f "best[height<=1080]"
 ```
 
 ```python
-# API
 ydl_opts = {
-    'format': 'best[height<=1080]',
+    'format': 'best[height<=1080]'
+}
+```
+
+```bash
+-S "res:720,fps,codec:h264"
+```
+
+```python
+ydl_opts = {
     'format_sort': ['res:720', 'fps', 'codec:h264']
 }
 ```
@@ -615,42 +740,166 @@ ydl_opts = {
 ### **Comprehensive Download Configuration**
 
 ```bash
-# CLI
-yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 \
-       --embed-thumbnail --add-metadata --write-info-json \
-       --write-description --write-thumbnail --write-sub \
-       --sub-lang en --embed-subs -o "%(uploader)s/%(title)s.%(ext)s" \
-       --download-archive archive.txt --continue --no-overwrites URL
+--extract-audio
 ```
 
 ```python
-# API
 ydl_opts = {
-    'outtmpl': '%(uploader)s/%(title)s.%(ext)s',
-    'download_archive': 'archive.txt',
-    'continuedl': True,
-    'nooverwrites': True,
-    'writeinfojson': True,
-    'writedescription': True,
-    'writethumbnail': True,
-    'writesubtitles': True,
-    'subtitleslangs': ['en'],
-    'postprocessors': [
-        {
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '0',
-        },
-        {
-            'key': 'EmbedThumbnail',
-        },
-        {
-            'key': 'FFmpegMetadata',
-        },
-        {
-            'key': 'FFmpegEmbedSubtitle',
-        }
-    ]
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio'
+    }]
+}
+```
+
+```bash
+--audio-format mp3
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3'
+    }]
+}
+```
+
+```bash
+--audio-quality 0
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredquality': '0'
+    }]
+}
+```
+
+```bash
+--embed-thumbnail
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'EmbedThumbnail'
+    }]
+}
+```
+
+```bash
+--add-metadata
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegMetadata'
+    }]
+}
+```
+
+```bash
+--write-info-json
+```
+
+```python
+ydl_opts = {
+    'writeinfojson': True
+}
+```
+
+```bash
+--write-description
+```
+
+```python
+ydl_opts = {
+    'writedescription': True
+}
+```
+
+```bash
+--write-thumbnail
+```
+
+```python
+ydl_opts = {
+    'writethumbnail': True
+}
+```
+
+```bash
+--write-sub
+```
+
+```python
+ydl_opts = {
+    'writesubtitles': True
+}
+```
+
+```bash
+--sub-lang en
+```
+
+```python
+ydl_opts = {
+    'subtitleslangs': ['en']
+}
+```
+
+```bash
+--embed-subs
+```
+
+```python
+ydl_opts = {
+    'postprocessors': [{
+        'key': 'FFmpegEmbedSubtitle'
+    }]
+}
+```
+
+```bash
+-o "%(uploader)s/%(title)s.%(ext)s"
+```
+
+```python
+ydl_opts = {
+    'outtmpl': '%(uploader)s/%(title)s.%(ext)s'
+}
+```
+
+```bash
+--download-archive archive.txt
+```
+
+```python
+ydl_opts = {
+    'download_archive': 'archive.txt'
+}
+```
+
+```bash
+--continue
+```
+
+```python
+ydl_opts = {
+    'continuedl': True
+}
+```
+
+```bash
+--no-overwrites
+```
+
+```python
+ydl_opts = {
+    'nooverwrites': True
 }
 ```
 

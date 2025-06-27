@@ -21,26 +21,31 @@ This comprehensive guide provides detailed installation and usage instructions f
 
 **Download and Setup:**
 
-```cmd
-# Download yt-dlp.exe from GitHub releases
-# Place in a directory in your PATH
+Download yt-dlp.exe from GitHub releases
+Place in a directory in your PATH
 
-# Recommended locations:
-# System-wide: C:\Windows\System32\
-# User-specific: %LOCALAPPDATA%\Microsoft\WindowsApps\
-# Custom: C:\Tools\yt-dlp\
-```
+Recommended locations:
+System-wide: C:\Windows\System32\
+User-specific: %LOCALAPPDATA%\Microsoft\WindowsApps\
+Custom: C:\Tools\yt-dlp\
 
 **Adding to PATH:**
 
+Temporary (current session only)
+
 ```cmd
-# Temporary (current session only)
 set PATH=%PATH%;C:\Tools\yt-dlp
+```
 
-# Permanent (all sessions)
+Permanent (all sessions)
+
+```cmd
 setx PATH "%PATH%;C:\Tools\yt-dlp"
+```
 
-# Verify installation
+Verify installation
+
+```cmd
 yt-dlp --version
 ```
 
@@ -48,41 +53,60 @@ yt-dlp --version
 
 **Chocolatey:**
 
-```powershell
-# Install as Administrator
-Set-ExecutionPolicy Bypass -Scope Process -Force
-iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Install as Administrator
 
-# Install yt-dlp
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+```
+
+```powershell
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+```
+
+Install yt-dlp
+
+```powershell
 choco install yt-dlp
 ```
 
 **Scoop:**
 
-```powershell
-# Install Scoop
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-irm get.scoop.sh | iex
+Install Scoop
 
-# Install yt-dlp
+```powershell
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+```powershell
+irm get.scoop.sh | iex
+```
+
+Install yt-dlp
+
+```powershell
 scoop install yt-dlp
 ```
 
 **winget:**
 
+Install yt-dlp
+
 ```cmd
-# Install yt-dlp
 winget install yt-dlp.yt-dlp
 ```
 
 #### Method 3: Python pip
 
-```cmd
-# Install Python from python.org or Microsoft Store
-# Install yt-dlp
-python -m pip install -U "yt-dlp[default]"
+Install Python from python.org or Microsoft Store
+Install yt-dlp
 
-# Or using Python Launcher
+```cmd
+python -m pip install -U "yt-dlp[default]"
+```
+
+Or using Python Launcher
+
+```cmd
 py -m pip install -U "yt-dlp[default]"
 ```
 
@@ -90,13 +114,17 @@ py -m pip install -U "yt-dlp[default]"
 
 #### PowerShell Profile Setup
 
+Create PowerShell profile
+
 ```powershell
-# Create PowerShell profile
 if (!(Test-Path -Path $PROFILE)) {
     New-Item -ItemType File -Path $PROFILE -Force
 }
+```
 
-# Add yt-dlp aliases and functions
+Add yt-dlp aliases and functions
+
+```powershell
 Add-Content -Path $PROFILE -Value @'
 # yt-dlp aliases
 function yt-dlp-audio { yt-dlp -x --audio-format mp3 $args }
@@ -107,9 +135,13 @@ function yt-dlp-playlist { yt-dlp -o "%(playlist)s/%(playlist_index)s - %(title)
 
 #### Windows Defender Exclusions
 
+Add yt-dlp to Windows Defender exclusions (if needed)
+
 ```powershell
-# Add yt-dlp to Windows Defender exclusions (if needed)
 Add-MpPreference -ExclusionPath "C:\Tools\yt-dlp\yt-dlp.exe"
+```
+
+```powershell
 Add-MpPreference -ExclusionProcess "yt-dlp.exe"
 ```
 
@@ -117,25 +149,39 @@ Add-MpPreference -ExclusionProcess "yt-dlp.exe"
 
 #### File Path Handling
 
-```cmd
-# Use double quotes for paths with spaces
-yt-dlp -o "C:\Users\%USERNAME%\Videos\%(title)s.%(ext)s" URL
+Use double quotes for paths with spaces
 
-# Use forward slashes or escaped backslashes
+```cmd
+yt-dlp -o "C:\Users\%USERNAME%\Videos\%(title)s.%(ext)s" URL
+```
+
+Use forward slashes or escaped backslashes
+
+```cmd
 yt-dlp -o "C:/Users/%USERNAME%/Videos/%(title)s.%(ext)s" URL
+```
+
+```cmd
 yt-dlp -o "C:\\Users\\%USERNAME%\\Videos\\%(title)s.%(ext)s" URL
 ```
 
 #### Network Configuration
 
+Configure proxy for corporate networks
+
 ```cmd
-# Configure proxy for corporate networks
 yt-dlp --proxy http://proxy.company.com:8080 URL
+```
 
-# Use system proxy settings
+Use system proxy settings
+
+```cmd
 yt-dlp --proxy "" URL
+```
 
-# Bypass SSL verification (if needed)
+Bypass SSL verification (if needed)
+
+```cmd
 yt-dlp --no-check-certificates URL
 ```
 
@@ -145,30 +191,36 @@ yt-dlp --no-check-certificates URL
 
 **MSVCR100.dll Missing:**
 
-```cmd
-# Download and install Microsoft Visual C++ 2010 SP1 Redistributable
-# x86: https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe
-# x64: https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe
-```
+Download and install Microsoft Visual C++ 2010 SP1 Redistributable
+x86: https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe
+x64: https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe
 
 **PowerShell Execution Policy:**
 
+Check current policy
+
 ```powershell
-# Check current policy
 Get-ExecutionPolicy
+```
 
-# Set policy for current user
+Set policy for current user
+
+```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
 
-# Bypass policy temporarily
+Bypass policy temporarily
+
+```powershell
 powershell -ExecutionPolicy Bypass -File script.ps1
 ```
 
 **Long Path Support:**
 
+Enable long path support (Windows 10 1607+)
+Run as Administrator
+
 ```cmd
-# Enable long path support (Windows 10 1607+)
-# Run as Administrator
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1
 ```
 
@@ -185,67 +237,116 @@ reg add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /
 
 #### Method 1: Homebrew (Recommended)
 
+Install Homebrew
+
 ```bash
-# Install Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-# Add to PATH (Apple Silicon Macs)
+Add to PATH (Apple Silicon Macs)
+
+```bash
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+```
+
+```bash
 eval "$(/opt/homebrew/bin/brew shellenv)"
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 brew install yt-dlp
+```
 
-# Install FFmpeg (recommended)
+Install FFmpeg (recommended)
+
+```bash
 brew install ffmpeg
 ```
 
 #### Method 2: MacPorts
 
+Install MacPorts from macports.org
+Update MacPorts
+
 ```bash
-# Install MacPorts from macports.org
-# Update MacPorts
 sudo port selfupdate
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 sudo port install yt-dlp
+```
 
-# Install FFmpeg
+Install FFmpeg
+
+```bash
 sudo port install ffmpeg
 ```
 
 #### Method 3: Binary Installation
 
+Download yt-dlp_macos from GitHub releases
+
 ```bash
-# Download yt-dlp_macos from GitHub releases
 curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_macos -o yt-dlp
+```
 
-# Make executable
+Make executable
+
+```bash
 chmod +x yt-dlp
+```
 
-# Remove quarantine attribute (if needed)
+Remove quarantine attribute (if needed)
+
+```bash
 xattr -d com.apple.quarantine yt-dlp
+```
 
-# Install system-wide
+Install system-wide
+
+```bash
 sudo mv yt-dlp /usr/local/bin/
+```
 
-# Or install user-specific
+Or install user-specific
+
+```bash
 mkdir -p ~/.local/bin
+```
+
+```bash
 mv yt-dlp ~/.local/bin/
+```
+
+```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+```
+
+```bash
 source ~/.zshrc
 ```
 
 #### Method 4: Python pip
 
+Install using system Python
+
 ```bash
-# Install using system Python
 python3 -m pip install --user -U "yt-dlp[default]"
+```
 
-# Install using Homebrew Python
+Install using Homebrew Python
+
+```bash
 /opt/homebrew/bin/python3 -m pip install -U "yt-dlp[default]"
+```
 
-# Add to PATH if needed
+Add to PATH if needed
+
+```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 ```
 
@@ -255,8 +356,9 @@ echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 
 **For Zsh (default on macOS Catalina+):**
 
+Add to ~/.zshrc
+
 ```bash
-# Add to ~/.zshrc
 cat >> ~/.zshrc << 'EOF'
 # yt-dlp aliases
 alias yt-audio='yt-dlp -x --audio-format mp3'
@@ -268,58 +370,77 @@ ytdl-best() {
     yt-dlp -f "bestvideo+bestaudio/best" -o "~/Downloads/%(title)s.%(ext)s" "$@"
 }
 EOF
+```
 
+```bash
 source ~/.zshrc
 ```
 
 **For Bash:**
 
+Add to ~/.bash_profile or ~/.bashrc
+
 ```bash
-# Add to ~/.bash_profile or ~/.bashrc
 cat >> ~/.bash_profile << 'EOF'
 # yt-dlp configuration
 export YT_DLP_CONFIG_HOME="$HOME/.config/yt-dlp"
 alias yt-audio='yt-dlp -x --audio-format mp3'
 EOF
+```
 
+```bash
 source ~/.bash_profile
 ```
 
 #### System Integration
 
-**Create macOS Service:**
+Create macOS Service:
 
-```bash
-# Create Automator service for right-click download
-# 1. Open Automator
-# 2. Create new Service
-# 3. Add "Run Shell Script" action
-# 4. Set script to: yt-dlp -o "~/Downloads/%(title)s.%(ext)s" "$@"
-# 5. Save as "Download with yt-dlp"
-```
+Create Automator service for right-click download
+
+1. Open Automator
+2. Create new Service
+3. Add "Run Shell Script" action
+4. Set script to: yt-dlp -o "~/Downloads/%(title)s.%(ext)s" "$@"
+5. Save as "Download with yt-dlp"
 
 ### macOS-Specific Usage
 
 #### Handling Gatekeeper
 
-```bash
-# If macOS blocks the binary
-sudo spctl --add /usr/local/bin/yt-dlp
-sudo spctl --enable /usr/local/bin/yt-dlp
+If macOS blocks the binary
 
-# Or disable Gatekeeper temporarily
+```bash
+sudo spctl --add /usr/local/bin/yt-dlp
+```
+
+```bash
+sudo spctl --enable /usr/local/bin/yt-dlp
+```
+
+Or disable Gatekeeper temporarily
+
+```bash
 sudo spctl --master-disable
-# Re-enable after use
+```
+
+Re-enable after use
+
+```bash
 sudo spctl --master-enable
 ```
 
 #### File System Considerations
 
-```bash
-# Handle special characters in filenames
-yt-dlp --restrict-filenames URL
+Handle special characters in filenames
 
-# Use case-sensitive file system
+```bash
+yt-dlp --restrict-filenames URL
+```
+
+Use case-sensitive file system
+
+```bash
 yt-dlp -o "%(title)s.%(ext)s" --no-overwrites URL
 ```
 
@@ -329,32 +450,47 @@ yt-dlp -o "%(title)s.%(ext)s" --no-overwrites URL
 
 **SSL Certificate Errors:**
 
-```bash
-# Update certificates
-/Applications/Python\ 3.x/Install\ Certificates.command
+Update certificates
 
-# Or install certificates via Homebrew
+```bash
+/Applications/Python\ 3.x/Install\ Certificates.command
+```
+
+Or install certificates via Homebrew
+
+```bash
 brew install ca-certificates
 ```
 
 **Permission Denied:**
 
-```bash
-# Fix permissions
-chmod +x /usr/local/bin/yt-dlp
+Fix permissions
 
-# Use user installation
+```bash
+chmod +x /usr/local/bin/yt-dlp
+```
+
+Use user installation
+
+```bash
 python3 -m pip install --user yt-dlp
 ```
 
 **Command Not Found:**
 
-```bash
-# Check PATH
-echo $PATH
+Check PATH
 
-# Add to PATH
+```bash
+echo $PATH
+```
+
+Add to PATH
+
+```bash
 echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.zshrc
+```
+
+```bash
 source ~/.zshrc
 ```
 
@@ -371,20 +507,39 @@ source ~/.zshrc
 
 **Installation:**
 
+Update package list
+
 ```bash
-# Update package list
 sudo apt update
+```
 
-# Install from official PPA (recommended)
+Install from official PPA (recommended)
+
+```bash
 sudo add-apt-repository ppa:yt-dlp/stable
+```
+
+```bash
 sudo apt update
+```
+
+```bash
 sudo apt install yt-dlp
+```
 
-# Install dependencies
+Install dependencies
+
+```bash
 sudo apt install ffmpeg python3-pip
+```
 
-# Alternative: pip installation
+Alternative: pip installation
+
+```bash
 sudo apt install python3-pip
+```
+
+```bash
 pip3 install --user "yt-dlp[default]"
 ```
 
@@ -392,66 +547,113 @@ pip3 install --user "yt-dlp[default]"
 
 **Fedora:**
 
-```bash
-# Install from official repository
-sudo dnf install yt-dlp ffmpeg
+Install from official repository
 
-# Install from RPM Fusion (if needed)
+```bash
+sudo dnf install yt-dlp ffmpeg
+```
+
+Install from RPM Fusion (if needed)
+
+```bash
 sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+```
+
+```bash
 sudo dnf install yt-dlp
 ```
 
 **CentOS/RHEL:**
 
+Enable EPEL
+
 ```bash
-# Enable EPEL
 sudo dnf install epel-release
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 sudo dnf install yt-dlp ffmpeg
+```
 
-# Or use pip
+Or use pip
+
+```bash
 sudo dnf install python3-pip
+```
+
+```bash
 pip3 install --user "yt-dlp[default]"
 ```
 
 #### Arch Linux
 
+Install from official repository
+
 ```bash
-# Install from official repository
 sudo pacman -S yt-dlp ffmpeg
+```
 
-# Install from AUR (development version)
+Install from AUR (development version)
+
+```bash
 yay -S yt-dlp-git
+```
 
-# Or using paru
+Or using paru
+
+```bash
 paru -S yt-dlp-git
 ```
 
 #### openSUSE
 
-```bash
-# Install from official repository
-sudo zypper install yt-dlp ffmpeg
+Install from official repository
 
-# Add multimedia repository
+```bash
+sudo zypper install yt-dlp ffmpeg
+```
+
+Add multimedia repository
+
+```bash
 sudo zypper addrepo https://download.opensuse.org/repositories/multimedia:/apps/openSUSE_Tumbleweed/ multimedia
+```
+
+```bash
 sudo zypper refresh
+```
+
+```bash
 sudo zypper install yt-dlp
 ```
 
 #### Alpine Linux
 
+Update package index
+
 ```bash
-# Update package index
 apk update
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 apk add yt-dlp ffmpeg
+```
 
-# Install from edge (latest version)
+Install from edge (latest version)
+
+```bash
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+```
+
+```bash
 apk update
+```
+
+```bash
 apk add yt-dlp
 ```
 
@@ -459,8 +661,9 @@ apk add yt-dlp
 
 #### Systemd Service
 
+Create systemd service for automated downloads
+
 ```bash
-# Create systemd service for automated downloads
 sudo tee /etc/systemd/system/yt-dlp-monitor.service << 'EOF'
 [Unit]
 Description=yt-dlp Download Monitor
@@ -477,22 +680,35 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
+```
 
-# Enable and start service
+Enable and start service
+
+```bash
 sudo systemctl enable yt-dlp-monitor
+```
+
+```bash
 sudo systemctl start yt-dlp-monitor
 ```
 
 #### Cron Jobs
 
+Add to crontab for scheduled downloads
+
 ```bash
-# Add to crontab for scheduled downloads
 crontab -e
+```
 
-# Download from URL list every hour
+Download from URL list every hour
+
+```bash
 0 * * * * /usr/local/bin/yt-dlp --batch-file ~/urls.txt --download-archive ~/downloaded.txt
+```
 
-# Update yt-dlp weekly
+Update yt-dlp weekly
+
+```bash
 0 0 * * 0 /usr/local/bin/yt-dlp -U
 ```
 
@@ -500,24 +716,35 @@ crontab -e
 
 #### Performance Optimization
 
+Use multiple connections
+
 ```bash
-# Use multiple connections
 yt-dlp --concurrent-fragments 4 URL
+```
 
-# Limit bandwidth
+Limit bandwidth
+
+```bash
 yt-dlp --limit-rate 1M URL
+```
 
-# Use external downloader
+Use external downloader
+
+```bash
 yt-dlp --downloader aria2c --downloader-args "aria2c:-x 16 -s 16" URL
 ```
 
 #### File System Integration
 
-```bash
-# Set extended attributes
-yt-dlp --xattr URL
+Set extended attributes
 
-# Use custom output directory structure
+```bash
+yt-dlp --xattr URL
+```
+
+Use custom output directory structure
+
+```bash
 yt-dlp -o "/media/storage/%(uploader)s/%(upload_date>%Y-%m-%d)s - %(title)s.%(ext)s" URL
 ```
 
@@ -525,27 +752,45 @@ yt-dlp -o "/media/storage/%(uploader)s/%(upload_date>%Y-%m-%d)s - %(title)s.%(ex
 
 #### Permission Issues
 
-```bash
-# Fix permissions for user installation
-chmod +x ~/.local/bin/yt-dlp
+Fix permissions for user installation
 
-# Add to PATH
+```bash
+chmod +x ~/.local/bin/yt-dlp
+```
+
+Add to PATH
+
+```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+```
+
+```bash
 source ~/.bashrc
 ```
 
 #### Dependency Issues
 
+Install missing dependencies
+
+Ubuntu/Debian
+
 ```bash
-# Install missing dependencies
-# Ubuntu/Debian
 sudo apt install python3-dev build-essential
+```
 
-# Fedora
+Fedora
+
+```bash
 sudo dnf groupinstall "Development Tools"
-sudo dnf install python3-devel
+```
 
-# Arch Linux
+```bash
+sudo dnf install python3-devel
+```
+
+Arch Linux
+
+```bash
 sudo pacman -S base-devel python
 ```
 
@@ -559,30 +804,51 @@ sudo pacman -S base-devel python
 
 ### Installation
 
+Update Termux packages
+
 ```bash
-# Update Termux packages
-pkg update && pkg upgrade
+pkg update
+```
 
-# Grant storage access
+```bash
+pkg upgrade
+```
+
+Grant storage access
+
+```bash
 termux-setup-storage
+```
 
-# Install Python and dependencies
+Install Python and dependencies
+
+```bash
 pkg install python ffmpeg
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 pip install "yt-dlp[default]"
+```
 
-# Optional: Install additional tools
+Optional: Install additional tools
+
+```bash
 pkg install curl wget git nano
 ```
 
 ### Android-Specific Configuration
 
-```bash
-# Create configuration directory
-mkdir -p ~/.config/yt-dlp
+Create configuration directory
 
-# Create configuration file
+```bash
+mkdir -p ~/.config/yt-dlp
+```
+
+Create configuration file
+
+```bash
 cat > ~/.config/yt-dlp/config << 'EOF'
 # Default output directory
 -o ~/storage/downloads/%(title)s.%(ext)s
@@ -601,14 +867,21 @@ EOF
 
 ### Android-Specific Usage
 
+Download to external storage
+
 ```bash
-# Download to external storage
 yt-dlp -o "~/storage/downloads/%(title)s.%(ext)s" URL
+```
 
-# Download audio for music apps
+Download audio for music apps
+
+```bash
 yt-dlp -x --audio-format mp3 -o "~/storage/music/%(title)s.%(ext)s" URL
+```
 
-# Low bandwidth mode
+Low bandwidth mode
+
+```bash
 yt-dlp -f "worst" URL
 ```
 
@@ -622,27 +895,41 @@ yt-dlp -f "worst" URL
 
 ### Installation
 
+Update Alpine packages
+
 ```bash
-# Update Alpine packages
 apk update
+```
 
-# Install Python and dependencies
+Install Python and dependencies
+
+```bash
 apk add python3 py3-pip ffmpeg
+```
 
-# Install yt-dlp
+Install yt-dlp
+
+```bash
 pip3 install yt-dlp
+```
 
-# Create symlink for easier access
+Create symlink for easier access
+
+```bash
 ln -s /usr/bin/python3 /usr/bin/python
 ```
 
 ### iOS-Specific Usage
 
-```bash
-# Download to Files app directory
-yt-dlp -o "/root/Downloads/%(title)s.%(ext)s" URL
+Download to Files app directory
 
-# Use lower quality for faster processing
+```bash
+yt-dlp -o "/root/Downloads/%(title)s.%(ext)s" URL
+```
+
+Use lower quality for faster processing
+
+```bash
 yt-dlp -f "worst[height<=480]" URL
 ```
 
@@ -650,29 +937,46 @@ yt-dlp -f "worst[height<=480]" URL
 
 ### Linux Container Setup
 
+Enable Linux development environment in Chrome OS settings
+Open Terminal app
+
+Update packages
+
 ```bash
-# Enable Linux development environment in Chrome OS settings
-# Open Terminal app
-
-# Update packages
 sudo apt update
+```
 
-# Install Python and yt-dlp
+Install Python and yt-dlp
+
+```bash
 sudo apt install python3-pip
-pip3 install --user "yt-dlp[default]"
+```
 
-# Add to PATH
+```bash
+pip3 install --user "yt-dlp[default]"
+```
+
+Add to PATH
+
+```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+```
+
+```bash
 source ~/.bashrc
 ```
 
 ### Chrome OS-Specific Usage
 
-```bash
-# Download to Downloads folder (shared with Chrome OS)
-yt-dlp -o "~/Downloads/%(title)s.%(ext)s" URL
+Download to Downloads folder (shared with Chrome OS)
 
-# Use Chrome OS file manager integration
+```bash
+yt-dlp -o "~/Downloads/%(title)s.%(ext)s" URL
+```
+
+Use Chrome OS file manager integration
+
+```bash
 yt-dlp --write-info-json URL
 ```
 
@@ -680,9 +984,13 @@ yt-dlp --write-info-json URL
 
 ### Configuration Management
 
+Create portable configuration
+
 ```bash
-# Create portable configuration
 mkdir -p ~/.config/yt-dlp
+```
+
+```bash
 cat > ~/.config/yt-dlp/config << 'EOF'
 # Output template
 -o "%(uploader)s/%(upload_date>%Y-%m-%d)s - %(title)s.%(ext)s"
@@ -703,7 +1011,7 @@ EOF
 
 ### Automation Scripts
 
-**Cross-platform download script:**
+Cross-platform download script:
 
 ```bash
 #!/bin/bash
@@ -734,8 +1042,9 @@ yt-dlp -o "$DOWNLOAD_DIR/%(title)s.%(ext)s" \
 
 ### Performance Optimization
 
+Platform-specific optimizations
+
 ```bash
-# Platform-specific optimizations
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # macOS optimizations
     export YT_DLP_ARGS="--concurrent-fragments 2"

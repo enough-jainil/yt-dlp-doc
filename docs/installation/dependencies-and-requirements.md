@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 3
 ---
 
 # Dependencies and Requirements
@@ -17,12 +17,19 @@ Other versions and implementations may or may not work correctly.
 
 ### Checking Python Version
 
-```bash
-# Check Python version
-python3 --version
-python --version
+Check Python version
 
-# Check if Python meets requirements
+```bash
+python3 --version
+```
+
+```bash
+python --version
+```
+
+Check if Python meets requirements
+
+```bash
 python3 -c "import sys; print('✓' if sys.version_info >= (3, 9) else '✗', 'Python version:', sys.version)"
 ```
 
@@ -40,41 +47,59 @@ python3 -c "import sys; print('✓' if sys.version_info >= (3, 9) else '✗', 'P
 
 **Windows:**
 
+Using Chocolatey
+
 ```cmd
-# Using Chocolatey
 choco install ffmpeg
-
-# Using Scoop
-scoop install ffmpeg
-
-# Manual installation
-# Download from https://ffmpeg.org/download.html
-# Add to PATH
 ```
+
+Using Scoop
+
+```cmd
+scoop install ffmpeg
+```
+
+Manual installation
+Download from https://ffmpeg.org/download.html
+Add to PATH
 
 **macOS:**
 
-```bash
-# Using Homebrew
-brew install ffmpeg
+Using Homebrew
 
-# Using MacPorts
+```bash
+brew install ffmpeg
+```
+
+Using MacPorts
+
+```bash
 sudo port install ffmpeg
 ```
 
 **Linux:**
 
+Ubuntu/Debian
+
 ```bash
-# Ubuntu/Debian
 sudo apt install ffmpeg
+```
 
-# Fedora
+Fedora
+
+```bash
 sudo dnf install ffmpeg
+```
 
-# Arch Linux
+Arch Linux
+
+```bash
 sudo pacman -S ffmpeg
+```
 
-# Alpine
+Alpine
+
+```bash
 apk add ffmpeg
 ```
 
@@ -90,12 +115,19 @@ yt-dlp provides [custom FFmpeg builds](https://github.com/yt-dlp/FFmpeg-Builds) 
 
 #### Verification
 
-```bash
-# Check FFmpeg installation
-ffmpeg -version
-ffprobe -version
+Check FFmpeg installation
 
-# Check if yt-dlp can find FFmpeg
+```bash
+ffmpeg -version
+```
+
+```bash
+ffprobe -version
+```
+
+Check if yt-dlp can find FFmpeg
+
+```bash
 yt-dlp --verbose 2>&1 | grep -i ffmpeg
 ```
 
@@ -105,32 +137,52 @@ yt-dlp --verbose 2>&1 | grep -i ffmpeg
 
 #### certifi \*
 
-- **Purpose**: Provides Mozilla's root certificate bundle for HTTPS connections
+Provides Mozilla's root certificate bundle for HTTPS connections
+
+```bash
+pip install certifi
+```
+
 - **License**: [MPLv2](https://github.com/certifi/python-certifi/blob/master/LICENSE)
-- **Installation**: `pip install certifi`
 - **Used for**: SSL/TLS certificate verification
 
 #### brotli or brotlicffi \*
 
-- **Purpose**: [Brotli](https://en.wikipedia.org/wiki/Brotli) content encoding support
+[Brotli](https://en.wikipedia.org/wiki/Brotli) content encoding support
+
+```bash
+pip install brotli
+```
+
+```bash
+pip install brotlicffi
+```
+
 - **Options**:
   - [brotli](https://github.com/google/brotli) - [MIT License](https://github.com/google/brotli/blob/master/LICENSE)
   - [brotlicffi](https://github.com/python-hyper/brotlicffi) - [MIT License](https://github.com/python-hyper/brotlicffi/blob/master/LICENSE)
-- **Installation**: `pip install brotli` or `pip install brotlicffi`
 - **Used for**: Decompressing Brotli-compressed web content
 
 #### websockets \*
 
-- **Purpose**: Downloading over websocket protocols
+Downloading over websocket protocols
+
+```bash
+pip install websockets
+```
+
 - **License**: [BSD-3-Clause](https://github.com/aaugustin/websockets/blob/main/LICENSE)
-- **Installation**: `pip install websockets`
 - **Used for**: Live streams and real-time content
 
 #### requests \*
 
-- **Purpose**: HTTP library for HTTPS proxy and persistent connections
+HTTP library for HTTPS proxy and persistent connections
+
+```bash
+pip install requests
+```
+
 - **License**: [Apache-2.0](https://github.com/psf/requests/blob/main/LICENSE)
-- **Installation**: `pip install requests`
 - **Used for**: Enhanced HTTP handling and proxy support
 
 ### Browser Impersonation
@@ -139,19 +191,27 @@ The following provide support for impersonating browser requests, which may be r
 
 #### curl_cffi (Recommended)
 
-- **Purpose**: Python binding for [curl-impersonate](https://github.com/lexiforest/curl-impersonate)
+Python binding for [curl-impersonate](https://github.com/lexiforest/curl-impersonate)
+
+```bash
+pip install "yt-dlp[default,curl-cffi]"
+```
+
 - **Features**: Impersonation targets for Chrome, Edge, and Safari
 - **License**: [MIT](https://github.com/lexiforest/curl_cffi/blob/main/LICENSE)
-- **Installation**: `pip install "yt-dlp[default,curl-cffi]"`
 - **Availability**: Included in `yt-dlp.exe`, `yt-dlp_linux`, and `yt-dlp_macos` builds
 
 #### Alternative Browser Impersonation
 
-```bash
-# Install curl_cffi separately
-pip install curl-cffi
+Install curl_cffi separately
 
-# Verify installation
+```bash
+pip install curl-cffi
+```
+
+Verify installation
+
+```bash
 python3 -c "import curl_cffi; print('curl_cffi available')"
 ```
 
@@ -161,27 +221,35 @@ python3 -c "import curl_cffi; print('curl_cffi available')"
 
 #### mutagen \*
 
-- **Purpose**: `--embed-thumbnail` in certain formats, metadata manipulation
+`--embed-thumbnail` in certain formats, metadata manipulation
+
+```bash
+pip install mutagen
+```
+
 - **License**: [GPLv2+](https://github.com/quodlibet/mutagen/blob/master/COPYING)
-- **Installation**: `pip install mutagen`
 - **Supported formats**: MP3, MP4, FLAC, OGG, and more
 
 #### AtomicParsley
 
-- **Purpose**: `--embed-thumbnail` in `mp4`/`m4a` files when `mutagen`/`ffmpeg` cannot
+`--embed-thumbnail` in `mp4`/`m4a` files when `mutagen`/`ffmpeg` cannot
+
+macOS
+
+```bash
+brew install atomicparsley
+```
+
+Ubuntu/Debian
+
+```bash
+sudo apt install atomicparsley
+```
+
+Windows (manual download required)
+Download from GitHub releases
+
 - **License**: [GPLv2+](https://github.com/wez/atomicparsley/blob/master/COPYING)
-- **Installation**:
-
-  ```bash
-  # macOS
-  brew install atomicparsley
-
-  # Ubuntu/Debian
-  sudo apt install atomicparsley
-
-  # Windows (manual download required)
-  # Download from GitHub releases
-  ```
 
 ### Extended Attributes
 
@@ -189,19 +257,28 @@ For writing xattr metadata (`--xattr`) on **Mac** and **BSD**:
 
 #### xattr
 
-- **Purpose**: Extended attributes support on macOS
+Extended attributes support on macOS
+
+```bash
+pip install xattr
+```
+
 - **License**: [MIT](https://github.com/xattr/xattr/blob/master/LICENSE.txt)
-- **Installation**: `pip install xattr`
 
 #### pyxattr
 
-- **Purpose**: Extended attributes support on Linux
+Extended attributes support on Linux
+
+```bash
+pip install pyxattr
+```
+
 - **License**: [LGPL2.1](https://github.com/iustin/pyxattr/blob/master/COPYING)
-- **Installation**: `pip install pyxattr`
 
 #### setfattr
 
-- **Purpose**: Extended attributes support (system utility)
+Extended attributes support (system utility)
+
 - **License**: [GPLv2+](http://git.savannah.nongnu.org/cgit/attr.git/tree/doc/COPYING)
 - **Installation**: Usually pre-installed on Linux systems
 
@@ -211,38 +288,49 @@ For writing xattr metadata (`--xattr`) on **Mac** and **BSD**:
 
 #### pycryptodomex \*
 
-- **Purpose**: Decrypting AES-128 HLS streams and various other encrypted data
+Decrypting AES-128 HLS streams and various other encrypted data
+
+```bash
+pip install pycryptodomex
+```
+
 - **License**: [BSD-2-Clause](https://github.com/Legrandin/pycryptodome/blob/master/LICENSE.rst)
-- **Installation**: `pip install pycryptodomex`
 - **Used for**: Encrypted content from various platforms
 
 ### JavaScript Execution
 
 #### phantomjs
 
-- **Purpose**: Used in extractors where JavaScript needs to be run
+Used in extractors where JavaScript needs to be run
+
+Ubuntu/Debian
+
+```bash
+sudo apt install phantomjs
+```
+
+macOS
+
+```bash
+brew install phantomjs
+```
+
+Or download from phantomjs.org
+
 - **License**: [BSD-3-Clause](https://github.com/ariya/phantomjs/blob/master/LICENSE.BSD)
-- **Installation**:
-
-  ```bash
-  # Ubuntu/Debian
-  sudo apt install phantomjs
-
-  # macOS
-  brew install phantomjs
-
-  # Or download from phantomjs.org
-  ```
-
 - **Note**: Being phased out in favor of other solutions
 
 ### System Integration
 
 #### secretstorage \*
 
-- **Purpose**: `--cookies-from-browser` to access **Gnome** keyring while decrypting **Chromium** cookies on **Linux**
+`--cookies-from-browser` to access **Gnome** keyring while decrypting **Chromium** cookies on **Linux**
+
+```bash
+pip install secretstorage
+```
+
 - **License**: [BSD-3-Clause](https://github.com/mitya57/secretstorage/blob/master/LICENSE)
-- **Installation**: `pip install secretstorage`
 - **Platform**: Linux with GNOME desktop environment
 
 ### External Downloaders
@@ -251,51 +339,79 @@ Any external downloader you want to use with `--downloader`:
 
 #### aria2c
 
-- **Purpose**: Parallel downloading with multiple connections
-- **Installation**:
+Parallel downloading with multiple connections
 
-  ```bash
-  # Ubuntu/Debian
-  sudo apt install aria2
+Ubuntu/Debian
 
-  # macOS
-  brew install aria2
+```bash
+sudo apt install aria2
+```
 
-  # Windows
-  choco install aria2
-  ```
+macOS
 
-- **Usage**: `yt-dlp --downloader aria2c URL`
+```bash
+brew install aria2
+```
+
+Windows
+
+```cmd
+choco install aria2
+```
+
+Usage
+
+```bash
+yt-dlp --downloader aria2c URL
+```
 
 #### curl
 
-- **Purpose**: Alternative HTTP downloader
+Alternative HTTP downloader
+
+Usage
+
+```bash
+yt-dlp --downloader curl URL
+```
+
 - **Installation**: Usually pre-installed on Unix systems
-- **Usage**: `yt-dlp --downloader curl URL`
 
 #### wget
 
-- **Purpose**: Alternative HTTP downloader
+Alternative HTTP downloader
+
+Usage
+
+```bash
+yt-dlp --downloader wget URL
+```
+
 - **Installation**: Usually pre-installed on Linux
-- **Usage**: `yt-dlp --downloader wget URL`
 
 #### axel
 
-- **Purpose**: Multi-connection downloader
-- **Installation**:
+Multi-connection downloader
 
-  ```bash
-  # Ubuntu/Debian
-  sudo apt install axel
+Ubuntu/Debian
 
-  # macOS
-  brew install axel
-  ```
+```bash
+sudo apt install axel
+```
+
+macOS
+
+```bash
+brew install axel
+```
 
 #### httpie
 
-- **Purpose**: Modern HTTP client
-- **Installation**: `pip install httpie`
+Modern HTTP client
+
+```bash
+pip install httpie
+```
 
 ## Deprecated Dependencies
 
@@ -303,28 +419,32 @@ Any external downloader you want to use with `--downloader`:
 
 #### avconv and avprobe
 
-- **Status**: **Deprecated** alternative to ffmpeg
+**Deprecated** alternative to ffmpeg
+
 - **License**: [Depends on the build](https://libav.org/legal)
 - **Recommendation**: Use ffmpeg instead
 - **Note**: No longer actively maintained
 
 #### sponskrub
 
-- **Purpose**: For the now **deprecated** [sponskrub options](#sponskrub-options)
+For the now **deprecated** [sponskrub options](#sponskrub-options)
+
 - **License**: [GPLv3+](https://github.com/faissaloo/SponSkrub/blob/master/LICENCE.md)
 - **Recommendation**: Use `--sponsorblock` options instead
 - **Migration**: Replace `--sponskrub` with `--sponsorblock-remove`
 
 #### rtmpdump
 
-- **Purpose**: Downloading `rtmp` streams
+Downloading `rtmp` streams
+
 - **License**: [GPLv2+](http://rtmpdump.mplayerhq.hu)
 - **Alternative**: Use `--downloader ffmpeg` instead
 - **Status**: Rarely needed in modern usage
 
 #### mplayer or mpv
 
-- **Purpose**: Downloading `rstp`/`mms` streams
+Downloading `rstp`/`mms` streams
+
 - **License**: [GPLv2+](https://github.com/mpv-player/mpv/blob/master/Copyright)
 - **Alternative**: Use `--downloader ffmpeg` instead
 
@@ -421,21 +541,29 @@ Adds browser impersonation capabilities with `curl_cffi`.
 
 ### Complete Installation
 
+Install with all optional dependencies
+
 ```bash
-# Install with all optional dependencies
 pip install "yt-dlp[default,curl-cffi]" mutagen atomicparsley
 ```
 
 ### Custom Installation Groups
 
+Minimal networking
+
 ```bash
-# Minimal networking
 pip install "yt-dlp" certifi requests
+```
 
-# Media processing focused
+Media processing focused
+
+```bash
 pip install "yt-dlp[default]" mutagen
+```
 
-# Development installation
+Development installation
+
+```bash
 pip install "yt-dlp[default,curl-cffi]" pytest flake8
 ```
 
@@ -474,34 +602,50 @@ The standalone release binaries include:
 - Most dependencies available through package managers
 - May need additional development headers for compilation:
 
-  ```bash
-  # Ubuntu/Debian
-  sudo apt install python3-dev build-essential
+Ubuntu/Debian
 
-  # Fedora
-  sudo dnf groupinstall "Development Tools"
-  sudo dnf install python3-devel
+```bash
+sudo apt install python3-dev build-essential
+```
 
-  # Arch Linux
-  sudo pacman -S base-devel
-  ```
+Fedora
+
+```bash
+sudo dnf groupinstall "Development Tools"
+```
+
+```bash
+sudo dnf install python3-devel
+```
+
+Arch Linux
+
+```bash
+sudo pacman -S base-devel
+```
 
 ### macOS
 
 - Homebrew recommended for installing dependencies
 - Some dependencies may require Xcode command line tools:
-  ```bash
-  xcode-select --install
-  ```
+
+```bash
+xcode-select --install
+```
+
 - Apple Silicon Macs may need Rosetta 2 for some binaries
 
 ### Android (Termux)
 
-```bash
-# Essential packages
-pkg install python ffmpeg
+Essential packages
 
-# Optional dependencies
+```bash
+pkg install python ffmpeg
+```
+
+Optional dependencies
+
+```bash
 pkg install curl wget aria2
 ```
 
@@ -511,53 +655,79 @@ pkg install curl wget aria2
 
 #### SSL Certificate Errors
 
-```bash
-# Update certificates
-pip install --upgrade certifi
+Update certificates
 
-# macOS specific
+```bash
+pip install --upgrade certifi
+```
+
+macOS specific
+
+```bash
 /Applications/Python\ 3.x/Install\ Certificates.command
 ```
 
 #### Missing FFmpeg
 
-```bash
-# Check if FFmpeg is in PATH
-which ffmpeg
+Check if FFmpeg is in PATH
 
-# Specify FFmpeg location
+```bash
+which ffmpeg
+```
+
+Specify FFmpeg location
+
+```bash
 yt-dlp --ffmpeg-location /path/to/ffmpeg URL
 ```
 
 #### Import Errors
 
-```bash
-# Check specific dependency
-python3 -c "import requests; print('requests OK')"
+Check specific dependency
 
-# Reinstall problematic dependency
+```bash
+python3 -c "import requests; print('requests OK')"
+```
+
+Reinstall problematic dependency
+
+```bash
 pip install --force-reinstall requests
 ```
 
 #### Permission Errors
 
-```bash
-# Use user installation
-pip install --user "yt-dlp[default]"
+Use user installation
 
-# Fix permissions
+```bash
+pip install --user "yt-dlp[default]"
+```
+
+Fix permissions
+
+```bash
 chmod +x ~/.local/bin/yt-dlp
 ```
 
 ### Dependency Conflicts
 
-```bash
-# Use virtual environment
-python3 -m venv yt-dlp-env
-source yt-dlp-env/bin/activate
-pip install "yt-dlp[default]"
+Use virtual environment
 
-# Or use pipx
+```bash
+python3 -m venv yt-dlp-env
+```
+
+```bash
+source yt-dlp-env/bin/activate
+```
+
+```bash
+pip install "yt-dlp[default]"
+```
+
+Or use pipx
+
+```bash
 pipx install "yt-dlp[default]"
 ```
 
@@ -565,18 +735,23 @@ pipx install "yt-dlp[default]"
 
 ### Dependency Selection
 
-```bash
-# For maximum performance
-pip install "yt-dlp[default,curl-cffi]"
+For maximum performance
 
-# For minimal resource usage
+```bash
+pip install "yt-dlp[default,curl-cffi]"
+```
+
+For minimal resource usage
+
+```bash
 pip install yt-dlp certifi
 ```
 
 ### External Downloader Configuration
 
+aria2c with optimal settings
+
 ```bash
-# aria2c with optimal settings
 yt-dlp --downloader aria2c \
        --downloader-args "aria2c:-x 16 -s 16 -k 1M" \
        URL

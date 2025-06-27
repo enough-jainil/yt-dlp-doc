@@ -12,13 +12,13 @@ Metadata modification happens **before** format selection, post-extraction, and 
 
 ## Text Replacement in Metadata
 
+Replace text in any metadata field using Python regular expressions with backreferences support.
+
 ### Basic Syntax
 
 ```bash
 --replace-in-metadata FIELDS REGEX REPLACE
 ```
-
-Replace text in any metadata field using Python regular expressions with backreferences support.
 
 ### Examples
 
@@ -42,20 +42,21 @@ yt-dlp --replace-in-metadata "uploader" "Official|Channel" "" URL
 
 #### Advanced Regex with Backreferences
 
+Move text in parentheses to the beginning
+
 ```bash
-# Move text in parentheses to the beginning
 yt-dlp --replace-in-metadata "title" "^(.*?)\s*\((.*?)\)$" "(\2) \1" URL
 ```
 
 ## Parsing Additional Metadata
+
+Extract data from one field and interpret it as another format.
 
 ### Basic Syntax
 
 ```bash
 --parse-metadata FROM:TO
 ```
-
-Extract data from one field and interpret it as another format.
 
 ### FROM Field Options
 
@@ -93,11 +94,15 @@ yt-dlp --parse-metadata "%(series)s S%(season_number)02dE%(episode_number)02d:%(
 
 ### 3. Extract Information from Description
 
-```bash
-# Extract artist from description
-yt-dlp --parse-metadata "description:Artist - (?P<artist>.+)" URL
+Extract artist from description
 
-# Extract multiple fields
+```bash
+yt-dlp --parse-metadata "description:Artist - (?P<artist>.+)" URL
+```
+
+Extract multiple fields
+
+```bash
 yt-dlp --parse-metadata "description:Artist: (?P<artist>.+?)\nAlbum: (?P<album>.+)" URL
 ```
 
@@ -123,26 +128,31 @@ This will download the first Vimeo video found in the description.
 
 Use the `meta_` prefix to change metadata embedded in the media file:
 
+Set custom description in the file
+
 ```bash
-# Set custom description in the file
-yt-dlp --parse-metadata "title:(?P<meta_description>Custom: %(title)s)" \
-       --embed-metadata URL
+yt-dlp --parse-metadata "title:(?P<meta_description>Custom: %(title)s)" --embed-metadata URL
+```
 
-# Set artist as uploader
-yt-dlp --parse-metadata "%(uploader|)s:%(meta_artist)s" \
-       --embed-metadata URL
+Set artist as uploader
 
-# Override default synopsis
-yt-dlp --parse-metadata "description:(?s)(?P<meta_comment>.+)" \
-       --embed-metadata URL
+```bash
+yt-dlp --parse-metadata "%(uploader|)s:%(meta_artist)s" --embed-metadata URL
+```
+
+Override default synopsis
+
+```bash
+yt-dlp --parse-metadata "description:(?s)(?P<meta_comment>.+)" --embed-metadata URL
 ```
 
 ### 3. Stream-Specific Metadata
 
 Use `meta<n>_` prefix for individual streams:
 
+Set language for first stream
+
 ```bash
-# Set language for first stream
 yt-dlp --parse-metadata "detected_lang:(?P<meta1_language>.+)" URL
 ```
 
@@ -150,11 +160,15 @@ yt-dlp --parse-metadata "detected_lang:(?P<meta1_language>.+)" URL
 
 Set fields to empty to remove them:
 
-```bash
-# Remove synopsis from embedded metadata
-yt-dlp --parse-metadata ":(?P<meta_synopsis>)" --embed-metadata URL
+Remove synopsis from embedded metadata
 
-# Remove formats field from infojson
+```bash
+yt-dlp --parse-metadata ":(?P<meta_synopsis>)" --embed-metadata URL
+```
+
+Remove formats field from infojson
+
+```bash
 yt-dlp --parse-metadata "video::(?P<formats>)" --write-info-json URL
 ```
 
@@ -162,31 +176,33 @@ yt-dlp --parse-metadata "video::(?P<formats>)" --write-info-json URL
 
 ### Complex Title Parsing
 
+Parse "[Channel] Title (Year)" format
+
 ```bash
-# Parse "[Channel] Title (Year)" format
 yt-dlp --parse-metadata "title:\[(?P<uploader>.+?)\]\s*(?P<title>.+?)\s*\((?P<year>\d{4})\)" URL
 ```
 
 ### Multi-line Description Parsing
 
+Extract multi-line comments correctly
+
 ```bash
-# Extract multi-line comments correctly
-yt-dlp --parse-metadata "description:(?s)(?P<meta_comment>.+)" \
-       --embed-metadata URL
+yt-dlp --parse-metadata "description:(?s)(?P<meta_comment>.+)" --embed-metadata URL
 ```
 
 ### Conditional Metadata
 
+Set artist as uploader only if artist doesn't exist
+
 ```bash
-# Set artist as uploader only if artist doesn't exist
-yt-dlp --parse-metadata "%(uploader|)s:%(meta_artist)s" \
-       --embed-metadata URL
+yt-dlp --parse-metadata "%(uploader|)s:%(meta_artist)s" --embed-metadata URL
 ```
 
 ### Date Formatting
 
+Convert timestamp to readable date
+
 ```bash
-# Convert timestamp to readable date
 yt-dlp --parse-metadata "timestamp:%(timestamp>%Y-%m-%d %H:%M:%S)s:%(formatted_date)s" URL
 ```
 
@@ -195,8 +211,11 @@ yt-dlp --parse-metadata "timestamp:%(timestamp>%Y-%m-%d %H:%M:%S)s:%(formatted_d
 You can specify when metadata processing occurs using the `WHEN` prefix:
 
 ```bash
---parse-metadata "pre_process:title:%(title)s - Downloaded:%(custom_title)s"
---parse-metadata "post_process:filepath:%(filepath)s:%(final_path)s"
+yt-dlp --parse-metadata "pre_process:title:%(title)s - Downloaded:%(custom_title)s" URL
+```
+
+```bash
+yt-dlp --parse-metadata "post_process:filepath:%(filepath)s:%(final_path)s" URL
 ```
 
 **Available timing options**:
@@ -299,14 +318,16 @@ yt-dlp --parse-metadata "%(uploader)s/%(upload_date>%Y)s/%(title)s:%(archive_pat
 
 ### Debug Tips
 
-```bash
-# See all available metadata fields
-yt-dlp -j URL | jq .
+See all available metadata fields
 
-# Test metadata modifications without downloading
-yt-dlp --simulate --print "%(meta_artist)s - %(meta_title)s" \
-       --parse-metadata "title:(?P<meta_artist>.+?) - (?P<meta_title>.+)" \
-       URL
+```bash
+yt-dlp -j URL | jq .
+```
+
+Test metadata modifications without downloading
+
+```bash
+yt-dlp --simulate --print "%(meta_artist)s - %(meta_title)s" --parse-metadata "title:(?P<meta_artist>.+?) - (?P<meta_title>.+)" URL
 ```
 
 This powerful metadata system allows you to customize exactly how your downloaded content is organized and tagged, making it perfect for building organized media libraries.

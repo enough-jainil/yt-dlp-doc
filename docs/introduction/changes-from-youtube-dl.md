@@ -203,34 +203,57 @@ For users migrating from youtube-dl or youtube-dlc, several compatibility modes 
 
 ### Quick Compatibility
 
+For youtube-dl users
+
 ```bash
-# For youtube-dl users
 --compat-options youtube-dl
+```
 
-# For youtube-dlc users
+For youtube-dlc users
+
+```bash
 --compat-options youtube-dlc
+```
 
-# For specific years
---compat-options 2021  # Includes older behaviors
---compat-options 2022  # Includes some newer changes
---compat-options 2023  # More recent defaults
+**For specific years**
+
+Includes older behaviors
+
+```bash
+--compat-options 2021
+```
+
+Includes some newer changes
+
+```bash
+--compat-options 2022
+```
+
+More recent defaults
+
+```bash
+--compat-options 2023
 ```
 
 ### Individual Options
 
+Specific compatibility options
+
 ```bash
-# Specific compatibility options
 --compat-options filename,format-sort,no-live-chat
 ```
 
 ### All Options (Not Recommended)
 
+Enable all compatibility options
+
 ```bash
-# Enable all compatibility options
 --compat-options all
 ```
 
-> **Warning**: Using `--compat-options all` is not recommended as it may include conflicting options.
+:::warning
+Using `--compat-options all` is not recommended as it may include conflicting options.
+:::
 
 ## Deprecated Options
 
@@ -238,21 +261,63 @@ yt-dlp maintains compatibility with most youtube-dl options while providing impr
 
 ### Almost Redundant
 
-- `-j, --dump-json` → `--print "%()j"`
-- `-F, --list-formats` → `--print formats_table`
-- `--list-thumbnails` → `--print thumbnails_table`
+`-j, --dump-json` → `--print "%()j"`
+
+```bash
+--print "%()j"
+```
+
+`-F, --list-formats` → `--print formats_table`
+
+```bash
+--print formats_table
+```
+
+`--list-thumbnails` → `--print thumbnails_table`
+
+```bash
+--print thumbnails_table
+```
 
 ### Redundant but Common
 
-- `--get-title` → `--print title`
-- `--get-id` → `--print id`
-- `--get-url` → `--print urls`
+`--get-title` → `--print title`
+
+```bash
+--print title
+```
+
+`--get-id` → `--print id`
+
+```bash
+--print id
+```
+
+`--get-url` → `--print urls`
+
+```bash
+--print urls
+```
 
 ### Not Recommended
 
-- `--force-generic-extractor` → `--ies generic,default`
-- `--all-formats` → `-f all`
-- `--print-json` → `-j --no-simulate`
+`--force-generic-extractor` → `--ies generic,default`
+
+```bash
+--ies generic,default
+```
+
+`--all-formats` → `-f all`
+
+```bash
+-f all
+```
+
+`--print-json` → `-j --no-simulate`
+
+```bash
+-j --no-simulate
+```
 
 See the [complete list of deprecated options](https://github.com/yt-dlp/yt-dlp#deprecated-options) in the official documentation.
 

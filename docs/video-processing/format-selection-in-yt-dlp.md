@@ -21,27 +21,41 @@ By default, yt-dlp uses the following format selection logic:
 
 Before selecting formats, list all available options:
 
-```bash
-# List all available formats
-yt-dlp -F "https://www.youtube.com/watch?v=BaW_jenozKc"
+List all available formats
 
-# List formats in a more compact way
+```bash
+yt-dlp -F "https://www.youtube.com/watch?v=BaW_jenozKc"
+```
+
+List formats in a more compact way
+
+```bash
 yt-dlp --list-formats "URL"
 ```
 
 ### Simple Format Selection
 
+Download specific format by ID
+
 ```bash
-# Download specific format by ID
 yt-dlp -f 22 URL
+```
 
-# Download best mp4 format
+Download best mp4 format
+
+```bash
 yt-dlp -f mp4 URL
+```
 
-# Download best webm format
+Download best webm format
+
+```bash
 yt-dlp -f webm URL
+```
 
-# Interactive format selection
+Interactive format selection
+
+```bash
 yt-dlp -f - URL
 ```
 
@@ -49,37 +63,109 @@ yt-dlp -f - URL
 
 ### Quality Selectors
 
-```bash
-# Best quality formats
--f best              # Best combined video+audio format
--f best*             # Best format (video or audio or both)
--f bestvideo         # Best video-only format
--f bestvideo*        # Best format containing video
--f bestaudio         # Best audio-only format
--f bestaudio*        # Best format containing audio
+Best quality formats
 
-# Worst quality formats
--f worst             # Worst combined video+audio format
--f worst*            # Worst format (video or audio or both)
--f worstvideo        # Worst video-only format
--f worstvideo*       # Worst format containing video
--f worstaudio        # Worst audio-only format
--f worstaudio*       # Worst format containing audio
+```bash
+-f best
 ```
+
+Best combined video+audio format
+
+```bash
+-f best*
+```
+
+Best format (video or audio or both)
+
+```bash
+-f bestvideo
+```
+
+Best video-only format
+
+```bash
+-f bestvideo*
+```
+
+Best format containing video
+
+```bash
+-f bestaudio
+```
+
+Best audio-only format
+
+```bash
+-f bestaudio*
+```
+
+Best format containing audio
+
+Worst quality formats
+
+```bash
+-f worst
+```
+
+Worst combined video+audio format
+
+```bash
+-f worst*
+```
+
+Worst format (video or audio or both)
+
+```bash
+-f worstvideo
+```
+
+Worst video-only format
+
+```bash
+-f worstvideo*
+```
+
+Worst format containing video
+
+```bash
+-f worstaudio
+```
+
+Worst audio-only format
+
+```bash
+-f worstaudio*
+```
+
+Worst format containing audio
 
 ### Special Selectors
 
+Download all formats separately
+
 ```bash
-# Download all formats separately
 -f all
-
-# Download and merge all formats (requires --audio-multistreams/--video-multistreams)
--f mergeall
-
-# Select nth best format
--f best.2            # 2nd best combined format
--f bestvideo.3       # 3rd best video format
 ```
+
+Download and merge all formats (requires --audio-multistreams/--video-multistreams)
+
+```bash
+-f mergeall
+```
+
+Select nth best format
+
+```bash
+-f best.2
+```
+
+2nd best combined format
+
+```bash
+-f bestvideo.3
+```
+
+3rd best video format
 
 ## Format Filtering
 
@@ -87,69 +173,209 @@ yt-dlp -f - URL
 
 Filter formats using numeric field comparisons:
 
+Video dimensions
+
 ```bash
-# Video dimensions
--f "best[height=720]"           # Exactly 720p height
--f "best[height<=720]"          # 720p or lower
--f "best[height>=1080]"         # 1080p or higher
--f "best[width<1920]"           # Width less than 1920
--f "best[width*height<=1000000]" # Total pixels limit
-
-# Bitrates and quality
--f "best[tbr<=1000]"            # Total bitrate ≤ 1000 kbps
--f "best[vbr>=500]"             # Video bitrate ≥ 500 kbps
--f "best[abr<=128]"             # Audio bitrate ≤ 128 kbps
--f "best[fps>30]"               # Frame rate > 30 fps
--f "best[asr=48000]"            # Audio sample rate = 48kHz
-
-# File size
--f "best[filesize<50M]"         # File size less than 50MB
--f "best[filesize_approx<100M]" # Approximate size < 100MB
+-f "best[height=720]"
 ```
+
+Exactly 720p height
+
+```bash
+-f "best[height<=720]"
+```
+
+720p or lower
+
+```bash
+-f "best[height>=1080]"
+```
+
+1080p or higher
+
+```bash
+-f "best[width<1920]"
+```
+
+Width less than 1920
+
+```bash
+-f "best[width*height<=1000000]"
+```
+
+Total pixels limit
+
+Bitrates and quality
+
+```bash
+-f "best[tbr<=1000]"
+```
+
+Total bitrate ≤ 1000 kbps
+
+```bash
+-f "best[vbr>=500]"
+```
+
+Video bitrate ≥ 500 kbps
+
+```bash
+-f "best[abr<=128]"
+```
+
+Audio bitrate ≤ 128 kbps
+
+```bash
+-f "best[fps>30]"
+```
+
+Frame rate > 30 fps
+
+```bash
+-f "best[asr=48000]"
+```
+
+Audio sample rate = 48kHz
+
+File size
+
+```bash
+-f "best[filesize<50M]"
+```
+
+File size less than 50MB
+
+```bash
+-f "best[filesize_approx<100M]"
+```
+
+Approximate size < 100MB
 
 ### String Comparisons
 
 Filter formats using string field comparisons:
 
+Extensions and containers
+
 ```bash
-# Extensions and containers
--f "best[ext=mp4]"              # MP4 container
--f "best[ext^=mp]"              # Extension starts with "mp"
--f "best[ext$=4]"               # Extension ends with "4"
--f "best[ext*=p4]"              # Extension contains "p4"
-
-# Codecs
--f "best[vcodec=h264]"          # H.264 video codec
--f "best[vcodec^=h26]"          # Video codec starts with "h26"
--f "best[acodec=aac]"           # AAC audio codec
--f "best[acodec!=none]"         # Has audio codec (not audio-only)
--f "best[vcodec!=none]"         # Has video codec (not video-only)
-
-# Protocol
--f "best[protocol=https]"       # HTTPS protocol only
--f "best[protocol^=http]"       # HTTP or HTTPS protocol
-
-# Language
--f "best[language=en]"          # English language
--f "best[language~=en.*]"       # English language (regex)
+-f "best[ext=mp4]"
 ```
+
+MP4 container
+
+```bash
+-f "best[ext^=mp]"
+```
+
+Extension starts with "mp"
+
+```bash
+-f "best[ext$=4]"
+```
+
+Extension ends with "4"
+
+```bash
+-f "best[ext*=p4]"
+```
+
+Extension contains "p4"
+
+Codecs
+
+```bash
+-f "best[vcodec=h264]"
+```
+
+H.264 video codec
+
+```bash
+-f "best[vcodec^=h26]"
+```
+
+Video codec starts with "h26"
+
+```bash
+-f "best[acodec=aac]"
+```
+
+AAC audio codec
+
+```bash
+-f "best[acodec!=none]"
+```
+
+Has audio codec (not audio-only)
+
+```bash
+-f "best[vcodec!=none]"
+```
+
+Has video codec (not video-only)
+
+Protocol
+
+```bash
+-f "best[protocol=https]"
+```
+
+HTTPS protocol only
+
+```bash
+-f "best[protocol^=http]"
+```
+
+HTTP or HTTPS protocol
+
+Language
+
+```bash
+-f "best[language=en]"
+```
+
+English language
+
+```bash
+-f "best[language~=en.*]"
+```
+
+English language (regex)
 
 ### Advanced Filtering
 
+Multiple conditions (AND)
+
 ```bash
-# Multiple conditions (AND)
 -f "best[height<=720][fps<=30]"
+```
 
-# Unknown values (use ? to include unknown)
--f "best[height<=?720]"         # 720p or lower, include unknown heights
+Unknown values (use ? to include unknown)
 
-# Negation
--f "best[!height>720]"          # NOT height > 720 (equivalent to height<=720)
+```bash
+-f "best[height<=?720]"
+```
 
-# Grouping with parentheses
--f "(mp4,webm)[height<480]"     # MP4 or WebM with height < 480
+720p or lower, include unknown heights
 
-# Complex conditions
+Negation
+
+```bash
+-f "best[!height>720]"
+```
+
+`NOT height > 720 (equivalent to height<=720)`
+
+Grouping with parentheses
+
+```bash
+-f "(mp4,webm)[height<480]"
+```
+
+MP4 or WebM with height < 480
+
+Complex conditions
+
+```bash
 -f "best[height<=720][tbr>500][ext=mp4]"
 ```
 
@@ -157,27 +383,43 @@ Filter formats using string field comparisons:
 
 ### Basic Merging
 
+Merge best video with best audio
+
 ```bash
-# Merge best video with best audio
 yt-dlp -f "bestvideo+bestaudio" URL
+```
 
-# Merge specific formats
-yt-dlp -f "136+140" URL          # Format IDs 136 (video) + 140 (audio)
+Merge specific formats
 
-# Merge with fallback
+```bash
+yt-dlp -f "136+140" URL
+```
+
+Format IDs 136 (video) + 140 (audio)
+
+Merge with fallback
+
+```bash
 yt-dlp -f "bestvideo+bestaudio/best" URL
 ```
 
 ### Advanced Merging
 
+Merge multiple formats (requires multistream options)
+
 ```bash
-# Merge multiple formats (requires multistream options)
 yt-dlp -f "bestvideo+bestaudio+bestaudio.2" --audio-multistreams URL
+```
 
-# Merge all audio formats
+Merge all audio formats
+
+```bash
 yt-dlp -f "bestvideo+mergeall[vcodec=none]" --audio-multistreams URL
+```
 
-# Merge with container preference
+Merge with container preference
+
+```bash
 yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]" URL
 ```
 
@@ -187,14 +429,21 @@ yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]" URL
 
 Use `/` to specify preference order (left has higher priority):
 
+Try specific format first, fallback to best
+
 ```bash
-# Try specific format first, fallback to best
 yt-dlp -f "22/best" URL
+```
 
-# Multiple fallbacks
+Multiple fallbacks
+
+```bash
 yt-dlp -f "22/17/18/best" URL
+```
 
-# Complex preference with merging
+Complex preference with merging
+
+```bash
 yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" URL
 ```
 
@@ -202,14 +451,21 @@ yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" URL
 
 Use `,` to download multiple formats:
 
+Download multiple formats separately
+
 ```bash
-# Download multiple formats separately
 yt-dlp -f "22,17,18" URL
+```
 
-# Download best video and audio separately
+Download best video and audio separately
+
+```bash
 yt-dlp -f "bestvideo,bestaudio" URL
+```
 
-# Use different output template for multiple formats
+Use different output template for multiple formats
+
+```bash
 yt-dlp -f "bestvideo,bestaudio" -o "%(title)s.f%(format_id)s.%(ext)s" URL
 ```
 
@@ -219,76 +475,245 @@ The `-S` option provides advanced sorting capabilities:
 
 ### Available Sort Fields
 
+Quality and technical specs
+
 ```bash
-# Quality and technical specs
--S "height"          # Sort by video height (higher first)
--S "width"           # Sort by video width
--S "res"             # Sort by resolution (smallest dimension)
--S "fps"             # Sort by frame rate
--S "tbr"             # Sort by total bitrate
--S "vbr"             # Sort by video bitrate
--S "abr"             # Sort by audio bitrate
--S "br"              # Sort by bitrate (tbr/vbr/abr)
--S "asr"             # Sort by audio sample rate
-
-# Codecs and containers
--S "vcodec"          # Sort by video codec preference
--S "acodec"          # Sort by audio codec preference
--S "codec"           # Sort by codec (vcodec,acodec)
--S "ext"             # Sort by extension preference
--S "vext"            # Sort by video extension
--S "aext"            # Sort by audio extension
-
-# File properties
--S "size"            # Sort by file size
--S "filesize"        # Sort by exact file size
--S "fs_approx"       # Sort by approximate file size
-
-# Other fields
--S "proto"           # Sort by protocol preference
--S "lang"            # Sort by language preference
--S "quality"         # Sort by quality preference
--S "source"          # Sort by source preference
--S "hdr"             # Sort by dynamic range
--S "channels"        # Sort by audio channels
+-S "height"
 ```
+
+Sort by video height (higher first)
+
+```bash
+-S "width"
+```
+
+Sort by video width
+
+```bash
+-S "res"
+```
+
+Sort by resolution (smallest dimension)
+
+```bash
+-S "fps"
+```
+
+Sort by frame rate
+
+```bash
+-S "tbr"
+```
+
+Sort by total bitrate
+
+```bash
+-S "vbr"
+```
+
+Sort by video bitrate
+
+```bash
+-S "abr"
+```
+
+Sort by audio bitrate
+
+```bash
+-S "br"
+```
+
+Sort by bitrate (tbr/vbr/abr)
+
+```bash
+-S "asr"
+```
+
+Sort by audio sample rate
+
+Codecs and containers
+
+```bash
+-S "vcodec"
+```
+
+Sort by video codec preference
+
+```bash
+-S "acodec"
+```
+
+Sort by audio codec preference
+
+```bash
+-S "codec"
+```
+
+Sort by codec (vcodec,acodec)
+
+```bash
+-S "ext"
+```
+
+Sort by extension preference
+
+```bash
+-S "vext"
+```
+
+Sort by video extension
+
+```bash
+-S "aext"
+```
+
+Sort by audio extension
+
+File properties
+
+```bash
+-S "size"
+```
+
+Sort by file size
+
+```bash
+-S "filesize"
+```
+
+Sort by exact file size
+
+```bash
+-S "fs_approx"
+```
+
+Sort by approximate file size
+
+Other fields
+
+```bash
+-S "proto"
+```
+
+Sort by protocol preference
+
+```bash
+-S "lang"
+```
+
+Sort by language preference
+
+```bash
+-S "quality"
+```
+
+Sort by quality preference
+
+```bash
+-S "source"
+```
+
+Sort by source preference
+
+```bash
+-S "hdr"
+```
+
+Sort by dynamic range
+
+```bash
+-S "channels"
+```
+
+Sort by audio channels
 
 ### Sort Modifiers
 
+Reverse order (ascending)
+
 ```bash
-# Reverse order (ascending)
--S "+height"         # Prefer smaller height
--S "+size"           # Prefer smaller file size
-
-# Preferred values
--S "height:720"      # Prefer 720p, larger is better but cap at 720p
--S "res:480"         # Prefer 480p resolution
--S "codec:h264:aac"  # Prefer H.264 video and AAC audio
-
-# Nearest value
--S "filesize~100M"   # Prefer size closest to 100MB
-
-# Multiple sort criteria
--S "height,fps,vcodec"           # Sort by height, then fps, then codec
--S "res:720,fps,hdr:12,vcodec"   # Complex multi-field sorting
+-S "+height"
 ```
+
+Prefer smaller height
+
+```bash
+-S "+size"
+```
+
+Prefer smaller file size
+
+Preferred values
+
+```bash
+-S "height:720"
+```
+
+Prefer 720p, larger is better but cap at 720p
+
+```bash
+-S "res:480"
+```
+
+Prefer 480p resolution
+
+```bash
+-S "codec:h264:aac"
+```
+
+Prefer H.264 video and AAC audio
+
+Nearest value
+
+```bash
+-S "filesize~100M"
+```
+
+Prefer size closest to 100MB
+
+Multiple sort criteria
+
+```bash
+-S "height,fps,vcodec"
+```
+
+Sort by height, then fps, then codec
+
+```bash
+-S "res:720,fps,hdr:12,vcodec"
+```
+
+Complex multi-field sorting
 
 ### Sort Examples
 
+Download smallest video
+
 ```bash
-# Download smallest video
 yt-dlp -S "+size,+br" URL
+```
 
-# Download best quality under 720p
+Download best quality under 720p
+
+```bash
 yt-dlp -S "res:720" URL
+```
 
-# Prefer H.264 and AAC
+Prefer H.264 and AAC
+
+```bash
 yt-dlp -S "vcodec:h264,acodec:aac" URL
+```
 
-# Prefer file size closest to 500MB
+Prefer file size closest to 500MB
+
+```bash
 yt-dlp -S "filesize~500M" URL
+```
 
-# Complex sorting for best quality under constraints
+Complex sorting for best quality under constraints
+
+```bash
 yt-dlp -S "res:1080,fps:60,vcodec:h264,size" URL
 ```
 
@@ -296,56 +721,87 @@ yt-dlp -S "res:1080,fps:60,vcodec:h264,size" URL
 
 ### YouTube Specific
 
+Best quality avoiding VP9 (for compatibility)
+
 ```bash
-# Best quality avoiding VP9 (for compatibility)
 yt-dlp -S "vcodec:h264,res,fps" URL
+```
 
-# Best audio quality
+Best audio quality
+
+```bash
 yt-dlp -f "bestaudio[ext=m4a]/bestaudio" URL
+```
 
-# 720p MP4 with AAC audio
+720p MP4 with AAC audio
+
+```bash
 yt-dlp -f "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]" URL
+```
 
-# Download with subtitle preference
+Download with subtitle preference
+
+```bash
 yt-dlp -f "best[height<=1080]" --sub-langs "en,en-US" --write-subs URL
 ```
 
 ### Size-Conscious Downloads
 
+Best quality under 100MB
+
 ```bash
-# Best quality under 100MB
 yt-dlp -f "best[filesize<100M]" URL
+```
 
-# Smallest file with decent quality
+Smallest file with decent quality
+
+```bash
 yt-dlp -S "+size,res:480" URL
+```
 
-# Best quality preferring smaller codecs
+Best quality preferring smaller codecs
+
+```bash
 yt-dlp -S "vcodec:h264,+size" URL
 ```
 
 ### High-Quality Downloads
 
+Best possible quality
+
 ```bash
-# Best possible quality
 yt-dlp -S "res,fps,vcodec,acodec" URL
+```
 
-# 4K with best audio
+4K with best audio
+
+```bash
 yt-dlp -f "bestvideo[height>=2160]+bestaudio" URL
+```
 
-# HDR content preference
+HDR content preference
+
+```bash
 yt-dlp -S "hdr,res,fps" URL
 ```
 
 ### Compatibility-Focused
 
+MP4 container with H.264/AAC for maximum compatibility
+
 ```bash
-# MP4 container with H.264/AAC for maximum compatibility
 yt-dlp -f "bestvideo[ext=mp4][vcodec^=avc1]+bestaudio[ext=m4a][acodec^=mp4a]/best[ext=mp4]" URL
+```
 
-# WebM for modern browsers
+WebM for modern browsers
+
+```bash
 yt-dlp -f "bestvideo[ext=webm]+bestaudio[ext=webm]/best[ext=webm]" URL
+```
 
-# Avoid problematic formats
+Avoid problematic formats
+
+```bash
 yt-dlp -f "best[vcodec!=vp9][acodec!=opus]" URL
 ```
 
@@ -361,30 +817,47 @@ yt-dlp -f "best[vcodec!=vp9][acodec!=opus]" URL
 
 ### Common Patterns
 
+Balanced quality and size
+
 ```bash
-# Balanced quality and size
 yt-dlp -S "res:720,fps:30,+size" URL
+```
 
-# Maximum compatibility
+Maximum compatibility
+
+```bash
 yt-dlp -f "best[ext=mp4]/best" URL
+```
 
-# Best quality with size limit
+Best quality with size limit
+
+```bash
 yt-dlp -f "best[filesize<200M]/worst" URL
+```
 
-# Audio extraction
+Audio extraction
+
+```bash
 yt-dlp -f "bestaudio" -x --audio-format mp3 URL
 ```
 
 ### Troubleshooting
 
+Force format checking
+
 ```bash
-# Force format checking
 yt-dlp --check-formats -f "your_format_selector" URL
+```
 
-# List all formats for debugging
+List all formats for debugging
+
+```bash
 yt-dlp -F --list-formats URL
+```
 
-# Use verbose output for format selection details
+Use verbose output for format selection details
+
+```bash
 yt-dlp -v -f "your_format_selector" URL
 ```
 

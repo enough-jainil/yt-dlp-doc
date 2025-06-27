@@ -19,7 +19,9 @@ Check your Python version:
 
 ```bash
 python3 --version
-# or
+```
+
+```bash
 python --version
 ```
 
@@ -29,7 +31,9 @@ Ensure pip is installed and up-to-date:
 
 ```bash
 python3 -m pip install --upgrade pip
-# or
+```
+
+```bash
 python -m pip install --upgrade pip
 ```
 
@@ -81,16 +85,23 @@ This adds `curl_cffi` for impersonating Chrome, Edge, and Safari browsers.
 
 #### Minimal with Selected Dependencies
 
-Install minimal version with specific optional dependencies:
+**Install minimal version with specific optional dependencies:**
+
+With networking enhancements only
 
 ```bash
-# With networking enhancements only
 python3 -m pip install -U "yt-dlp[networking]"
+```
 
-# With post-processing support only
+With post-processing support only
+
+```bash
 python3 -m pip install -U "yt-dlp[postprocessing]"
+```
 
-# Multiple feature sets
+Multiple feature sets
+
+```bash
 python3 -m pip install -U "yt-dlp[networking,postprocessing]"
 ```
 
@@ -106,25 +117,33 @@ python3 -m pip install -U --pre "yt-dlp[default]"
 
 #### Install from GitHub Master Branch
 
-Get the absolute latest code from the master branch:
+**Get the absolute latest code from the master branch:**
+
+Ensure build tools are available
 
 ```bash
-# Ensure build tools are available
 python3 -m pip install -U pip hatchling wheel
+```
 
-# Install from master branch
+Install from master branch
+
+```bash
 python3 -m pip install -U --force-reinstall "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz"
 ```
 
 #### Install Specific Development Build
 
-Install from a specific commit or branch:
+**Install from a specific commit or branch:**
+
+From specific commit
 
 ```bash
-# From specific commit
 python3 -m pip install -U "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/COMMIT_HASH.tar.gz"
+```
 
-# From specific branch
+From specific branch
+
+```bash
 python3 -m pip install -U "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/archive/BRANCH_NAME.tar.gz"
 ```
 
@@ -132,34 +151,52 @@ python3 -m pip install -U "yt-dlp[default] @ https://github.com/yt-dlp/yt-dlp/ar
 
 ### Creating a Virtual Environment
 
-Using virtual environments is recommended to avoid conflicts:
+**Using virtual environments is recommended to avoid conflicts:**
+
+Create virtual environment
 
 ```bash
-# Create virtual environment
 python3 -m venv yt-dlp-env
+```
 
-# Activate virtual environment
-# On Linux/macOS:
+Activate virtual environment
+On Linux/macOS:
+
+```bash
 source yt-dlp-env/bin/activate
-# On Windows:
-yt-dlp-env\Scripts\activate
+```
 
-# Install yt-dlp in virtual environment
+On Windows:
+
+```cmd
+yt-dlp-env\Scripts\activate
+```
+
+Install yt-dlp in virtual environment
+
+```bash
 python3 -m pip install -U "yt-dlp[default]"
 ```
 
 ### Using pipx (Recommended for CLI Tools)
 
-pipx automatically creates isolated environments for CLI applications:
+**pipx automatically creates isolated environments for CLI applications:**
+
+Install pipx if not available
 
 ```bash
-# Install pipx if not available
 python3 -m pip install --user pipx
+```
 
-# Install yt-dlp with pipx
+Install yt-dlp with pipx
+
+```bash
 pipx install "yt-dlp[default]"
+```
 
-# Update yt-dlp via pipx
+Update yt-dlp via pipx
+
+```bash
 pipx upgrade yt-dlp
 ```
 
@@ -181,6 +218,9 @@ If you encounter execution policy issues:
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+```powershell
 python -m pip install -U "yt-dlp[default]"
 ```
 
@@ -196,11 +236,15 @@ python -m pip install -U "yt-dlp[default]"
 
 #### System Python vs Homebrew Python
 
-```bash
-# Using system Python (if available)
-python3 -m pip install --user -U "yt-dlp[default]"
+Using system Python (if available)
 
-# Using Homebrew Python
+```bash
+python3 -m pip install --user -U "yt-dlp[default]"
+```
+
+Using Homebrew Python
+
+```bash
 /opt/homebrew/bin/python3 -m pip install -U "yt-dlp[default]"
 ```
 
@@ -218,32 +262,47 @@ python3 -m pip install --user -U "yt-dlp[default]"
 
 **Ubuntu/Debian:**
 
-```bash
-# Install Python pip if not available
-sudo apt update
-sudo apt install python3-pip
+Install Python pip if not available
 
-# Install yt-dlp
+```bash
+sudo apt update
+```
+
+```bash
+sudo apt install python3-pip
+```
+
+Install yt-dlp
+
+```bash
 python3 -m pip install --user -U "yt-dlp[default]"
 ```
 
 **Fedora/CentOS/RHEL:**
 
-```bash
-# Install Python pip if not available
-sudo dnf install python3-pip
+Install Python pip if not available
 
-# Install yt-dlp
+```bash
+sudo dnf install python3-pip
+```
+
+Install yt-dlp
+
+```bash
 python3 -m pip install --user -U "yt-dlp[default]"
 ```
 
 **Arch Linux:**
 
-```bash
-# Install Python pip if not available
-sudo pacman -S python-pip
+Install Python pip if not available
 
-# Install yt-dlp
+```bash
+sudo pacman -S python-pip
+```
+
+Install yt-dlp
+
+```bash
 python3 -m pip install --user -U "yt-dlp[default]"
 ```
 
@@ -279,13 +338,23 @@ python3 -m pip install -U --pre "yt-dlp[default]"
 
 **Solutions:**
 
-```bash
-# Use --user flag (recommended)
-python3 -m pip install --user -U "yt-dlp[default]"
+Use --user flag (recommended)
 
-# Or use virtual environment (recommended)
+```bash
+python3 -m pip install --user -U "yt-dlp[default]"
+```
+
+Or use virtual environment (recommended)
+
+```bash
 python3 -m venv yt-dlp-env
+```
+
+```bash
 source yt-dlp-env/bin/activate
+```
+
+```bash
 python3 -m pip install -U "yt-dlp[default]"
 ```
 
@@ -295,11 +364,15 @@ python3 -m pip install -U "yt-dlp[default]"
 
 **Solutions:**
 
-```bash
-# Upgrade certificates
-python3 -m pip install --upgrade certifi
+Upgrade certificates
 
-# If still failing, use trusted host (less secure)
+```bash
+python3 -m pip install --upgrade certifi
+```
+
+If still failing, use trusted host (less secure)
+
+```bash
 python3 -m pip install -U "yt-dlp[default]" --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
 ```
 
@@ -309,13 +382,23 @@ python3 -m pip install -U "yt-dlp[default]" --trusted-host pypi.org --trusted-ho
 
 **Solutions:**
 
-```bash
-# Use virtual environment
-python3 -m venv clean-env
-source clean-env/bin/activate
-python3 -m pip install -U "yt-dlp[default]"
+Use virtual environment
 
-# Or use minimal installation
+```bash
+python3 -m venv clean-env
+```
+
+```bash
+source clean-env/bin/activate
+```
+
+```bash
+python3 -m pip install -U "yt-dlp[default]"
+```
+
+Or use minimal installation
+
+```bash
 python3 -m pip install -U yt-dlp
 ```
 
@@ -325,11 +408,15 @@ python3 -m pip install -U yt-dlp
 
 **Solutions:**
 
-```bash
-# Install build dependencies
-python3 -m pip install -U pip setuptools wheel
+Install build dependencies
 
-# Use pre-built wheels only
+```bash
+python3 -m pip install -U pip setuptools wheel
+```
+
+Use pre-built wheels only
+
+```bash
 python3 -m pip install -U "yt-dlp[default]" --only-binary=all
 ```
 
@@ -339,15 +426,25 @@ python3 -m pip install -U "yt-dlp[default]" --only-binary=all
 
 **Solutions:**
 
+Check installation location
+
 ```bash
-# Check installation location
 python3 -m pip show -f yt-dlp
+```
 
-# Add to PATH (Linux/macOS)
+Add to PATH (Linux/macOS)
+
+```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
+```
 
-# Use python module directly
+```bash
+source ~/.bashrc
+```
+
+Use python module directly
+
+```bash
 python3 -m yt_dlp --version
 ```
 
@@ -355,20 +452,27 @@ python3 -m yt_dlp --version
 
 #### Check Installation
 
-```bash
-# Check if yt-dlp is installed
-python3 -m pip show yt-dlp
+Check if yt-dlp is installed
 
-# Check version
+```bash
+python3 -m pip show yt-dlp
+```
+
+Check version
+
+```bash
 yt-dlp --version
-# or
+```
+
+```bash
 python3 -m yt_dlp --version
 ```
 
 #### Test Basic Functionality
 
+Test with a simple video
+
 ```bash
-# Test with a simple video
 yt-dlp --simulate "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ```
 
@@ -378,9 +482,13 @@ yt-dlp --simulate "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 Create a configuration file for consistent behavior:
 
+Linux/macOS
+
 ```bash
-# Linux/macOS
 mkdir -p ~/.config/yt-dlp
+```
+
+```bash
 cat > ~/.config/yt-dlp/config << 'EOF'
 # Default format selection
 -f 'bestvideo[height<=1080]+bestaudio/best[height<=1080]'
@@ -396,11 +504,15 @@ EOF
 
 ### Environment Variables
 
-Set up environment variables for pip installations:
+**Set up environment variables for pip installations:**
+
+Add to ~/.bashrc or ~/.zshrc
 
 ```bash
-# Add to ~/.bashrc or ~/.zshrc
 export YT_DLP_CONFIG_HOME="$HOME/.config/yt-dlp"
+```
+
+```bash
 export YT_DLP_CACHE_DIR="$HOME/.cache/yt-dlp"
 ```
 
@@ -438,40 +550,61 @@ export YT_DLP_CACHE_DIR="$HOME/.cache/yt-dlp"
 
 ### Installing Specific Versions
 
+Install specific version
+
 ```bash
-# Install specific version
 python3 -m pip install "yt-dlp==2023.12.30"
+```
 
-# Install version range
+Install version range
+
+```bash
 python3 -m pip install "yt-dlp>=2023.12.30,<2024.01.01"
+```
 
-# Install latest version in a series
+Install latest version in a series
+
+```bash
 python3 -m pip install "yt-dlp~=2023.12.0"
 ```
 
 ### Dependency Management
 
+Generate requirements file
+
 ```bash
-# Generate requirements file
 python3 -m pip freeze | grep yt-dlp > requirements.txt
+```
 
-# Install from requirements file
+Install from requirements file
+
+```bash
 python3 -m pip install -r requirements.txt
+```
 
-# Show dependency tree
+Show dependency tree
+
+```bash
 python3 -m pip show yt-dlp
 ```
 
 ### Development Installation
 
-For contributing to yt-dlp development:
+**For contributing to yt-dlp development:**
+
+Clone repository
 
 ```bash
-# Clone repository
 git clone https://github.com/yt-dlp/yt-dlp.git
-cd yt-dlp
+```
 
-# Install in development mode
+```bash
+cd yt-dlp
+```
+
+Install in development mode
+
+```bash
 python3 -m pip install -e ".[default]"
 ```
 

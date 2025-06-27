@@ -13,12 +13,16 @@ Effective bug reporting is essential for maintaining and improving yt-dlp. This 
 Always ensure you're using the latest version of yt-dlp before reporting a bug:
 
 ```bash
-# Update yt-dlp
 yt-dlp -U
+```
 
-# Verify version
+Update yt-dlp.
+
+```bash
 yt-dlp --version
 ```
+
+Verify version.
 
 ### **2. Search Existing Issues**
 
@@ -56,24 +60,26 @@ Collect the following information before reporting:
 Reduce your command to the simplest form that still reproduces the bug:
 
 ```bash
-# Instead of this complex command:
-yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail --add-metadata --output "%(title)s.%(ext)s" URL
-
-# Try this minimal version:
 yt-dlp --extract-audio URL
 ```
+
+Minimal version instead of complex command.
 
 ### **Step 2: Generate Verbose Output**
 
 Always include verbose output with your bug report:
 
 ```bash
-# Generate verbose output
 yt-dlp --verbose URL 2>&1
+```
 
-# For very long output, use a pastebin service
+Generate verbose output.
+
+```bash
 yt-dlp --verbose URL 2>&1 | curl -F 'f:1=<-' ix.io
 ```
+
+Use a pastebin service for very long output.
 
 ### **Step 3: Open a New Issue**
 
