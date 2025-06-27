@@ -1,7 +1,7 @@
 # Unofficial yt-dlp Documentation 📚
 
-[![Website](https://img.shields.io/badge/Website-Live-brightgreen)](https://yt-dlp.memoryview.in)
-[![Documentation](https://img.shields.io/badge/Documentation-Complete-blue)](https://yt-dlp.memoryview.in/docs/what-is-yt-dlp)
+[![Website](https://img.shields.io/badge/Website-Live-brightgreen)](https://altctrlreturn.com)
+[![Documentation](https://img.shields.io/badge/Documentation-Complete-blue)](https://altctrlreturn.com/docs/what-is-yt-dlp)
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-lightgrey)](https://github.com/enough-jainil/yt-dlp-doc)
 [![Comments](https://img.shields.io/badge/Comments-Giscus-purple)](https://giscus.app)
 
@@ -24,7 +24,7 @@ This is an **unofficial documentation site** for [yt-dlp](https://github.com/yt-
 
 ## 🚀 Live Documentation
 
-**Visit the live documentation:** [https://yt-dlp.memoryview.in](https://yt-dlp.memoryview.in)
+**Visit the live documentation:** [https://altctrlreturn.com](https://altctrlreturn.com)
 
 ## 🙏 Apologies & Request for Feedback
 
@@ -172,7 +172,7 @@ We use privacy-focused analytics to understand how to improve the documentation:
 
 ## 🔗 Links & Resources
 
-- **Live Documentation:** [https://yt-dlp.memoryview.in](https://yt-dlp.memoryview.in)
+- **Live Documentation:** [https://altctrlreturn.com](https://altctrlreturn.com)
 - **Official yt-dlp Project:** [https://github.com/yt-dlp/yt-dlp](https://github.com/yt-dlp/yt-dlp)
 - **Documentation Repository:** [https://github.com/enough-jainil/yt-dlp-doc](https://github.com/enough-jainil/yt-dlp-doc)
 - **Issue Tracker:** [GitHub Issues](https://github.com/enough-jainil/yt-dlp-doc/issues)
@@ -194,7 +194,7 @@ This documentation project is licensed under the WTFPL License - see the [LICENS
 - **Issues:** [GitHub Issues](https://github.com/enough-jainil/yt-dlp-doc/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/enough-jainil/yt-dlp-doc/discussions)
 - **Comments:** Use the comment system on any documentation page
-- **Website:** [memoryview.in](https://memoryview.in)
+- **Website:** [altctrlreturn.com](https://altctrlreturn.com)
 
 ---
 

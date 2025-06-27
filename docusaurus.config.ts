@@ -10,7 +10,7 @@ const config: Config = {
   favicon: "img/yt-dlp-logo.png",
 
   // Set the production url of your site here
-  url: "https://yt-dlp.memoryview.in",
+  url: "https://altctrlreturn.com",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
