@@ -127,7 +127,7 @@ const config: Config = {
         },
       ],
       copyright:
-        "Built with Docusaurus 🦖 with ❤️ by <a href='https://algogist.com'>algogist</a> hosted on <a href='https://vercel.com'>Vercel</a>",
+        "Built with Docusaurus 🦖 with ❤️ by <a href='https://algogist.com'>algogist</a> made under <a href='https://github.com/enough-jainil/yt-dlp-doc/blob/main/LICENSE'>WTFPL License</a>",
     },
     prism: {
       theme: prismThemes.github,
