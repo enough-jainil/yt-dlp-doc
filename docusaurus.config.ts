@@ -65,7 +65,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
+    image: "img/yt-dlp-social.png",
     navbar: {
       title: "yt-dlp",
       logo: {
@@ -126,7 +126,8 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} <a href="https://memoryview.in">memoryview.in</a> Built with Docusaurus.`,
+      copyright:
+        "Built with Docusaurus 🦖 with ❤️ by <a href='https://algogist.com'>algogist</a> hosted on <a href='https://vercel.com'>Vercel</a>",
     },
     prism: {
       theme: prismThemes.github,
